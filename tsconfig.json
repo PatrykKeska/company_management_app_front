@@ -1,6 +1,8 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "target": "es5",
+    "types": ["styled-components-react-native"],
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
