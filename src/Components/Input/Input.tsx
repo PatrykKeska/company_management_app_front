@@ -15,7 +15,11 @@ export const StyledInput = styled.input`
   background-color: white;
   border-radius: 25px;
   text-align: center;
-  margin: 5px 0 ;
+  margin: 20px 0 ;
+  transition: .2s linear all;
+  &:hover{
+    transform: scale(.95);
+  }
 
 `
 

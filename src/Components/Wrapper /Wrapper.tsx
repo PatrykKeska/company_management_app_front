@@ -9,5 +9,9 @@ background-color: #FFF96B;
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 `
 

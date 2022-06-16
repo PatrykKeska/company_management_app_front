@@ -25,8 +25,11 @@ const StyledLink = styled(Link)`
   &:hover {
     color: white;
     background-color: black;
-
-
+    
+  }
+  &:active{
+    background-color: red;
+    color: blue;
   }
 
 `

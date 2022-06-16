@@ -34,16 +34,15 @@ const Burger = styled(FontAwesomeIcon)`
 
 export const Nav = () => {
     const [isOpen, setOpen] = useState(true);
-    const [isMobile,setMobile] = useState([]);
-        const {width} = useWindowDimensions();
+    const [isMobile, setMobile] = useState([]);
+    const {width} = useWindowDimensions();
 
-    useEffect(()=>{
-        if(width >= 800){
+    useEffect(() => {
+        if (width >= 800) {
 
             setOpen(true)
         }
     })
-
 
 
     return (
@@ -56,13 +55,6 @@ export const Nav = () => {
                 <NavLink icon={faPlusCircle} path={'/add-places'}>Dodaj Placówki</NavLink>
             </StyledNav> : null}
         </>
-        // <StyledNav>
-        //     <Burger onClick={() => setOpen(!isOpen)} icon={faBars}/>
-        //     <NavLink icon={faDatabase} path={'/storage'}> Magazyn</NavLink>
-        //     <NavLink icon={faHome} path={'/places'}>Placówki</NavLink>
-        //     <NavLink icon={faPlusCircle} path={'/add-items'}>Dodaj Przedmioty</NavLink>
-        //     <NavLink icon={faPlusCircle} path={'/add-places'}>Dodaj Placówki</NavLink>
-        // </StyledNav>
 
     )
 }
