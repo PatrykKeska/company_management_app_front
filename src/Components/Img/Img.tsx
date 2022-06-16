@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import pencil from '../../assets /img/pencil.webp';
 
 interface Props {
-    src:string
+src?: HTMLImageElement | any
 }
 
-const StyledImg = styled.img`
-    min-width: 100px;
+
+const StyledImg = styled.img<Props>`
+  min-width: 100px;
   min-height: 100px;
   width: 25vw;
   height: 25vw;
@@ -17,10 +17,10 @@ const StyledImg = styled.img`
 `
 
 
-
-
-export const Img = (props:Props)=>{
-    return(
-        <StyledImg src={props.src}/>
+export const Img = (props:Props) => {
+    return (
+        <>
+        <StyledImg  src={props.src}/>
+        </>
     )
 }
