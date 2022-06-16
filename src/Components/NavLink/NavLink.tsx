@@ -8,8 +8,10 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 interface Props {
     path: string;
-    children: string
-    icon: IconProp
+    children: string;
+    icon: IconProp;
+
+
 }
 
 const StyledLink = styled(Link)`

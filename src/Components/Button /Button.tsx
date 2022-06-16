@@ -13,8 +13,14 @@ background-color: black;
   width: ${props => props.small ? '150px' : '250px'};
   border-radius: 30px;
   border:none;
-  margin: 20px;
+  margin: 10px;
   transition: .2s ease-in all;
+  grid-column-start: 2;
+  grid-column-end: 2;
+  grid-row-start: 5;
+  grid-row-end: 5;
+  align-self: center;
+  justify-self: stretch;
   &:hover{
     transform: scale(.9);
     color: black;
