@@ -30,7 +30,7 @@ export const Input = (props:Props)=>{
 
 
     return(
-        <StyledInput type={props.type} placeholder={props.placeholder}>
+        <StyledInput required type={props.type} placeholder={props.placeholder}>
 
         </StyledInput>
     )

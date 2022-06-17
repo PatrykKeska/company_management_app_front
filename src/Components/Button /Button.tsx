@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 interface Props {
     small?: boolean
+    positionStart? : number
+    positionEnd? : number
 }
 
 export const Button = styled.button<Props>`
@@ -16,15 +18,21 @@ background-color: black;
   margin: 10px;
   transition: .2s ease-in all;
   grid-column-start: 2;
-  grid-column-end: 2;
+  grid-column-end: 4;
   grid-row-start: 5;
   grid-row-end: 5;
   align-self: center;
-  justify-self: stretch;
+  justify-self: center;
   &:hover{
     transform: scale(.9);
     color: black;
     background-color: white;
+  }
+  
+  @media(min-width: 500px){
+    grid-column-start: ${({positionStart})=> positionStart};
+    grid-column-end: ${({positionEnd})=> positionEnd};
+    justify-self: center;
   }
 `
 

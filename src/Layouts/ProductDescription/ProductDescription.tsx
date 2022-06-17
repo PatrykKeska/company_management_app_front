@@ -19,13 +19,22 @@ width: 350px;
   border: 2px solid black;
   display: grid;
   padding: 10px;
-  grid-template-columns: 87px 87px 87px 87px;
-  grid-template-rows: 50px 50px 50px 50px 50px 50px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr ;
+  transition: .3s linear all;
+
+  @media(min-width: 500px){
+    width: 600px;
+  }
+
+  &:hover{
+    box-shadow: 0 0 10px 5px white;
+  }
 `
 
 
 
-export const Product_Description = (props:Props)=>{
+export const Place_Description = (props:Props)=>{
 
 
     return(

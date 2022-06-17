@@ -4,9 +4,13 @@ import {NavLink} from "../../Components/NavLink/NavLink";
 import {faDatabase, faHome, faPlusCircle,} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark, faBars} from '@fortawesome/free-solid-svg-icons'
-import useWindowDimensions from "../../utils/get_window-dimensions";
 
-const StyledNav = styled.nav`
+
+interface Props {
+    open: boolean
+}
+
+const StyledNav = styled.nav<Props>`
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -18,15 +22,21 @@ const StyledNav = styled.nav`
   flex-direction: column;
   position: absolute;
   z-index: 100;
-  background-color:#FFF96B;
-  
+  background-color: #FFF96B;
+  overflow: hidden;
+  transition: .3s linear all;
+  transform: ${({open}) => open ? 'translateX(0)' : 'translateX(-100%)'};
+
 
   @media (min-width: 800px ) {
     flex-direction: row;
     height: 10vh;
     width: 100vw;
     position: relative;
+    animation: none;
+    transform: translateX(0);
   }
+
 `
 
 const Burger = styled(FontAwesomeIcon)`
@@ -43,27 +53,17 @@ const Burger = styled(FontAwesomeIcon)`
 
 export const Nav = () => {
     const [isOpen, setOpen] = useState(true);
-    const [isMobile, setMobile] = useState([]);
-    const {width} = useWindowDimensions();
-    useEffect(() => {
-        if (width >= 800) {
-
-            setOpen(true)
-        }
-   
-    })
-
-
 
     return (
         <>
-            {isOpen?  <Burger onClick={() => setOpen(!isOpen)} icon={faXmark}/> :<Burger onClick={() => setOpen(!isOpen)} icon={faBars}/> }
-            {isOpen ? <StyledNav>
-                <NavLink icon={faDatabase} path={'/storage'}> Magazyn</NavLink>
-                <NavLink icon={faHome} path={'/places'}>Placówki</NavLink>
-                <NavLink icon={faPlusCircle} path={'/add-items'}>Dodaj Przedmioty</NavLink>
-                <NavLink icon={faPlusCircle} path={'/add-places'}>Dodaj Placówki</NavLink>
-            </StyledNav> : null}
+            {isOpen ? <Burger onClick={() => setOpen(!isOpen)} icon={faXmark}/> :
+                <Burger onClick={() => setOpen(!isOpen)} icon={faBars}/>}
+            <StyledNav open={isOpen}>
+                <NavLink click={()=>{setOpen(!isOpen)}} icon={faDatabase} path={'/storage'}> Magazyn</NavLink>
+                <NavLink click={()=>{setOpen(!isOpen)}} icon={faHome} path={'/places'}>Placówki</NavLink>
+                <NavLink click={()=>{setOpen(!isOpen)}} icon={faPlusCircle} path={'/add-items'}>Dodaj Przedmioty</NavLink>
+                <NavLink click={()=>{setOpen(!isOpen)}} icon={faPlusCircle} path={'/add-places'}>Dodaj Placówki</NavLink>
+            </StyledNav>
         </>
 
     )

@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Route, Routes} from "react-router-dom";
-import {Home_Page} from "./Pages/Home_Page/Home_Page";
-import {Storage_Page} from "./Pages/Storage_Page/Storage_Page";
+import {HomePage} from "./Pages/HomePage/HomePage";
+import {StoragePage} from "./Pages/StoragePage/StoragePage";
+import {PlacesPage} from "./Pages/PlacesPage/PlacesPage";
+import {AddItemPage} from "./Pages/AddItemPage/AddItemPage";
+import {AddPlacePage} from "./Pages/AddPlacePage/AddPlacePage";
+
 
 function App() {
+
+    // @ts-ignore
     return (
         <Routes>
-            <Route path='/' element={<Home_Page/>}/>
-            <Route path='/storage' element={<Storage_Page/>}/>
+            <Route path='/' element={<HomePage/>}/>
+            <Route path='/storage' element={<StoragePage/>}/>
+            <Route path='/places' element={<PlacesPage/>}/>
+            <Route path='/add-items' element={<AddItemPage/>}/>
+            <Route path='/add-places' element={<AddPlacePage/>}/>
         </Routes>
-
     );
 }
 

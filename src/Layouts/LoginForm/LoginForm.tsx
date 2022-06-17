@@ -11,7 +11,7 @@ display: flex;
   flex-direction: column;
 `
 
-export const Form = ()=>{
+export const LoginForm = ()=>{
 
 
     return(

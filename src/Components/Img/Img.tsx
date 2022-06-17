@@ -18,6 +18,11 @@ const StyledImg = styled.img<Props>`
   grid-column-end: 1;
   grid-row-start: 1;
   grid-row-end: 1;
+  
+  @media(min-width: 800px){
+    width:150px;
+    height: 150px;
+  }
 `
 
 
