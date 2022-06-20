@@ -34,7 +34,7 @@ width: 350px;
 
 
 
-export const Place_Description = (props:Props)=>{
+export const PlaceDescription = (props:Props)=>{
 
 
     return(

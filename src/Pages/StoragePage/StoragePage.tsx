@@ -2,7 +2,7 @@ import React from "react";
 import {Wrapper} from "../../Components/Wrapper /Wrapper";
 import {Nav} from "../../Layouts/Nav/Nav";
 import styled from "styled-components";
-import {Place_Description} from "../../Layouts/ProductDescription/ProductDescription";
+import { PlaceDescription } from "../../Layouts/ProductDescription/ProductDescription";
 
 
 const GridWrapper = styled(Wrapper)`
@@ -29,67 +29,67 @@ export const StoragePage = () => {
             <GridWrapper>
 
                 {/*Dummy Data  to create styles*/}
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
                     amount={120}/>
 
-                <Place_Description
+                <PlaceDescription
                     title={'Długopis'}
                     price={2.49}
                     date={'29-09-2022'}
