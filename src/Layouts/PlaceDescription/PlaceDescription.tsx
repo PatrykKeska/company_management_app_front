@@ -25,6 +25,7 @@ width: 350px;
   
   @media(min-width: 500px){
     width: 600px;
+    height: 400px;
   }
   
   &:hover{
@@ -40,11 +41,11 @@ export const PlaceDescription = (props:Props)=>{
     return(
         <Wrapper>
             <Img src={office}/>
-            <Paragraph positionStart={1} positionEnd={1}>{`${props.title}`}</Paragraph>
-            <Paragraph positionStart={2} positionEnd={2}>{`Miasto: ${props.city}`}</Paragraph>
-            <Paragraph positionStart={3} positionEnd={3}>{`Ulica:${props.street}`}</Paragraph>
-            <Paragraph  positionStart={4} positionEnd={4}>{`Numer Bydynku: ${props.buildingNumber}`}</Paragraph>
-            <Button positionStart={2} positionEnd={4} small>Edytuj</Button>
+            <Paragraph positionStart={2} positionEnd={2}>{`${props.title}`}</Paragraph>
+            <Paragraph positionStart={3} positionEnd={3}>{`Miasto: ${props.city}`}</Paragraph>
+            <Paragraph positionStart={4} positionEnd={4}>{`Ulica:${props.street}`}</Paragraph>
+            <Paragraph  positionStart={5} positionEnd={5}>{`Numer Bydynku: ${props.buildingNumber}`}</Paragraph>
+            <Button small>Edytuj</Button>
 
         </Wrapper>
     )

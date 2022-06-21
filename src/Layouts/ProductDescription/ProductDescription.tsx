@@ -2,15 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import {Paragraph} from "../../Components/Paragraphs/Paragraph";
 import {Img} from "../../Components/Img/Img";
-import pencil from '../../assets /img/pencil.webp'
 import {Button} from "../../Components/Button /Button";
-interface Props {
-    title:string
-    price:number;
-    amount: number;
-    date : string
+import {SingleItemTypes} from "../../types/singleItem.types";
 
-}
 
 const Wrapper = styled.div`
 width: 350px;
@@ -25,6 +19,7 @@ width: 350px;
 
   @media(min-width: 500px){
     width: 600px;
+    height: 400px;
   }
 
   &:hover{
@@ -34,18 +29,16 @@ width: 350px;
 
 
 
-export const PlaceDescription = (props:Props)=>{
-
-
+export const ProductDescription = (props:SingleItemTypes)=>{
     return(
-        <Wrapper>
-            <Img src={pencil}/>
-            <Paragraph positionStart={1} positionEnd={1}>{`${props.title}`}</Paragraph>
-        <Paragraph positionStart={2} positionEnd={2}>{`Cena: ${props.price}`}</Paragraph>
-        <Paragraph positionStart={3} positionEnd={3}>{`Ilość:${props.amount}`}</Paragraph>
-        <Paragraph  positionStart={4} positionEnd={4}>{`Data Zakupu: ${props.date}`}</Paragraph>
-            <Button small>Edytuj</Button>
 
+        <Wrapper key={props.id}>
+            <Img src={props.img}/>
+            <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
+        <Paragraph positionStart={3} positionEnd={3}>{`Cena: ${props.price}`}</Paragraph>
+        <Paragraph positionStart={4} positionEnd={4}>{`Ilość:${props.pieces}`}</Paragraph>
+        <Paragraph  positionStart={5} positionEnd={5}>{`Data Zakupu: ${props.dateOfBuy}`}</Paragraph>
+            <Button small>Edytuj</Button>
         </Wrapper>
     )
 }
