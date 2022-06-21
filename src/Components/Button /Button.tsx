@@ -19,8 +19,8 @@ background-color: black;
   transition: .2s ease-in all;
   grid-column-start: 2;
   grid-column-end: 4;
-  grid-row-start: 5;
-  grid-row-end: 5;
+  grid-row-start: 6;
+  grid-row-end: 6;
   align-self: center;
   justify-self: center;
   &:hover{
