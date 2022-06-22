@@ -5,12 +5,10 @@ import {Button} from "../../Components/Button /Button";
 import {Img} from "../../Components/Img/Img";
 import {SendingPopUp} from "../../Components/SendingPopUP/SendingPopUp";
 import photo from '../../assets /img/photo.jpeg'
+import {FileUploader} from "../../utils/FileUploader/FileUploader";
 
 
-declare module  "*.jpeg"{
-    const img: string
-    export default img
-}
+
 type FormData = {
     name: string,
     price: number,
@@ -37,7 +35,6 @@ display: flex;
 export const AddProductForm = () => {
     const [formValues, setFormValues] = useState<FormData>({name: '', price: 0, pieces: 0, dateOfBuy: '', img: photo});
     const [loading, setLoading] = useState(false)
-
     const addNewProduct = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true)
@@ -55,7 +52,10 @@ export const AddProductForm = () => {
             setFormValues({name: '', price: 0, pieces: 0, dateOfBuy: '', img: photo})
         }
     }
+
+
     return (
+
         loading ? <SendingPopUp/> : (
             <StyledForm onSubmit={addNewProduct}>
                 <Img src={formValues.img}/>

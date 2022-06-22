@@ -6,9 +6,6 @@ export interface SingleItemTypes {
     img: string
     id?:string
     key?:string
+    file?: any
 }
 
-declare module "*.jpeg" {
-    const src: any;
-    export = value;
-}
