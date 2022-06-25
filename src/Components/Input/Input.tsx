@@ -2,7 +2,6 @@ import React, {TransitionEventHandler} from "react";
 import styled from "styled-components";
 
 interface Props {
-placeholder:string
     type:string
     value?: string | number | any
     name: string
@@ -33,7 +32,7 @@ export const Input = (props:Props)=>{
 
 
     return(
-        <StyledInput onChange={props.onChange} value={props.value} name={props.name}  required type={props.type} placeholder={props.placeholder}>
+        <StyledInput onChange={props.onChange} value={props.value} name={props.name}  required type={props.type}>
 
         </StyledInput>
     )

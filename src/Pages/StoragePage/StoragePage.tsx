@@ -3,7 +3,7 @@ import {Wrapper} from "../../Components/Wrapper /Wrapper";
 import {Nav} from "../../Layouts/Nav/Nav";
 import styled from "styled-components";
 import {ProductDescription} from "../../Layouts/ProductDescription/ProductDescription";
-import {SingleItemTypes} from "../../types/singleItem.types";
+import {SingleProductTypes} from "../../types/Product.types";
 
 
 const GridWrapper = styled(Wrapper)`
@@ -23,7 +23,7 @@ const GridWrapper = styled(Wrapper)`
 
 
 export const StoragePage = () => {
-    const [storage, setStorage] = useState([] as SingleItemTypes[]);
+    const [storage, setStorage] = useState([] as SingleProductTypes[]);
 
 
     useEffect(() => {

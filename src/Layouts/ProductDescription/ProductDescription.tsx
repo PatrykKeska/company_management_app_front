@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {Paragraph} from "../../Components/Paragraphs/Paragraph";
 import {Img} from "../../Components/Img/Img";
 import {Button} from "../../Components/Button /Button";
-import {SingleItemTypes} from "../../types/singleItem.types";
+import {SingleProductTypes} from "../../types/Product.types";
 
 
 const Wrapper = styled.div`
@@ -29,7 +29,7 @@ width: 350px;
 
 
 
-export const ProductDescription = (props:SingleItemTypes)=>{
+export const ProductDescription = (props:SingleProductTypes)=>{
     return(
 
         <Wrapper key={props.id}>
