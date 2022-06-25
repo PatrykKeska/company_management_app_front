@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../Components/Wrapper /Wrapper";
 import {Nav} from "../../Layouts/Nav/Nav";
 import styled from "styled-components";
 import {PlaceDescription} from "../../Layouts/PlaceDescription/PlaceDescription";
+import {SinglePlaceTypes} from "../../types/Places.types";
 
 
 const GridWrapper = styled(Wrapper)`
@@ -21,32 +22,37 @@ justify-content: center;
 
 export const PlacesPage = () => {
 
+    const [places, setPlaces] = useState([] as SinglePlaceTypes[]);
+
+        useEffect(()=>{
+            (async ()=>{
+                try {
+                    const data = await fetch('http://localhost:3001/places');
+                    const results =await data.json();
+                    setPlaces(results.message)
+                }
+                catch (error){
+                    console.log(error)
+                }
+
+            })()
+        },[])
+
 
     return (<>
             <Nav/>
             <GridWrapper>
 
-                {/*Dummy Data  to create styles*/}
-                <PlaceDescription
-                    title={"Centrala"}
-                    city={'Limanowa'}
-                    street={'Test 12'}
-                    buildingNumber={12}
-                />
+                {places.map((place)=>
+                    <PlaceDescription
+                        key={place.id}
+                        img = {place.img}
+                        name={place.name}
+                        city={place.city}
+                        street={place.street}
+                        buildNumber={place.buildNumber}
+                    /> )}
 
-                <PlaceDescription
-                    title={"Centrala"}
-                    city={'Limanowa'}
-                    street={'Test 12'}
-                    buildingNumber={12}
-                />
-
-                <PlaceDescription
-                    title={"Centrala"}
-                    city={'Limanowa'}
-                    street={'Test 12'}
-                    buildingNumber={12}
-                />
             </GridWrapper>
         </>
     )

@@ -4,13 +4,8 @@ import {Paragraph} from "../../Components/Paragraphs/Paragraph";
 import {Img} from "../../Components/Img/Img";
 import office from '../../assets /img/office.jpeg'
 import {Button} from "../../Components/Button /Button";
-interface Props {
-    title:string
-    city:string;
-    street: string;
-    buildingNumber : number
+import {SinglePlaceTypes} from "../../types/Places.types";
 
-}
 
 const Wrapper = styled.div`
 width: 350px;
@@ -35,16 +30,16 @@ width: 350px;
 
 
 
-export const PlaceDescription = (props:Props)=>{
+export const PlaceDescription = (props:SinglePlaceTypes)=>{
 
 
     return(
-        <Wrapper>
-            <Img src={office}/>
-            <Paragraph positionStart={2} positionEnd={2}>{`${props.title}`}</Paragraph>
+        <Wrapper key={props.id}>
+            <Img src={props.img}/>
+            <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
             <Paragraph positionStart={3} positionEnd={3}>{`Miasto: ${props.city}`}</Paragraph>
             <Paragraph positionStart={4} positionEnd={4}>{`Ulica:${props.street}`}</Paragraph>
-            <Paragraph  positionStart={5} positionEnd={5}>{`Numer Bydynku: ${props.buildingNumber}`}</Paragraph>
+            <Paragraph  positionStart={5} positionEnd={5}>{`Numer Bydynku: ${props.buildNumber}`}</Paragraph>
             <Button small>Edytuj</Button>
 
         </Wrapper>
