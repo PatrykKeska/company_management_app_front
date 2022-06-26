@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import styled from "styled-components";
 import {Paragraph} from "../../Components/Paragraphs/Paragraph";
 import {Img} from "../../Components/Img/Img";
-import office from '../../assets /img/office.jpeg'
-import {Button} from "../../Components/Button /Button";
-import {SinglePlaceTypes} from "../../types/Places.types";
 
+import {SinglePlaceTypes} from "../../types/Places.types";
+import {LinkButton} from "../../Components/LinkButton/LinkButton";
+import {SinglePlaceContext} from "../../context/SinglePlace/singlePlace.context";
 
 const Wrapper = styled.div`
 width: 350px;
@@ -31,16 +31,20 @@ width: 350px;
 
 
 export const PlaceDescription = (props:SinglePlaceTypes)=>{
-
-
+const {details,setDetails} = useContext(SinglePlaceContext);
+const [placeDescription, setPlaceDescription] = useState(props);
+const setContextForSingleElement = ()=>{
+setDetails(placeDescription)
+}
     return(
         <Wrapper key={props.id}>
-            <Img src={props.img}/>
+            <Img width={'150px'} height={'120px'} src={props.img}/>
             <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
-            <Paragraph positionStart={3} positionEnd={3}>{`Miasto: ${props.city}`}</Paragraph>
-            <Paragraph positionStart={4} positionEnd={4}>{`Ulica:${props.street}`}</Paragraph>
-            <Paragraph  positionStart={5} positionEnd={5}>{`Numer Bydynku: ${props.buildNumber}`}</Paragraph>
-            <Button small>Edytuj</Button>
+            <Paragraph positionStart={3} positionEnd={3}>{`City: ${props.city}`}</Paragraph>
+            <Paragraph positionStart={4} positionEnd={4}>{`Street:${props.street}`}</Paragraph>
+            <Paragraph  positionStart={5} positionEnd={5}>{`Number of the building: ${props.buildNumber}`}</Paragraph>
+            <LinkButton small={'true'} onClick={setContextForSingleElement} to={`/places/${props.id}`}>Edit</LinkButton>
+
 
         </Wrapper>
     )
