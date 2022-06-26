@@ -51,7 +51,7 @@ export const StoragePage = () => {
                         key={item.id}
                         name={item.name}
                         price={item.price}
-                        pieces={item.pieces}
+                        amount={item.amount}
                         dateOfBuy={item.dateOfBuy}
                         img={item.img}/>
 

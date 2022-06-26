@@ -2,17 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 interface Props {
-src?: string
+    src?: string
+    width: string;
+    height: string;
 }
 
 
 const StyledImg = styled.img<Props>`
-  min-width: 100px;
-  min-height: 100px;
-  width: 150px;
-  height: 120px;
-  max-width: 200px;
-  max-height: 200px;
+
+  width: ${({width}) => width};
+  height: ${({height}) => height};
   border-radius: 80px;
   grid-column-start: 2;
   grid-column-end: 4;
@@ -20,18 +19,19 @@ const StyledImg = styled.img<Props>`
   grid-row-end: 1;
   align-self: center;
   justify-self: center;
-  
-  @media(min-width: 800px){
-    width:200px;
+  margin: 10px 0;
+
+  @media (min-width: 800px) {
+    width: 200px;
     height: 150px;
   }
 `
 
 
-export const Img = (props:Props) => {
+export const Img = (props: Props) => {
     return (
         <>
-        <StyledImg  src={props.src}/>
+            <StyledImg height={props.height} width={props.width} src={props.src}/>
         </>
     )
 }

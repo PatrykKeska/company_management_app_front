@@ -11,7 +11,7 @@ export const Button = styled.button<Props>`
 background-color: black;
   color: white;
   font-weight: bold;
-  padding:${props => props.small ? '10px 10px' : '20px 5px'};
+  padding:${props => props.small  ? '10px 10px' : '20px 5px'};
   width: ${props => props.small ? '150px' : '250px'};
   border-radius: 30px;
   border:none;

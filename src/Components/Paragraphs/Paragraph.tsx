@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 interface Props{
-    positionStart:number
-    positionEnd:number
+    positionStart?:number
+    positionEnd?:number
 }
 
 export const Paragraph = styled.p<Props>`

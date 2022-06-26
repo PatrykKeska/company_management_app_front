@@ -20,7 +20,7 @@ export const SendingPopUp = () => {
 
     return (
         <Wrapper>
-            <h3>Przedmiot jest dodawany do bazy danych...</h3>
+            <h3>Item was added successfully!</h3>
         </Wrapper>
     )
 }

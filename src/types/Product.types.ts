@@ -2,7 +2,7 @@
 export interface SingleProductTypes {
     name: string;
     price: number;
-    pieces: number;
+    amount: number;
     dateOfBuy: string;
     img: string;
     id?:string;

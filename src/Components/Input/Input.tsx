@@ -1,11 +1,11 @@
-import React, {TransitionEventHandler} from "react";
+import React, {ChangeEventHandler, TransitionEventHandler} from "react";
 import styled from "styled-components";
 
 interface Props {
     type:string
     value?: string | number | any
     name: string
-    onChange: any
+    onChange: ChangeEventHandler
 }
 
 export const StyledInput = styled.input`

@@ -10,7 +10,7 @@ interface Props {
     path: string;
     children: string;
     icon: IconProp;
-    click: MouseEventHandler
+    click: MouseEventHandler;
 
 
 }

@@ -33,11 +33,11 @@ export const ProductDescription = (props:SingleProductTypes)=>{
     return(
 
         <Wrapper key={props.id}>
-            <Img src={props.img}/>
+            <Img width={'150px'} height={'120px'} src={props.img}/>
             <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
-        <Paragraph positionStart={3} positionEnd={3}>{`Cena: ${props.price}`}</Paragraph>
-        <Paragraph positionStart={4} positionEnd={4}>{`Ilość:${props.pieces}`}</Paragraph>
-        <Paragraph  positionStart={5} positionEnd={5}>{`Data Zakupu: ${props.dateOfBuy}`}</Paragraph>
+        <Paragraph positionStart={3} positionEnd={3}>{`Price: ${props.price}`}</Paragraph>
+        <Paragraph positionStart={4} positionEnd={4}>{`Amount:${props.amount}`}</Paragraph>
+        <Paragraph  positionStart={5} positionEnd={5}>{`Date of buy: ${props.dateOfBuy}`}</Paragraph>
             <Button small>Edytuj</Button>
         </Wrapper>
     )

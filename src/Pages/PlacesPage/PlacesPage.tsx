@@ -45,6 +45,7 @@ export const PlacesPage = () => {
 
                 {places.map((place)=>
                     <PlaceDescription
+                        id={place.id}
                         key={place.id}
                         img = {place.img}
                         name={place.name}
