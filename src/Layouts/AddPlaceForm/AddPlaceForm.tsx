@@ -6,8 +6,13 @@ import {Img} from "../../Components/Img/Img";
 import office from '../../assets /img/office.jpeg'
 import {SinglePlaceTypes} from "../../types/Places.types";
 import {InputOnChange} from "../../types/common.types";
-import {stringify} from "querystring";
+import {Checkbox} from "../../Components/Input/Checkbox";
+import {useNavigate} from "react-router-dom";
+import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
 
+interface Props {
+    row?: boolean
+}
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -17,16 +22,11 @@ const StyledForm = styled.form`
   flex-direction: column;
 `
 
-const StyledLabel = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
 
 
 export const AddPlaceForm = () => {
-
+    const navigate = useNavigate();
+    const [changeImg, toSetChangeImg] = useState(false);
     const [formValues, setFormValues] = useState({
         name: '',
         city: '',
@@ -43,6 +43,9 @@ export const AddPlaceForm = () => {
         setLoading(true)
         try {
             (async () => {
+                if (formValues.img === '') {
+                    formValues.img = 'http://localhost:3000/static/media/office.929e7651334293b5e310.jpeg'
+                }
                 const response = await fetch('http://localhost:3001/add-new-place', {
                     method: "POST",
                     body: JSON.stringify({
@@ -63,17 +66,18 @@ export const AddPlaceForm = () => {
                 img: '',
 
             })
-
+            navigate('/places')
         }
     }
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            {formValues.img === '' ? <Img src={office}/> : <Img  src={formValues.img}/> }
+            {formValues.img === '' ? <Img width={'150px'} height={'120px'} src={office}/> :
+                <Img width={'150px'} height={'120px'} src={formValues.img}/>}
 
 
             <StyledLabel>
-                Nazwa:
+                Name:
                 <Input
                     type={'text'} name={'name'}
                     value={formValues.name}
@@ -85,7 +89,7 @@ export const AddPlaceForm = () => {
             </StyledLabel>
 
             <StyledLabel>
-                Miasto:
+                City:
                 <Input
                     type={'text'}
                     name={'city'}
@@ -98,7 +102,7 @@ export const AddPlaceForm = () => {
             </StyledLabel>
 
             <StyledLabel>
-                Ulica:
+                Street:
                 <Input
                     type={'text'}
                     name={'street'}
@@ -111,7 +115,7 @@ export const AddPlaceForm = () => {
             </StyledLabel>
 
             <StyledLabel>
-                Number Budynku:
+               Number of the building:
                 <Input
                     type={'text'}
                     name={'buildNumber'}
@@ -123,9 +127,12 @@ export const AddPlaceForm = () => {
                     })}
                 />
             </StyledLabel>
-
-            <StyledLabel>
-                Link do Zdjęcia:
+            <StyledLabel row>
+                Change default image
+                <Checkbox checked={changeImg} onChange={() => toSetChangeImg(!changeImg)}/>
+            </StyledLabel>
+            {changeImg ? (<StyledLabel>
+                Link to your image
                 <Input
                     onChange={(e: InputOnChange) => setFormValues({
                         ...formValues,
@@ -134,8 +141,9 @@ export const AddPlaceForm = () => {
                     value={formValues.img}
                     name={'img'}
                     type={'string'}/>
-            </StyledLabel>
-            <Button>Dodaj</Button>
+            </StyledLabel>) : null}
+
+            <Button>Add</Button>
 
         </StyledForm>
     )
