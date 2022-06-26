@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import styled from "styled-components";
 import {NavLink} from "../../Components/NavLink/NavLink";
 import {faDatabase, faHome, faPlusCircle,} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark, faBars} from '@fortawesome/free-solid-svg-icons'
+import {NavContext} from "../../context/nav/nav.context";
 
 
 interface Props {
@@ -51,18 +52,45 @@ const Burger = styled(FontAwesomeIcon)`
 
 `
 
-export const Nav = () => {
-    const [isOpen, setOpen] = useState(true);
 
+export const Nav = () => {
+    const {isNavOpen, setIsNavOpen} = useContext(NavContext);
     return (
         <>
-            {isOpen ? <Burger onClick={() => setOpen(!isOpen)} icon={faXmark}/> :
-                <Burger onClick={() => setOpen(!isOpen)} icon={faBars}/>}
-            <StyledNav open={isOpen}>
-                <NavLink click={()=>{setOpen(!isOpen)}} icon={faDatabase} path={'/storage'}> Magazyn</NavLink>
-                <NavLink click={()=>{setOpen(!isOpen)}} icon={faHome} path={'/places'}>Placówki</NavLink>
-                <NavLink click={()=>{setOpen(!isOpen)}} icon={faPlusCircle} path={'/add-items'}>Dodaj Przedmioty</NavLink>
-                <NavLink click={()=>{setOpen(!isOpen)}} icon={faPlusCircle} path={'/add-places'}>Dodaj Placówki</NavLink>
+            {isNavOpen
+                ?
+                <Burger
+                    onClick={() => setIsNavOpen(!isNavOpen)}
+                    icon={faXmark}/>
+                :
+                <Burger
+                    onClick={() => setIsNavOpen(!isNavOpen)}
+                    icon={faBars}
+                />}
+
+            <StyledNav open={isNavOpen}>
+
+
+                <NavLink
+                    click={() => {setIsNavOpen(false)}}
+                    icon={faDatabase}
+                    path={'/storage'}>Items Storage</NavLink>
+
+
+                <NavLink
+                    click={() => {setIsNavOpen(false) }}
+                    icon={faHome}
+                    path={'/places'}>Offices</NavLink>
+
+
+                <NavLink click={() => { setIsNavOpen(false) }}
+                         icon={faPlusCircle}
+                         path={'/add-items'}>New Item</NavLink>
+
+
+                <NavLink click={() => { setIsNavOpen(false) }}
+                         icon={faPlusCircle}
+                         path={'/add-places'}>New office</NavLink>
             </StyledNav>
         </>
 
