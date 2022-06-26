@@ -7,6 +7,7 @@ import {SendingPopUp} from "../../Components/SendingPopUP/SendingPopUp";
 import item from '../../assets /img/item.jpeg'
 import {SingleProductTypes} from "../../types/Product.types";
 import {InputOnChange} from "../../types/common.types";
+import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
 
 
 const StyledForm = styled.form`
@@ -17,18 +18,12 @@ const StyledForm = styled.form`
   flex-direction: column;
 `
 
-const StyledLabel = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
 
 export const AddProductForm = () => {
     const [formValues, setFormValues] = useState({
         name: '',
         price: 0,
-        pieces: 0,
+        amount: 0,
         dateOfBuy: '',
         img: ''
     } as SingleProductTypes);
@@ -47,7 +42,7 @@ export const AddProductForm = () => {
             })
         } finally {
             setLoading(false)
-            setFormValues({name: '', price: 0, pieces: 0, dateOfBuy: '', img: ''})
+            setFormValues({name: '', price: 0, amount: 0, dateOfBuy: '', img: ''})
         }
     }
 
@@ -56,11 +51,11 @@ export const AddProductForm = () => {
 
         loading ? <SendingPopUp/> : (
             <StyledForm onSubmit={addNewProduct}>
-                {formValues.img === '' ? <Img src={item}/> : <Img src={formValues.img}/>}
+                {formValues.img === '' ? <Img width={'150px'} height={'120px'} src={item}/> : <Img  width={'150px'} height={'120px'}src={formValues.img}/>}
 
 
                 <StyledLabel htmlFor="name">
-                    Nazwa:
+                    Name:
                     <Input onChange={(e: InputOnChange) => setFormValues({
                         ...formValues,
                         name: e.target.value
@@ -71,7 +66,7 @@ export const AddProductForm = () => {
                 </StyledLabel>
 
                 <StyledLabel>
-                    Cena:
+                    Price:
                     <Input
                         onChange={(e: InputOnChange) => setFormValues({
                             ...formValues,
@@ -83,20 +78,20 @@ export const AddProductForm = () => {
                 </StyledLabel>
 
                 <StyledLabel>
-                    Ilość sztuk:
+                    Amount:
                     <Input
 
                         onChange={(e: InputOnChange) => setFormValues({
                             ...formValues,
-                            pieces: Number(e.target.value)
+                            amount: Number(e.target.value)
                         })}
-                        value={formValues.pieces}
+                        value={formValues.amount}
                         name={'pieces'}
                         type={'number'}/>
                 </StyledLabel>
 
                 <StyledLabel>
-                    Data Zakupu:
+                    Date of buy:
                     <Input
                         onChange={(e: InputOnChange) => setFormValues({
                             ...formValues,
@@ -109,7 +104,7 @@ export const AddProductForm = () => {
                 </StyledLabel>
 
                 <StyledLabel>
-                    Link do Zdjęcia:
+                    Link to your image
                     <Input
                         onChange={(e: InputOnChange) => setFormValues({
                             ...formValues,
@@ -119,7 +114,7 @@ export const AddProductForm = () => {
                         name={'img'}
                         type={'string'}/>
                 </StyledLabel>
-                <Button>Dodaj</Button>
+                <Button>Add</Button>
             </StyledForm>
         ))
 }
