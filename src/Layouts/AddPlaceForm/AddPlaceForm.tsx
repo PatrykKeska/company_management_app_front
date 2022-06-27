@@ -72,8 +72,8 @@ export const AddPlaceForm = () => {
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            {formValues.img === '' ? <Img width={'150px'} height={'120px'} src={office}/> :
-                <Img width={'150px'} height={'120px'} src={formValues.img}/>}
+            {formValues.img === '' ? <Img width={'200px'} height={'120px'} src={office}/> :
+                <Img width={'200px'} height={'120px'} src={formValues.img}/>}
 
 
             <StyledLabel>

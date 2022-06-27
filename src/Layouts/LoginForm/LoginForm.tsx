@@ -4,7 +4,6 @@ import {Input} from "../../Components/Input/Input";
 import {Button} from "../../Components/Button /Button";
 import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
 import {InputOnChange} from "../../types/common.types";
-import {set} from "react-hook-form";
 
 
 const StyledForm = styled.form`

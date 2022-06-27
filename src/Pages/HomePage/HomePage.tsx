@@ -11,7 +11,7 @@ export const HomePage = () => {
     return (
         <Wrapper>
             <Nav/>
-            <Title>Organizer Firmowy</Title>
+            <Title>Inventory Management</Title>
             <LoginForm/>
         </Wrapper>
     )

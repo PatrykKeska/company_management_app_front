@@ -12,7 +12,7 @@ const StyledImg = styled.img<Props>`
 
   width: ${({width}) => width};
   height: ${({height}) => height};
-  border-radius: 80px;
+  border-radius: 40px;
   grid-column-start: 2;
   grid-column-end: 4;
   grid-row-start: 1;
@@ -22,8 +22,8 @@ const StyledImg = styled.img<Props>`
   margin: 10px 0;
 
   @media (min-width: 800px) {
-    width: 200px;
-    height: 150px;
+    width: 250px;
+    height: 160px;
   }
 `
 

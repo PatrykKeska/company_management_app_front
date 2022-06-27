@@ -8,6 +8,8 @@ import item from '../../assets /img/item.jpeg'
 import {SingleProductTypes} from "../../types/Product.types";
 import {InputOnChange} from "../../types/common.types";
 import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
+import {useNavigate} from "react-router-dom";
+import {Checkbox} from "../../Components/Input/Checkbox";
 
 
 const StyledForm = styled.form`
@@ -20,6 +22,8 @@ const StyledForm = styled.form`
 
 
 export const AddProductForm = () => {
+    const navigate = useNavigate();
+    const [changeImg, toSetChangeImg] = useState(false);
     const [formValues, setFormValues] = useState({
         name: '',
         price: 0,
@@ -33,6 +37,9 @@ export const AddProductForm = () => {
         setLoading(true)
 
         try {
+            if (formValues.img === '') {
+                formValues.img = item
+            }
             await fetch(`http://localhost:3001/add-new-item`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -43,6 +50,7 @@ export const AddProductForm = () => {
         } finally {
             setLoading(false)
             setFormValues({name: '', price: 0, amount: 0, dateOfBuy: '', img: ''})
+            navigate('/storage')
         }
     }
 
@@ -51,7 +59,8 @@ export const AddProductForm = () => {
 
         loading ? <SendingPopUp/> : (
             <StyledForm onSubmit={addNewProduct}>
-                {formValues.img === '' ? <Img width={'150px'} height={'120px'} src={item}/> : <Img  width={'150px'} height={'120px'}src={formValues.img}/>}
+                {formValues.img === '' ? <Img width={'200px'} height={'120px'} src={item}/> :
+                    <Img width={'200px'} height={'120px'} src={formValues.img}/>}
 
 
                 <StyledLabel htmlFor="name">
@@ -103,7 +112,11 @@ export const AddProductForm = () => {
 
                 </StyledLabel>
 
-                <StyledLabel>
+                <StyledLabel row>
+                    Change default image
+                    <Checkbox checked={changeImg} onChange={() => toSetChangeImg(!changeImg)}/>
+                </StyledLabel>
+                {changeImg ? (<StyledLabel>
                     Link to your image
                     <Input
                         onChange={(e: InputOnChange) => setFormValues({
@@ -113,7 +126,7 @@ export const AddProductForm = () => {
                         value={formValues.img}
                         name={'img'}
                         type={'string'}/>
-                </StyledLabel>
+                </StyledLabel>) : null}
                 <Button>Add</Button>
             </StyledForm>
         ))
