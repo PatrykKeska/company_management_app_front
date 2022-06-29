@@ -36,6 +36,7 @@ export const AddPlaceForm = () => {
 
     } as SinglePlaceTypes);
 
+    // @TODO create a loading component !
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e: FormEvent) => {
@@ -46,7 +47,7 @@ export const AddPlaceForm = () => {
                 if (formValues.img === '') {
                     formValues.img = 'http://localhost:3000/static/media/office.929e7651334293b5e310.jpeg'
                 }
-                const response = await fetch('http://localhost:3001/add-new-place', {
+                await fetch('http://localhost:3001/add-new-place', {
                     method: "POST",
                     body: JSON.stringify({
                         ...formValues

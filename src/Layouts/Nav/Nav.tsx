@@ -74,7 +74,7 @@ export const Nav = () => {
                 <NavLink
                     click={() => {setIsNavOpen(false)}}
                     icon={faDatabase}
-                    path={'/storage'}>Items Storage</NavLink>
+                    path={'/storage'}>Storage</NavLink>
 
 
                 <NavLink

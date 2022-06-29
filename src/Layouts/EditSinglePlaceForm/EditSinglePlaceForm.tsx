@@ -9,10 +9,9 @@ import {Img} from "../../Components/Img/Img";
 import {Checkbox} from "../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
 import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
+import office from '../../assets /img/office.jpeg'
 
-interface Props {
-    row?: boolean;
-}
+
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -25,10 +24,9 @@ const StyledForm = styled.form`
 
 export const EditSinglePlaceForm = () => {
     const navigate = useNavigate();
-    const {details, setDetails} = useContext(SinglePlaceContext);
+    const {placeDetails, setPlaceDetails} = useContext(SinglePlaceContext);
     const [toUpdateImg, setToUpdateImg] = useState(false);
     const [toDelete, setToDelete] = useState(false);
-    const [formValues, setFormValues] = useState(details);
     const handleToUpdateImg = () => {
         setToUpdateImg(!toUpdateImg)
     }
@@ -36,7 +34,7 @@ export const EditSinglePlaceForm = () => {
         setToDelete(!toDelete)
     }
 
-
+// @TODO Create loading Component !!!
     const [loading, setLoading] = useState(false);
 
 
@@ -45,16 +43,16 @@ export const EditSinglePlaceForm = () => {
         setLoading(true)
 
         try {
-            if (toDelete === false) {
+            if (!toDelete) {
                 (async () => {
 
-                    if (formValues.img === '') {
-                        formValues.img = 'http://localhost:3000/static/media/office.929e7651334293b5e310.jpeg'
+                    if (placeDetails.img === '') {
+                        placeDetails.img = office
                     }
-                    const response = await fetch('http://localhost:3001/places/update', {
+                     await fetch('http://localhost:3001/places/update', {
                         method: "PATCH",
                         body: JSON.stringify({
-                            ...formValues
+                            ...placeDetails
                         }),
                         headers: {'Content-Type': 'application/json'},
 
@@ -63,11 +61,10 @@ export const EditSinglePlaceForm = () => {
                 })()
             } else {
                 (async () => {
-
-                    const response = await fetch('http://localhost:3001/places/delete', {
+                    await fetch('http://localhost:3001/places/delete', {
                         method: "DELETE",
                         body: JSON.stringify({
-                            ...formValues
+                            ...placeDetails
                         }),
                         headers: {'Content-Type': 'application/json'},
 
@@ -78,7 +75,7 @@ export const EditSinglePlaceForm = () => {
         } finally {
             setLoading(false)
 
-            setFormValues({
+            setPlaceDetails({
                 name: '',
                 city: '',
                 street: '',
@@ -95,14 +92,14 @@ export const EditSinglePlaceForm = () => {
     return (
 
         <StyledForm onSubmit={handleSubmit}>
-            <Img width={'200px'} height={'150px'} src={formValues.img}/>
+            <Img width={'200px'} height={'150px'} src={placeDetails.img}/>
             <StyledLabel>
                 Name:
                 <Input
                     type={'text'} name={'name'}
-                    value={formValues.name}
-                    onChange={(event: InputOnChange) => setFormValues({
-                        ...formValues,
+                    value={placeDetails.name}
+                    onChange={(event: InputOnChange) => setPlaceDetails({
+                        ...placeDetails,
                         name: event.target.value
 
                     })}/>
@@ -113,9 +110,9 @@ export const EditSinglePlaceForm = () => {
                 <Input
                     type={'text'}
                     name={'city'}
-                    value={formValues.city}
-                    onChange={(event: InputOnChange) => setFormValues({
-                        ...formValues,
+                    value={placeDetails.city}
+                    onChange={(event: InputOnChange) => setPlaceDetails({
+                        ...placeDetails,
                         city: event.target.value
 
                     })}/>
@@ -126,9 +123,9 @@ export const EditSinglePlaceForm = () => {
                 <Input
                     type={'text'}
                     name={'street'}
-                    value={formValues.street}
-                    onChange={(event: InputOnChange) => setFormValues({
-                        ...formValues,
+                    value={placeDetails.street}
+                    onChange={(event: InputOnChange) => setPlaceDetails({
+                        ...placeDetails,
                         street: event.target.value
 
                     })}/>
@@ -139,9 +136,9 @@ export const EditSinglePlaceForm = () => {
                 <Input
                     type={'text'}
                     name={'buildNumber'}
-                    value={formValues.buildNumber}
-                    onChange={(event: InputOnChange) => setFormValues({
-                        ...formValues,
+                    value={placeDetails.buildNumber}
+                    onChange={(event: InputOnChange) => setPlaceDetails({
+                        ...placeDetails,
                         buildNumber: event.target.value,
 
                     })}
@@ -153,11 +150,11 @@ export const EditSinglePlaceForm = () => {
                 <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg}/>
             </StyledLabel>
             {toUpdateImg ? (<ImgInput
-                onChange={(e: InputOnChange) => setFormValues({
-                    ...formValues,
+                onChange={(e: InputOnChange) => setPlaceDetails({
+                    ...placeDetails,
                     img: e.target.value
                 })}
-                value={formValues.img}
+                value={placeDetails.img}
                 name={'img'}
                 placeholder={'Pozostaw Puste jeżeli nie chcesz zmieniać zdjęcia'}
                 type={'string'}/>) : null}
