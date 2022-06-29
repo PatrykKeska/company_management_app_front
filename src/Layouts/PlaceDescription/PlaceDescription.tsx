@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import {Paragraph} from "../../Components/Paragraphs/Paragraph";
 import {Img} from "../../Components/Img/Img";
@@ -31,10 +31,10 @@ width: 350px;
 
 
 export const PlaceDescription = (props:SinglePlaceTypes)=>{
-const {details,setDetails} = useContext(SinglePlaceContext);
-const [placeDescription, setPlaceDescription] = useState(props);
+const {setPlaceDetails} = useContext(SinglePlaceContext);
+
 const setContextForSingleElement = ()=>{
-setDetails(placeDescription)
+setPlaceDetails(props)
 }
     return(
         <Wrapper key={props.id}>
