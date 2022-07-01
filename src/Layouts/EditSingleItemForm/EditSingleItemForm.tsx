@@ -83,7 +83,7 @@ export const EditSingleItemForm = () => {
             })
 
         }
-        navigate('/places')
+        navigate('/storage')
     }
 
 

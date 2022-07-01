@@ -11,20 +11,22 @@ const Wrapper = styled.div`
 width: 350px;
   margin:10px auto;
   height: 330px;
-  border: 2px solid black;
   display: grid;
   padding: 10px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr ;
-  transition: .3s linear all;
+  transition: .2s linear all;
+  border: 1px solid black;
   
   @media(min-width: 500px){
     width: 600px;
     height: 400px;
   }
-  
-  &:hover{
-   box-shadow: 0 0 10px 5px white;
+
+  &:hover {
+    box-shadow: 0 0 2px 2px white;
+    transform: scale(1.05);
+
   }
 `
 

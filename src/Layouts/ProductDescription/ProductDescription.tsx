@@ -8,42 +8,44 @@ import {SingleItemContext} from "../../context/SingleItem/SingleItem.context";
 
 
 const Wrapper = styled.div`
-width: 350px;
-  margin:10px auto;
+  width: 350px;
+  margin: 10px auto;
   height: 330px;
-  border: 2px solid black;
   display: grid;
   padding: 10px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr ;
-  transition: .3s linear all;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  transition: .2s linear all;
+  border: 1px solid black;
 
-  @media(min-width: 500px){
+  @media (min-width: 500px) {
     width: 600px;
     height: 400px;
   }
 
-  &:hover{
-    box-shadow: 0 0 10px 5px white;
+  &:hover {
+    box-shadow: 0 0 2px 2px white;
+    transform: scale(1.05);
+    
   }
 `
 
 
-
-export const ProductDescription = (props:SingleProductTypes)=>{
+export const ProductDescription = (props: SingleProductTypes) => {
     const {setItemDetails} = useContext(SingleItemContext);
-    const setContextForSingleProduct = ()=>{
+    const setContextForSingleProduct = () => {
         setItemDetails(props)
     }
-    return(
+    return (
 
         <Wrapper key={props.id}>
             <Img width={'150px'} height={'120px'} src={props.img}/>
             <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
-        <Paragraph positionStart={3} positionEnd={3}>{`Price: ${props.price}`}</Paragraph>
-        <Paragraph positionStart={4} positionEnd={4}>{`Amount:${props.amount}`}</Paragraph>
-        <Paragraph  positionStart={5} positionEnd={5}>{`Date of buy: ${props.dateOfBuy}`}</Paragraph>
-            <LinkButton small={'true'} onClick={setContextForSingleProduct} to={`/storage/${props.id}`}>Edit</LinkButton>
+            <Paragraph positionStart={3} positionEnd={3}>{`Price: ${props.price}`}</Paragraph>
+            <Paragraph positionStart={4} positionEnd={4}>{`Amount:${props.amount}`}</Paragraph>
+            <Paragraph positionStart={5} positionEnd={5}>{`Date of buy: ${props.dateOfBuy}`}</Paragraph>
+            <LinkButton small={'true'} onClick={setContextForSingleProduct}
+                        to={`/storage/${props.id}`}>Edit</LinkButton>
         </Wrapper>
     )
 }

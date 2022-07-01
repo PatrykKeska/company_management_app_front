@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import {NavLink} from "../../Components/NavLink/NavLink";
-import {faDatabase, faHome, faPlusCircle,} from '@fortawesome/free-solid-svg-icons'
+import {faDatabase, faHome, faPlusCircle, faBoxesStacked} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark, faBars} from '@fortawesome/free-solid-svg-icons'
 import {NavContext} from "../../context/nav/nav.context";
@@ -72,25 +72,40 @@ export const Nav = () => {
 
 
                 <NavLink
-                    click={() => {setIsNavOpen(false)}}
+                    click={() => {
+                        setIsNavOpen(false)
+                    }}
                     icon={faDatabase}
                     path={'/storage'}>Storage</NavLink>
 
 
                 <NavLink
-                    click={() => {setIsNavOpen(false) }}
+                    click={() => {
+                        setIsNavOpen(false)
+                    }}
                     icon={faHome}
                     path={'/places'}>Offices</NavLink>
 
 
-                <NavLink click={() => { setIsNavOpen(false) }}
+                <NavLink click={() => {
+                    setIsNavOpen(false)
+                }}
                          icon={faPlusCircle}
                          path={'/add-items'}>New Item</NavLink>
 
 
-                <NavLink click={() => { setIsNavOpen(false) }}
+                <NavLink click={() => {
+                    setIsNavOpen(false)
+                }}
                          icon={faPlusCircle}
                          path={'/add-places'}>New office</NavLink>
+
+
+                <NavLink click={() => {
+                    setIsNavOpen(false)
+                }}
+                         icon={faBoxesStacked}
+                         path={'/inventory'}>Inventory</NavLink>
             </StyledNav>
         </>
 

@@ -32,6 +32,7 @@ function App() {
                             <Route path='/places' element={<PlacesPage/>}/>
                             <Route path='/add-items' element={<AddItemPage/>}/>
                             <Route path='/add-places' element={<AddPlacePage/>}/>
+                            <Route path='/inventory/' element={<PlacesPage/>}/>
                             <Route path='/places/:id' element={<EditSinglePlacePage/>}/>
                             <Route path='/storage/:id' element={<EditSingleItemPage/>}/>
                         </Routes>
