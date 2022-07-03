@@ -19,6 +19,7 @@ background-color: black;
   padding:${props => props.small === 'true' ? '10px 10px' : '20px 5px'};
   width: ${props => props.small === 'true'  ? '150px' : '250px'};
   border-radius: 30px;
+  
   border:none;
   margin: 10px;
   transition: .2s ease-in all;
@@ -38,6 +39,10 @@ background-color: black;
     grid-column-start: ${({positionStart})=> positionStart};
     grid-column-end: ${({positionEnd})=> positionEnd};
     justify-self: center;
+  }
+  
+  @media(min-width: 800px){
+    width: ${props => props.small === 'true'  ? '200px' : '250px'};
   }
 `
 

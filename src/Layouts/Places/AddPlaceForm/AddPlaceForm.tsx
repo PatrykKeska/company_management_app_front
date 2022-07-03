@@ -1,14 +1,14 @@
 import React, {FormEvent, useState} from "react";
 import styled from "styled-components";
-import {Input} from "../../Components/Input/Input";
-import {Button} from "../../Components/Button /Button";
-import {Img} from "../../Components/Img/Img";
-import office from '../../assets /img/office.jpeg'
-import {SinglePlaceTypes} from "../../types/Places.types";
-import {InputOnChange} from "../../types/common.types";
-import {Checkbox} from "../../Components/Input/Checkbox";
+import {Input} from "../../../Components/Input/Input";
+import {Button} from "../../../Components/Button /Button";
+import {Img} from "../../../Components/Img/Img";
+import office from '../../../assets /img/office.jpeg'
+import {SinglePlaceTypes} from "../../../types/Places.types";
+import {InputOnChange} from "../../../types/common.types";
+import {Checkbox} from "../../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
-import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
+import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 
 interface Props {
     row?: boolean

@@ -1,10 +1,10 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
-import {NavLink} from "../../Components/NavLink/NavLink";
+import {NavLink} from "../../../Components/NavLink/NavLink";
 import {faDatabase, faHome, faPlusCircle, faBoxesStacked} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark, faBars} from '@fortawesome/free-solid-svg-icons'
-import {NavContext} from "../../context/nav/nav.context";
+import {NavContext} from "../../../context/nav/nav.context";
 
 
 interface Props {
@@ -36,6 +36,7 @@ const StyledNav = styled.nav<Props>`
     position: relative;
     animation: none;
     transform: translateX(0);
+    
   }
 
 `
@@ -68,7 +69,7 @@ export const Nav = () => {
                     icon={faBars}
                 />}
 
-            <StyledNav open={isNavOpen}>
+            <StyledNav  open={isNavOpen}>
 
 
                 <NavLink
@@ -100,12 +101,12 @@ export const Nav = () => {
                          icon={faPlusCircle}
                          path={'/add-places'}>New office</NavLink>
 
-
                 <NavLink click={() => {
                     setIsNavOpen(false)
                 }}
                          icon={faBoxesStacked}
                          path={'/inventory'}>Inventory</NavLink>
+
             </StyledNav>
         </>
 

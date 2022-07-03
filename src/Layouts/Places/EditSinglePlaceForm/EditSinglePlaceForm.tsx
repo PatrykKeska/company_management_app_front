@@ -1,15 +1,15 @@
 import React, {FormEvent, useContext, useState} from "react";
 import styled from "styled-components";
-import {Input} from "../../Components/Input/Input";
-import {InputOnChange} from "../../types/common.types";
-import {Button} from "../../Components/Button /Button";
-import {ImgInput} from "../../Components/Input/ImgInput";
-import {SinglePlaceContext} from "../../context/SinglePlace/singlePlace.context";
-import {Img} from "../../Components/Img/Img";
-import {Checkbox} from "../../Components/Input/Checkbox";
+import {Input} from "../../../Components/Input/Input";
+import {InputOnChange} from "../../../types/common.types";
+import {Button} from "../../../Components/Button /Button";
+import {ImgInput} from "../../../Components/Input/ImgInput";
+import {SinglePlaceContext} from "../../../context/SinglePlace/singlePlace.context";
+import {Img} from "../../../Components/Img/Img";
+import {Checkbox} from "../../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
-import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
-import office from '../../assets /img/office.jpeg'
+import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
+import office from '../../../assets /img/office.jpeg'
 
 
 

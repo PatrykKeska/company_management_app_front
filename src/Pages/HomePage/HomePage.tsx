@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
 import {Wrapper} from "../../Components/Wrapper /Wrapper";
-import {Nav} from "../../Layouts/Nav/Nav";
+import {Nav} from "../../Layouts/GeneralUse/Nav/Nav";
 import {Title} from "../../Components/Title /Title";
-import {LoginForm} from "../../Layouts/LoginForm/LoginForm";
+import {LoginForm} from "../../Layouts/GeneralUse/LoginForm/LoginForm";
 import {AuthProvider} from "../../context/AuthProvider/AuthProvider";
 
 

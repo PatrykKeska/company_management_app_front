@@ -1,15 +1,15 @@
 import React, {FormEvent, useState} from "react";
 import styled from "styled-components";
-import {Input} from "../../Components/Input/Input";
-import {Button} from "../../Components/Button /Button";
-import {Img} from "../../Components/Img/Img";
-import {SendingPopUp} from "../../Components/SendingPopUP/SendingPopUp";
-import item from '../../assets /img/item.jpeg'
-import {SingleProductTypes} from "../../types/Product.types";
-import {InputOnChange} from "../../types/common.types";
-import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
+import {Input} from "../../../Components/Input/Input";
+import {Button} from "../../../Components/Button /Button";
+import {Img} from "../../../Components/Img/Img";
+import {SendingPopUp} from "../../../Components/SendingPopUP/SendingPopUp";
+import item from '../../../assets /img/item.jpeg'
+import {SingleProductTypes} from "../../../types/Product.types";
+import {InputOnChange} from "../../../types/common.types";
+import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import {useNavigate} from "react-router-dom";
-import {Checkbox} from "../../Components/Input/Checkbox";
+import {Checkbox} from "../../../Components/Input/Checkbox";
 
 
 const StyledForm = styled.form`

@@ -1,10 +1,10 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
-import {Paragraph} from "../../Components/Paragraphs/Paragraph";
-import {Img} from "../../Components/Img/Img";
-import {SingleProductTypes} from "../../types/Product.types";
-import {LinkButton} from "../../Components/LinkButton/LinkButton";
-import {SingleItemContext} from "../../context/SingleItem/SingleItem.context";
+import {Paragraph} from "../../../Components/Paragraphs/Paragraph";
+import {Img} from "../../../Components/Img/Img";
+import {SingleProductTypes} from "../../../types/Product.types";
+import {LinkButton} from "../../../Components/LinkButton/LinkButton";
+import {SingleItemContext} from "../../../context/SingleItem/SingleItem.context";
 
 
 const Wrapper = styled.div`

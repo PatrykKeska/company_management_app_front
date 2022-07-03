@@ -1,11 +1,11 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
-import {Paragraph} from "../../Components/Paragraphs/Paragraph";
-import {Img} from "../../Components/Img/Img";
+import {Paragraph} from "../../../Components/Paragraphs/Paragraph";
+import {Img} from "../../../Components/Img/Img";
 
-import {SinglePlaceTypes} from "../../types/Places.types";
-import {LinkButton} from "../../Components/LinkButton/LinkButton";
-import {SinglePlaceContext} from "../../context/SinglePlace/singlePlace.context";
+import {SinglePlaceTypes} from "../../../types/Places.types";
+import {LinkButton} from "../../../Components/LinkButton/LinkButton";
+import {SinglePlaceContext} from "../../../context/SinglePlace/singlePlace.context";
 
 const Wrapper = styled.div`
 width: 350px;

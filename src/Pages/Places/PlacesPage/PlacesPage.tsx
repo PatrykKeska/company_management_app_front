@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Wrapper} from "../../Components/Wrapper /Wrapper";
-import {Nav} from "../../Layouts/Nav/Nav";
+import {Wrapper} from "../../../Components/Wrapper /Wrapper";
+import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import styled from "styled-components";
-import {PlaceDescription} from "../../Layouts/PlaceDescription/PlaceDescription";
-import {SinglePlaceTypes} from "../../types/Places.types";
+import {PlaceDescription} from "../../../Layouts/Places/PlaceDescription/PlaceDescription";
+import {SinglePlaceTypes} from "../../../types/Places.types";
 
 
 const GridWrapper = styled(Wrapper)`

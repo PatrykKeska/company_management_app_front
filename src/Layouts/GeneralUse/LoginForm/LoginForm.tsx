@@ -1,10 +1,10 @@
 import React, {useContext, useState} from "react";
 import styled from "styled-components";
-import {Input} from "../../Components/Input/Input";
-import {Button} from "../../Components/Button /Button";
-import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
-import {InputOnChange, onSubmitType} from "../../types/common.types";
-import {AuthProvider} from "../../context/AuthProvider/AuthProvider";
+import {Input} from "../../../Components/Input/Input";
+import {Button} from "../../../Components/Button /Button";
+import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
+import {InputOnChange, onSubmitType} from "../../../types/common.types";
+import {AuthProvider} from "../../../context/AuthProvider/AuthProvider";
 
 
 const StyledForm = styled.form`
@@ -38,8 +38,10 @@ export const LoginForm = () => {
 
             if (!data.auth) {
                 setLogginStatus(false);
+
             } else {
                 setLogginStatus(true)
+
 
             }
 

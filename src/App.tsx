@@ -1,18 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {HomePage} from "./Pages/HomePage/HomePage";
-import {StoragePage} from "./Pages/StoragePage/StoragePage";
-import {PlacesPage} from "./Pages/PlacesPage/PlacesPage";
-import {AddItemPage} from "./Pages/AddItemPage/AddItemPage";
-import {AddPlacePage} from "./Pages/AddPlacePage/AddPlacePage";
-import {EditSinglePlacePage} from "./Pages/EditSinglePlacePage/EditSinglePlacePage";
+import {StoragePage} from "./Pages/Products/StoragePage/StoragePage";
+import {PlacesPage} from "./Pages/Places/PlacesPage/PlacesPage";
+import {AddItemPage} from "./Pages/Products/AddItemPage/AddItemPage";
+import {AddPlacePage} from "./Pages/Places/AddPlacePage/AddPlacePage";
+import {EditSinglePlacePage} from "./Pages/Places/EditSinglePlacePage/EditSinglePlacePage";
 import {SinglePlaceContext} from "./context/SinglePlace/singlePlace.context";
 import {SinglePlaceTypes} from "./types/Places.types";
 import {NavContext} from "./context/nav/nav.context";
 import {SingleItemContext} from "./context/SingleItem/SingleItem.context";
 import {SingleProductTypes} from "./types/Product.types";
-import {EditSingleItemPage} from "./Pages/EditSingleItemPage/EditSingleItemPage";
+import {EditSingleItemPage} from "./Pages/Products/EditSingleItemPage/EditSingleItemPage";
 import {AuthProvider} from "./context/AuthProvider/AuthProvider";
+import {InventoryPage} from "./Pages/Inventory/InventoryPage";
 
 
 function App() {
@@ -30,9 +31,9 @@ function App() {
                             <Route path='/' element={<HomePage/>}/>
                             <Route path='/storage' element={<StoragePage/>}/>
                             <Route path='/places' element={<PlacesPage/>}/>
+                            <Route path='/inventory' element={<InventoryPage/>}/>
                             <Route path='/add-items' element={<AddItemPage/>}/>
                             <Route path='/add-places' element={<AddPlacePage/>}/>
-                            <Route path='/inventory/' element={<PlacesPage/>}/>
                             <Route path='/places/:id' element={<EditSinglePlacePage/>}/>
                             <Route path='/storage/:id' element={<EditSingleItemPage/>}/>
                         </Routes>

@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Wrapper} from "../../Components/Wrapper /Wrapper";
-import {Nav} from "../../Layouts/Nav/Nav";
+import {Wrapper} from "../../../Components/Wrapper /Wrapper";
+import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import styled from "styled-components";
-import {ProductDescription} from "../../Layouts/ProductDescription/ProductDescription";
-import {SingleProductTypes} from "../../types/Product.types";
-import {AuthProvider} from "../../context/AuthProvider/AuthProvider";
+import {ProductDescription} from "../../../Layouts/Products/ProductDescription/ProductDescription";
+import {SingleProductTypes} from "../../../types/Product.types";
+import {AuthProvider} from "../../../context/AuthProvider/AuthProvider";
 import {useNavigate} from "react-router-dom";
 
 
