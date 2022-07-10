@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import {Wrapper} from "../../../Components/Wrapper /Wrapper";
 import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import styled from "styled-components";
@@ -36,13 +36,9 @@ export const StoragePage = () => {
                     const json = await response.json();
                     setStorage(json.message)
 
-            } catch (error) {
-
-            }
+            } catch (error) {}
         })();
-
-
-    }, []);
+ }, []);
 
     return (<>
             <Nav/>

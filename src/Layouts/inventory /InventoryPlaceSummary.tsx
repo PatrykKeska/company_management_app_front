@@ -24,7 +24,6 @@ export const InventoryPlaceSummary = (props: Props) => {
                 <Paragraph>City: <Strong>{city} </Strong></Paragraph>
                 <Paragraph>Adress: <Strong>{street + '/' + buildNumber}</Strong></Paragraph>
                 <Img src={img} height={'120px'} width={'200px'}/></> : null}
-            {/*<Paragraph>Pick Product and Amount</Paragraph>*/}
 
         </>
     )

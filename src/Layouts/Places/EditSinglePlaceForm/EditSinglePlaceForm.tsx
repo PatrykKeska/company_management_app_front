@@ -55,9 +55,7 @@ export const EditSinglePlaceForm = () => {
                             ...placeDetails
                         }),
                         headers: {'Content-Type': 'application/json'},
-
                     })
-
                 })()
             } else {
                 (async () => {

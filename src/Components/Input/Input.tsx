@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, TransitionEventHandler} from "react";
+import React, {ChangeEventHandler} from "react";
 import styled from "styled-components";
 
 interface Props {

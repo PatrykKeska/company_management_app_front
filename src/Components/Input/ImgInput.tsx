@@ -1,6 +1,5 @@
 import React, {ChangeEventHandler} from "react";
 import styled from "styled-components";
-import {InputOnChange} from "../../types/common.types";
 
 interface Props {
     type:string
