@@ -1,26 +1,37 @@
 import React from "react";
 import styled from "styled-components";
-import pencil from '../../assets /img/pencil.webp';
 
 interface Props {
-    src:string
+    src?: string
+    width: string;
+    height: string;
 }
 
-const StyledImg = styled.img`
-    min-width: 100px;
-  min-height: 100px;
-  width: 25vw;
-  height: 25vw;
-  max-width: 200px;
-  max-height: 200px;
-  border-radius: 80px;
+
+const StyledImg = styled.img<Props>`
+
+  width: ${({width}) => width};
+  height: ${({height}) => height};
+  border-radius: 40px;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  align-self: center;
+  justify-self: center;
+  margin: 10px 0;
+
+  @media (min-width: 800px) {
+    width: 250px;
+    height: 160px;
+  }
 `
 
 
-
-
-export const Img = (props:Props)=>{
-    return(
-        <StyledImg src={props.src}/>
+export const Img = (props: Props) => {
+    return (
+        <>
+            <StyledImg height={props.height} width={props.width} src={props.src}/>
+        </>
     )
 }

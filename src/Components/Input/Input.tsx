@@ -1,9 +1,11 @@
-import React from "react";
+import React, {ChangeEventHandler} from "react";
 import styled from "styled-components";
 
 interface Props {
-placeholder:string
     type:string
+    value?: string | number | any
+    name: string
+    onChange: ChangeEventHandler
 }
 
 export const StyledInput = styled.input`
@@ -15,7 +17,11 @@ export const StyledInput = styled.input`
   background-color: white;
   border-radius: 25px;
   text-align: center;
-  margin: 5px 0 ;
+  margin: 20px 0 ;
+  transition: .3s linear all;
+  &:hover{
+    box-shadow: 0 0 5px 1px black;
+  }
 
 `
 
@@ -26,7 +32,7 @@ export const Input = (props:Props)=>{
 
 
     return(
-        <StyledInput type={props.type} placeholder={props.placeholder}>
+        <StyledInput onChange={props.onChange} value={props.value} name={props.name}  required type={props.type}>
 
         </StyledInput>
     )

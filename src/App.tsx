@@ -1,28 +1,53 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faBars } from '@fortawesome/free-solid-svg-icons'
-import {Button} from "./Components/Button /Button";
-import {Title} from "./Components/Title /Title";
-import {Wrapper} from "./Components/Wrapper /Wrapper";
-import {Input} from "./Components/Input/Input";
-import {Paragraph} from "./Components/Paragraphs/Paragraph";
-import {Img} from "./Components/Img/Img";
-function App() {
-  return (
-   <Wrapper>
+import React, { useState} from 'react';
+import {Route, Routes} from "react-router-dom";
+import {HomePage} from "./Pages/HomePage/HomePage";
+import {StoragePage} from "./Pages/Products/StoragePage/StoragePage";
+import {PlacesPage} from "./Pages/Places/PlacesPage/PlacesPage";
+import {AddItemPage} from "./Pages/Products/AddItemPage/AddItemPage";
+import {AddPlacePage} from "./Pages/Places/AddPlacePage/AddPlacePage";
+import {EditSinglePlacePage} from "./Pages/Places/EditSinglePlacePage/EditSinglePlacePage";
+import {SinglePlaceContext} from "./context/SinglePlace/singlePlace.context";
+import {SinglePlaceTypes} from "./types/Places.types";
+import {NavContext} from "./context/nav/nav.context";
+import {SingleItemContext} from "./context/SingleItem/SingleItem.context";
+import {SingleProductTypes} from "./types/Product.types";
+import {EditSingleItemPage} from "./Pages/Products/EditSingleItemPage/EditSingleItemPage";
+import {AuthProvider} from "./context/AuthProvider/AuthProvider";
+import {InventoryPage} from "./Pages/Inventory/InventoryPage";
+import {FinalizedPage} from "./Pages/FInalized/FinalizedPage";
+import {TestPage} from "./Pages/TestPage";
 
-         <FontAwesomeIcon icon={faBars} />
-       {/*<Button >Zaloguj</Button>*/}
-       {/*<Button small >Zaloguj</Button>*/}
-       {/*<Title>Menedżer Firmowy</Title>*/}
-       {/*<Input type='text' placeholder='login'/>*/}
-       {/*<Input type='password' placeholder='hasło'/>*/}
-       {/*<Paragraph>Cena:2,49</Paragraph>*/}
-       {/*<Paragraph>Ilość: 239</Paragraph>*/}
-       {/*<Paragraph>Data Zakupu : 29-08-2022</Paragraph>*/}
-       <Img src='https://cdn.shopify.com/s/files/1/2776/0008/products/Navy_Logo_Pen_2048x.jpg?v=1608530496'/>
-   </Wrapper>
-  );
+
+function App() {
+    const [placeDetails, setPlaceDetails] = useState({} as SinglePlaceTypes);
+    const [itemDetails, setItemDetails] = useState({} as SingleProductTypes);
+    const [isNavOpen, setIsNavOpen] = useState(true);
+    const [loginStatus, setLogginStatus] = useState(false);
+
+    return (
+        <AuthProvider.Provider value={{loginStatus, setLogginStatus}}>
+            {loginStatus ? (<NavContext.Provider value={{isNavOpen: isNavOpen, setIsNavOpen}}>
+                <SingleItemContext.Provider value={{itemDetails, setItemDetails}}>
+                    <SinglePlaceContext.Provider value={{placeDetails, setPlaceDetails}}>
+                        <Routes>
+                            <Route path='/' element={<HomePage/>}/>
+                            <Route path='/storage' element={<StoragePage/>}/>
+                            <Route path='/places' element={<PlacesPage/>}/>
+                            <Route path='/inventory' element={<InventoryPage/>}/>
+                            <Route path='/finalized' element={<FinalizedPage/>}/>
+                            <Route path='/add-items' element={<AddItemPage/>}/>
+                            <Route path='/add-places' element={<AddPlacePage/>}/>
+                            <Route path='/places/:id' element={<EditSinglePlacePage/>}/>
+                            <Route path='/storage/:id' element={<EditSingleItemPage/>}/>
+                        </Routes>
+                    </SinglePlaceContext.Provider>
+                </SingleItemContext.Provider>
+            </NavContext.Provider>) : <Routes>
+                <Route path='/' element={<HomePage/>}/>
+
+            </Routes>}
+        </AuthProvider.Provider>
+    );
 }
 
 export default App;
