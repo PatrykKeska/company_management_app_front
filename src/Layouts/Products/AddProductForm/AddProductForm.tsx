@@ -4,7 +4,7 @@ import {Input} from "../../../Components/Input/Input";
 import {Button} from "../../../Components/Button /Button";
 import {Img} from "../../../Components/Img/Img";
 import {SendingPopUp} from "../../../Components/SendingPopUP/SendingPopUp";
-import item from '../../../assets /img/item.jpeg'
+import item1 from '../../../assets /img/item1.jpeg'
 import {SingleProductTypes} from "../../../types/Product.types";
 import {InputOnChange} from "../../../types/common.types";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
@@ -38,7 +38,7 @@ export const AddProductForm = () => {
 
         try {
             if (formValues.img === '') {
-                formValues.img = item
+                formValues.img = item1
             }
             await fetch(`http://localhost:3001/add-new-item`, {
                 method: "POST",
@@ -59,7 +59,7 @@ export const AddProductForm = () => {
 
         loading ? <SendingPopUp/> : (
             <StyledForm onSubmit={addNewProduct}>
-                {formValues.img === '' ? <Img width={'200px'} height={'120px'} src={item}/> :
+                {formValues.img === '' ? <Img width={'200px'} height={'120px'} src={item1}/> :
                     <Img width={'200px'} height={'120px'} src={formValues.img}/>}
 
 

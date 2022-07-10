@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {Route, Routes} from "react-router-dom";
 import {HomePage} from "./Pages/HomePage/HomePage";
 import {StoragePage} from "./Pages/Products/StoragePage/StoragePage";
@@ -14,6 +14,8 @@ import {SingleProductTypes} from "./types/Product.types";
 import {EditSingleItemPage} from "./Pages/Products/EditSingleItemPage/EditSingleItemPage";
 import {AuthProvider} from "./context/AuthProvider/AuthProvider";
 import {InventoryPage} from "./Pages/Inventory/InventoryPage";
+import {FinalizedPage} from "./Pages/FInalized/FinalizedPage";
+import {TestPage} from "./Pages/TestPage";
 
 
 function App() {
@@ -24,7 +26,7 @@ function App() {
 
     return (
         <AuthProvider.Provider value={{loginStatus, setLogginStatus}}>
-            {loginStatus ?( <NavContext.Provider value={{isNavOpen: isNavOpen, setIsNavOpen}}>
+            {loginStatus ? (<NavContext.Provider value={{isNavOpen: isNavOpen, setIsNavOpen}}>
                 <SingleItemContext.Provider value={{itemDetails, setItemDetails}}>
                     <SinglePlaceContext.Provider value={{placeDetails, setPlaceDetails}}>
                         <Routes>
@@ -32,6 +34,7 @@ function App() {
                             <Route path='/storage' element={<StoragePage/>}/>
                             <Route path='/places' element={<PlacesPage/>}/>
                             <Route path='/inventory' element={<InventoryPage/>}/>
+                            <Route path='/finalized' element={<FinalizedPage/>}/>
                             <Route path='/add-items' element={<AddItemPage/>}/>
                             <Route path='/add-places' element={<AddPlacePage/>}/>
                             <Route path='/places/:id' element={<EditSinglePlacePage/>}/>
@@ -39,7 +42,7 @@ function App() {
                         </Routes>
                     </SinglePlaceContext.Provider>
                 </SingleItemContext.Provider>
-            </NavContext.Provider>):<Routes>
+            </NavContext.Provider>) : <Routes>
                 <Route path='/' element={<HomePage/>}/>
 
             </Routes>}

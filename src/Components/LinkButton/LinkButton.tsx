@@ -44,5 +44,7 @@ background-color: black;
   @media(min-width: 800px){
     width: ${props => props.small === 'true'  ? '200px' : '250px'};
   }
+  
+  
 `
 
