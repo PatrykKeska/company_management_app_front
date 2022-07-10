@@ -79,8 +79,11 @@ Maybe you can mention me or this repo in the acknowledgements too
 
 <!-- About the Project -->
 ## :star2: About the Project
-*App written to improve own skills, allows to manage assets from Storage center and split it beetween your offices.
+* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
+
+* *App written to improve own skills, allows to manage assets from Storage center and split it beetween your offices.
 This is base version and will be improved in feature.
+
 
 Incomming:
 
@@ -98,6 +101,10 @@ Incomming:
 
 <div align="center"> 
   <img src="../src/assets%20/readme/s1.jpg" alt="screenshot" />
+  <img src="../src/assets%20/readme/s2.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/s3.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/s4.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/s5.png" alt="screenshot" />
 </div>
 
 
