@@ -1,25 +1,20 @@
 import React, {FormEvent, useEffect, useState} from "react";
 import {Nav} from "../../Layouts/GeneralUse/Nav/Nav";
 import {Wrapper} from "../../Components/Wrapper /Wrapper";
-import {StyledInput} from "../../Components/Input/Input";
-import {StyledLabel} from "../../Components/StyledLabel/StyledLabel";
 import axios from "axios";
 import {SingleProductTypes} from "../../types/Product.types";
 import {SinglePlaceTypes} from "../../types/Places.types";
-import {Paragraph} from "../../Components/Paragraphs/Paragraph";
-import {Img} from "../../Components/Img/Img";
-import {StyledTable} from "../../Components/Table/Table";
-import {StyledTh} from "../../Components/Th/Th";
-import {StyledTd} from "../../Components/Td/Td";
-import {InventoryButton} from "../../Components/InventoryButton/InventoryButton";
-import {StyledTbody} from "../../Components/Tbody/Tbody";
-import {InventoryForm} from "../../Components/InventoryForm/InventoryForm";
+import {InventoryPlaceSummary} from "../../Layouts/inventory /InventoryPlaceSummary";
+import {InventoryItemSummary} from "../../Layouts/inventory /InventoryItemSummary";
+import {InventoryFormLayout} from "../../Layouts/inventory /InventoryFormLayout";
+import {InventoryTableItem} from "../../Layouts/inventory /InventoryTableItem";
+import {InventoryTablePlace} from "../../Layouts/inventory /InventoryTablePlace";
 
 
 export const InventoryPage = () => {
     const [items, setItems] = useState(Array<SingleProductTypes>);
-    const [isPicked, setIsPicked] = useState({picked: false});
     const [places, setPlaces] = useState(Array<SinglePlaceTypes>);
+    const [isPicked, setIsPicked] = useState({pickedItem: false, pickedPlace: false});
     const [itemsBasket, setItemBasket] = useState({} as SingleProductTypes);
     const [pickedPlace, setPickedPlace] = useState({} as SinglePlaceTypes);
 
@@ -30,36 +25,38 @@ export const InventoryPage = () => {
             const places = await axios('http://localhost:3001/places')
             setPlaces(places.data.message)
         })()
-    }, [])
+    }, [isPicked])
 
 
     const handleItems = (item: SingleProductTypes) => {
         setItemBasket({
-            ...item
-
+            ...item,
+            amount: 0
         })
-        setIsPicked({picked: true})
+        setIsPicked({...isPicked, pickedItem: true})
     }
 
     const handlePlaces = (place: SinglePlaceTypes) => {
         setPickedPlace({
             ...place
         })
+        setIsPicked({...isPicked, pickedPlace: true})
+
     }
 
-    const handleReset = () => {
-        setIsPicked({picked: false});
-    }
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubbmit = async (e: FormEvent) => {
         e.preventDefault();
-        try {
-            await axios.post('http://localhost:3001/inventory/check', {items: itemsBasket, place: pickedPlace}, {
-                headers: {"Content-type": "application/json"}
-
-            });
-        } catch (err) {
-            console.log(err)
+        if (isPicked.pickedItem && isPicked.pickedPlace) {
+            try {
+                await axios.post('http://localhost:3001/inventory/check', {items: itemsBasket, place: pickedPlace}, {
+                    headers: {"Content-type": "application/json"}
+                })
+            } catch (err) {
+                console.log(err)
+            } finally {
+                setIsPicked({pickedItem: false, pickedPlace: false});
+            }
         }
     }
 
@@ -70,88 +67,44 @@ export const InventoryPage = () => {
         })
 
     }
+
+
     return (
         <Wrapper>
             <Nav/>
-            <StyledTable>
-                <StyledTbody>
-                    <tr>
-                        <StyledTh>Name</StyledTh>
-                        <StyledTh>Price</StyledTh>
-                        <StyledTh>Amount</StyledTh>
-                        <StyledTh>Edit</StyledTh>
-                    </tr>
-                </StyledTbody>
+            <InventoryTablePlace
+                place={places}
+                onClick={handlePlaces}/>
 
-                {items.map((item: SingleProductTypes) => (
-                        <StyledTbody key={item.id}>
-                            <tr>
-                                <StyledTd>{item.name}</StyledTd>
-                                <StyledTd>{item.price}</StyledTd>
-                                <StyledTd>{item.amount}</StyledTd>
-                                <StyledTd>
-                                    <InventoryButton
-                                        value={item.id}
-                                        onClick={() => handleItems(item)}
-                                    >Pick</InventoryButton>
+            <InventoryTableItem
+                onClick={handleItems}
+                items={items}/>
 
-                                </StyledTd>
-                            </tr>
-                        </StyledTbody>
-                    )
-                )}
-            </StyledTable>
 
-            {isPicked.picked && (
+            {isPicked.pickedPlace &&
+
+            <InventoryPlaceSummary
+                img={pickedPlace.img}
+                name={pickedPlace.name}
+                city={pickedPlace.city}
+                street={pickedPlace.street}
+                buildNumber={pickedPlace.buildNumber}/>}
+
+            {isPicked.pickedItem && (
                 <>
-                    <Img src={itemsBasket.img} height={'120px'} width={'200px'}/>
-                    <Paragraph>Summary: </Paragraph>
-                    <Paragraph>Product: {itemsBasket.name}</Paragraph>
-                    <Paragraph>Price per one: {itemsBasket.price}</Paragraph>
-                    <Paragraph>Total Cost :{itemsBasket.price * itemsBasket.amount}</Paragraph>
+                    <InventoryItemSummary
+                        name={itemsBasket.name}
+                        price={itemsBasket.price}
+                        amount={itemsBasket.amount}
+                        dateOfBuy={itemsBasket.dateOfBuy}
+                        img={itemsBasket.img}/>
 
+                    <InventoryFormLayout
+                        onSubmit={handleSubbmit}
+                        onChange={handleAmountInput}
+                        amount={itemsBasket.amount}/> </>)
+            }
 
-                    <InventoryForm onSubmit={handleSubmit}>
-                        <StyledLabel>
-                            Amount:
-                            <StyledInput
-                                onChange={handleAmountInput}
-                                value={itemsBasket.amount}
-                                type={"number"}/>
-                        </StyledLabel>
-                        <StyledTable>
-                            <StyledTbody>
-                                <tr>
-                                    <StyledTh>Name</StyledTh>
-                                    <StyledTh>City</StyledTh>
-                                    <StyledTh>Street</StyledTh>
-                                    <StyledTh>Edit</StyledTh>
-                                </tr>
-                            </StyledTbody>
-
-                            {places.map((place: SinglePlaceTypes) => (
-                                    <StyledTbody key={place.id}>
-                                        <tr>
-                                            <StyledTd>{place.name}</StyledTd>
-                                            <StyledTd>{place.city}</StyledTd>
-                                            <StyledTd>{place.street}</StyledTd>
-                                            <StyledTd>
-
-                                                <InventoryButton
-                                                    value={place.id}
-                                                    onClick={() => handlePlaces(place)}
-                                                >Pick</InventoryButton>
-                                            </StyledTd>
-                                        </tr>
-                                    </StyledTbody>
-                                )
-                            )}
-                        </StyledTable>
-                        <Paragraph>Place to assign:{pickedPlace.name}</Paragraph>
-                        <Img src={pickedPlace.img} height={'120px'} width={'200px'}/>
-                        <InventoryButton onClick={handleReset}>Save</InventoryButton>
-                    </InventoryForm>
-                </>)}
         </Wrapper>
     )
 
