@@ -1,34 +1,12 @@
 import React, {useContext} from "react";
-import styled from "styled-components";
 import {Paragraph} from "../../../Components/Paragraphs/Paragraph";
 import {Img} from "../../../Components/Img/Img";
 import {SingleProductTypes} from "../../../types/Product.types";
 import {LinkButton} from "../../../Components/LinkButton/LinkButton";
 import {SingleItemContext} from "../../../context/SingleItem/SingleItem.context";
+import {ProductPlaceDescriptionWrapper} from "../../../Components/Product-Place-Description/ProductPlaceDescriptionWrapper";
 
 
-const Wrapper = styled.div`
-  width: 350px;
-  margin: 10px auto;
-  height: 330px;
-  display: grid;
-  padding: 10px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  transition: .2s linear all;
-  border: 1px solid black;
-
-  @media (min-width: 500px) {
-    width: 600px;
-    height: 400px;
-  }
-
-  &:hover {
-    box-shadow: 0 0 2px 2px white;
-    transform: scale(1.05);
-    
-  }
-`
 
 
 export const ProductDescription = (props: SingleProductTypes) => {
@@ -38,7 +16,7 @@ export const ProductDescription = (props: SingleProductTypes) => {
     }
     return (
 
-        <Wrapper key={props.id}>
+        <ProductPlaceDescriptionWrapper key={props.id}>
             <Img width={'150px'} height={'120px'} src={props.img}/>
             <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
             <Paragraph positionStart={3} positionEnd={3}>{`Price: ${props.price}`}</Paragraph>
@@ -46,6 +24,6 @@ export const ProductDescription = (props: SingleProductTypes) => {
             <Paragraph positionStart={5} positionEnd={5}>{`Date of buy: ${props.dateOfBuy}`}</Paragraph>
             <LinkButton small={'true'} onClick={setContextForSingleProduct}
                         to={`/storage/${props.id}`}>Edit</LinkButton>
-        </Wrapper>
+        </ProductPlaceDescriptionWrapper>
     )
 }

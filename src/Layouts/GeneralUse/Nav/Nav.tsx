@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
 import {NavLink} from "../../../Components/NavLink/NavLink";
-import {faDatabase, faHome, faPlusCircle, faBoxesStacked} from '@fortawesome/free-solid-svg-icons'
+import {faDatabase, faHome, faPlusCircle, faBoxesStacked, faCheckCircle} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark, faBars} from '@fortawesome/free-solid-svg-icons'
 import {NavContext} from "../../../context/nav/nav.context";
@@ -29,7 +29,7 @@ const StyledNav = styled.nav<Props>`
   transform: ${({open}) => open ? 'translateX(0)' : 'translateX(-100%)'};
 
 
-  @media (min-width: 800px ) {
+  @media (min-width: 1000px ) {
     flex-direction: row;
     height: 10vh;
     width: 100vw;
@@ -47,7 +47,7 @@ const Burger = styled(FontAwesomeIcon)`
   left: 10px;
   z-index: 101;
   font-size: 2em;
-  @media (min-width: 800px) {
+  @media (min-width: 1000px) {
     display: none;
   }
 
@@ -106,6 +106,12 @@ export const Nav = () => {
                 }}
                          icon={faBoxesStacked}
                          path={'/inventory'}>Inventory</NavLink>
+
+                <NavLink click={() => {
+                    setIsNavOpen(false)
+                }}
+                         icon={faCheckCircle}
+                         path={'/finalized'}>finalized</NavLink>
 
             </StyledNav>
         </>

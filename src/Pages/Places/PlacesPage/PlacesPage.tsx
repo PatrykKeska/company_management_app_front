@@ -1,23 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {Wrapper} from "../../../Components/Wrapper /Wrapper";
 import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
-import styled from "styled-components";
 import {PlaceDescription} from "../../../Layouts/Places/PlaceDescription/PlaceDescription";
 import {SinglePlaceTypes} from "../../../types/Places.types";
+import {PlaceDescriptionWrapper} from "../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper";
 
 
-const GridWrapper = styled(Wrapper)`
-display: flex;
-justify-content: center;
-  align-items: flex-start;
-  padding-top: 100px;
-  
-  @media(min-width: 800px){
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-  }
-`
 
 
 export const PlacesPage = () => {
@@ -41,8 +28,7 @@ export const PlacesPage = () => {
 
     return (<>
             <Nav/>
-            <GridWrapper>
-
+            <PlaceDescriptionWrapper>
                 {places.map((place)=>
                     <PlaceDescription
                         id={place.id}
@@ -54,7 +40,7 @@ export const PlacesPage = () => {
                         buildNumber={place.buildNumber}
                     /> )}
 
-            </GridWrapper>
+            </PlaceDescriptionWrapper>
         </>
     )
 }

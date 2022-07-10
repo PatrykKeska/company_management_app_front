@@ -4,8 +4,6 @@ import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import styled from "styled-components";
 import {ProductDescription} from "../../../Layouts/Products/ProductDescription/ProductDescription";
 import {SingleProductTypes} from "../../../types/Product.types";
-import {AuthProvider} from "../../../context/AuthProvider/AuthProvider";
-import {useNavigate} from "react-router-dom";
 
 
 const GridWrapper = styled(Wrapper)`
