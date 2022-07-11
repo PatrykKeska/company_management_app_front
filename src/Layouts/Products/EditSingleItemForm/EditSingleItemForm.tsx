@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import {SingleItemContext} from "../../../context/SingleItem/SingleItem.context";
 import item from '../../../assets /img/item.jpeg';
+import {apiURL} from "../../../utils/api";
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -47,7 +48,7 @@ export const EditSingleItemForm = () => {
                     if (itemDetails.img === '') {
                         itemDetails.img = item
                     }
-                    await fetch('http://localhost:3001/storage/update', {
+                    await fetch(`${apiURL}/storage/update`, {
                         method: "PATCH",
                         body: JSON.stringify({
                             ...itemDetails
@@ -59,7 +60,7 @@ export const EditSingleItemForm = () => {
                 })()
             } else {
                 (async () => {
-                    await fetch('http://localhost:3001/storage/delete', {
+                    await fetch(`${apiURL}/storage/delete`, {
                         method: "DELETE",
                         body: JSON.stringify({
                             ...itemDetails

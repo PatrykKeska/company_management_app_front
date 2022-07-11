@@ -15,7 +15,6 @@ import {EditSingleItemPage} from "./Pages/Products/EditSingleItemPage/EditSingle
 import {AuthProvider} from "./context/AuthProvider/AuthProvider";
 import {InventoryPage} from "./Pages/Inventory/InventoryPage";
 import {FinalizedPage} from "./Pages/FInalized/FinalizedPage";
-import {TestPage} from "./Pages/TestPage";
 
 
 function App() {

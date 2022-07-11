@@ -3,6 +3,7 @@ import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import {PlaceDescription} from "../../../Layouts/Places/PlaceDescription/PlaceDescription";
 import {SinglePlaceTypes} from "../../../types/Places.types";
 import {PlaceDescriptionWrapper} from "../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper";
+import {apiURL} from "../../../utils/api";
 
 
 
@@ -14,7 +15,7 @@ export const PlacesPage = () => {
         useEffect(()=>{
             (async ()=>{
                 try {
-                    const data = await fetch('http://localhost:3001/places');
+                    const data = await fetch(`${apiURL}/places`);
                     const results =await data.json();
                     setPlaces(results.message)
                 }

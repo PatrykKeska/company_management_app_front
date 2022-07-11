@@ -9,6 +9,7 @@ import {InputOnChange} from "../../../types/common.types";
 import {Checkbox} from "../../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
+import {apiURL} from "../../../utils/api";
 
 interface Props {
     row?: boolean
@@ -45,9 +46,9 @@ export const AddPlaceForm = () => {
         try {
             (async () => {
                 if (formValues.img === '') {
-                    formValues.img = 'http://localhost:3000/static/media/office.929e7651334293b5e310.jpeg'
+                    formValues.img = `${apiURL}/static/media/office.929e7651334293b5e310.jpeg`
                 }
-                await fetch('http://localhost:3001/add-new-place', {
+                await fetch(`${apiURL}/add-new-place`, {
                     method: "POST",
                     body: JSON.stringify({
                         ...formValues

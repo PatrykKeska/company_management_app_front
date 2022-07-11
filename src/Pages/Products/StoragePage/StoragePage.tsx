@@ -4,6 +4,7 @@ import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import styled from "styled-components";
 import {ProductDescription} from "../../../Layouts/Products/ProductDescription/ProductDescription";
 import {SingleProductTypes} from "../../../types/Product.types";
+import {apiURL} from "../../../utils/api";
 
 
 const GridWrapper = styled(Wrapper)`
@@ -30,7 +31,7 @@ export const StoragePage = () => {
 
         (async () => {
             try {
- const response = await fetch('http://localhost:3001/storage', {
+ const response = await fetch(`${apiURL}/storage`, {
                         credentials: 'include',
                     });
                     const json = await response.json();

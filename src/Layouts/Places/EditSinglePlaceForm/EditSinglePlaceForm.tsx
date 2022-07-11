@@ -10,6 +10,7 @@ import {Checkbox} from "../../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import office from '../../../assets /img/office.jpeg'
+import {apiURL} from "../../../utils/api";
 
 
 
@@ -49,7 +50,7 @@ export const EditSinglePlaceForm = () => {
                     if (placeDetails.img === '') {
                         placeDetails.img = office
                     }
-                     await fetch('http://localhost:3001/places/update', {
+                     await fetch(`${apiURL}/places/update`, {
                         method: "PATCH",
                         body: JSON.stringify({
                             ...placeDetails
@@ -59,7 +60,7 @@ export const EditSinglePlaceForm = () => {
                 })()
             } else {
                 (async () => {
-                    await fetch('http://localhost:3001/places/delete', {
+                    await fetch(`${apiURL}/places/delete`, {
                         method: "DELETE",
                         body: JSON.stringify({
                             ...placeDetails

@@ -9,6 +9,7 @@ import {InventoryItemSummary} from "../../Layouts/inventory /InventoryItemSummar
 import {InventoryFormLayout} from "../../Layouts/inventory /InventoryFormLayout";
 import {InventoryTableItem} from "../../Layouts/inventory /InventoryTableItem";
 import {InventoryTablePlace} from "../../Layouts/inventory /InventoryTablePlace";
+import {apiURL} from "../../utils/api";
 
 
 export const InventoryPage = () => {
@@ -20,9 +21,9 @@ export const InventoryPage = () => {
 
     useEffect(() => {
         (async () => {
-            const items = await axios('http://localhost:3001/storage')
+            const items = await axios(`${apiURL}/storage`)
             setItems(items.data.message)
-            const places = await axios('http://localhost:3001/places')
+            const places = await axios(`${apiURL}/places`)
             setPlaces(places.data.message)
         })()
     }, [isPicked])
@@ -49,7 +50,7 @@ export const InventoryPage = () => {
         e.preventDefault();
         if (isPicked.pickedItem && isPicked.pickedPlace) {
             try {
-                await axios.post('http://localhost:3001/inventory/check', {items: itemsBasket, place: pickedPlace}, {
+                await axios.post(`${apiURL}/inventory/check`, {items: itemsBasket, place: pickedPlace}, {
                     headers: {"Content-type": "application/json"}
                 })
             } catch (err) {
