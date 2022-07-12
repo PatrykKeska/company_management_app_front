@@ -81,7 +81,10 @@ Maybe you can mention me or this repo in the acknowledgements too
 ## :star2: About the Project
 * Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
 * App is still in development, right now has basic features implemented. 
-* Check roadmap to see an incommings changes...
+* Check roadmap to see an incoming changes...
+* Preview available(Login and password : admin) : https://patrykkeska.networkmanager.pl/>
+* Backend Repo : https://github.com/PatrykKeska/company_management_app_backend
+* DataBase file for Import purpose  : https://github.com/PatrykKeska/company_management_app_backend/tree/main/DataBaseScheme
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -92,6 +95,9 @@ Maybe you can mention me or this repo in the acknowledgements too
   <img src="../src/assets%20/readme/s3.png" alt="screenshot" />
   <img src="../src/assets%20/readme/s4.png" alt="screenshot" />
   <img src="../src/assets%20/readme/s5.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/s6.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/s7.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/s8.png" alt="screenshot" />
 </div>
 
 
@@ -138,19 +144,18 @@ Maybe you can mention me or this repo in the acknowledgements too
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#222831](https://via.placeholder.com/10/222831?text=+) #222831 |
-| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #393E46 |
-| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #00ADB5 |
-| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #EEEEEE |
+| Primary Color | ![#FFF96B;](https://via.placeholder.com/10/222831?text=+) #FFF96B; |
 
 
 <!-- Env Variables -->
 ### :key: Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
+<h2>Api File </h2>
+in utils/api.ts you can change path to api which you want to use. 
+if you want to use project locally please visit this file. 
 
-To login and try  please use admin account : 
-
+<h2>Login and Password</h2> 
 * Login : admin
 * password : admin 
 
@@ -180,16 +185,6 @@ Install my-project with npm
   cd my-project
 ```
 
-<!-- Running Tests -->
-### :test_tube: Running Tests
-
-
-tests were not implemented yet
- 
-
-```bash
-  yarn test test
-```
 
 <!-- Run Locally -->
 ### :running: Run Locally
@@ -225,7 +220,7 @@ Start the server
 To deploy this project run
 
 ```bash
-  yarn deploy
+  yarn build
 ```
 
 
@@ -235,14 +230,6 @@ To deploy this project run
 App can be used as your own managing tool to help you out  sort and keep up to date your company assets in local offices etc.
 This is basic concept and still lot of features has to be implemented.
 
-
-```javascript
-import Component from 'my-project'
-
-function App() {
-  return <Component />
-}
-```
 
 <!-- Roadmap -->
 ## :compass: Roadmap
