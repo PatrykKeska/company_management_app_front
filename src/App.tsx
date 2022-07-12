@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {HomePage} from "./Pages/HomePage/HomePage";
 import {StoragePage} from "./Pages/Products/StoragePage/StoragePage";
 import {PlacesPage} from "./Pages/Places/PlacesPage/PlacesPage";
@@ -24,15 +24,20 @@ function App() {
     const [isNavOpen, setIsNavOpen] = useState(true);
     const [loginStatus, setLogginStatus] = useState(false);
     const localStorageToken = localStorage.getItem("auth");
+    const navigate = useNavigate();
     isTokenExpire();
     useEffect(() => {
         if (localStorageToken != null) {
             const Token = JSON.parse(localStorageToken);
             if (Token.auth) {
-                setLogginStatus(true)
+                setLogginStatus(true);
+            }else{
+                navigate('/');
             }
         }
     }, [])
+
+
 
 
     return (
@@ -53,10 +58,8 @@ function App() {
                         </Routes>
                     </SinglePlaceContext.Provider>
                 </SingleItemContext.Provider>
-            </NavContext.Provider>) : <Routes>
-                <Route path='/' element={<HomePage/>}/>
+            </NavContext.Provider>) : <Routes><Route path='/' element={<HomePage/>}/></Routes>}
 
-            </Routes>}
         </AuthProvider.Provider>
     );
 }
