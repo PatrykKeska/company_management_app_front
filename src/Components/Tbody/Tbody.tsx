@@ -6,11 +6,10 @@ export const StyledTbody = styled.tbody`
   position: relative;
   z-index: 1;
   font-weight: bold;
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(250,249,105,0.9976365546218487) 0%, rgba(211,241,0,1) 24%, rgba(254,177,88,1) 66%, rgba(252,250,40,1) 89%);
-  
+  background-color: #FFF96B;
+
   &:nth-of-type(even) {
-    background-color: rgb(246, 230, 96);
+    background-color: rgb(243, 233, 105);
   }
 
   &:after {
