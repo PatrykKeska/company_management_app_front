@@ -78,15 +78,18 @@ Maybe you can mention me or this repo in the acknowledgements too
 
 <!-- About the Project -->
 ## :star2: About the Project
-<h2>Login and Password</h2>
+
 <h3>Login : admin </br>
 Password : admin</h3>
-* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
-* App is still in development, right now has basic features implemented. 
-* Check roadmap to see an incoming changes...
-* Preview available(Login and password : admin) : https://patrykkeska.networkmanager.pl/>
-* Backend Repo : https://github.com/PatrykKeska/company_management_app_backend
-* DataBase file for Import purpose  : https://github.com/PatrykKeska/company_management_app_backend/tree/main/DataBaseScheme
+
+
+<br/>* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
+<br/>* App is still in development, right now has basic features implemented.
+<br/>* Check roadmap to see an incoming changes...
+<br/>* Check the features to see implemented functionalities.
+<br/>* Preview available(Login and password : admin) : https://patrykkeska.networkmanager.pl
+<br/>* Backend Repo : https://github.com/PatrykKeska/company_management_app_backend
+<br/>* DataBase file for Import purpose  : https://github.com/PatrykKeska/company_management_app_backend/tree/main/DataBaseScheme
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -151,6 +154,7 @@ Password : admin</h3>
 * [x] Creating of new offices. 
 * [x] Editing of existing offices. 
 * [x] Deleting offices 
+* [x] Keeping up to date all your resources in your offices 
 
 Check the Roadmap to find an incoming features! 
 
