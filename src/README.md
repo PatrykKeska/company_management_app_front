@@ -90,14 +90,14 @@ Maybe you can mention me or this repo in the acknowledgements too
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="../src/assets%20/readme/S1.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S2.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S3.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S4.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S5.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S6.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S7.png" alt="screenshot" />
-  <img src="../src/assets%20/readme/S8.png" alt="screenshot" />
+  <img src="../src/assets%20/readme/S1.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S2.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S3.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S4.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S5.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S6.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S7.jpeg" alt="screenshot" />
+  <img src="../src/assets%20/readme/S8.jpeg" alt="screenshot" />
   
 </div>
 
