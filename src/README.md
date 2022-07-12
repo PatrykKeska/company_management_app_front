@@ -80,21 +80,8 @@ Maybe you can mention me or this repo in the acknowledgements too
 <!-- About the Project -->
 ## :star2: About the Project
 * Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
-
-* *App written to improve own skills, allows to manage assets from Storage center and split it beetween your offices.
-This is base version and will be improved in feature.
-
-
-Incomming:
-
-* I d'like to add backend in NestJS
-
-* File transfer and serving a files from backend to client.
-
-* Session with JWT
-
-* Register/Login Accounts( For now there is only one Admin user)
-
+* App is still in development, right now has basic features implemented. 
+* Check roadmap to see an incommings changes...
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -161,6 +148,11 @@ Incomming:
 ### :key: Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
+
+To login and try  please use admin account : 
+
+* Login : admin
+* password : admin 
 
 `API_KEY`
 
@@ -240,7 +232,8 @@ To deploy this project run
 <!-- Usage -->
 ## :eyes: Usage
 
-Use this space to tell a little more about your project and how it can be used. Show additional screenshots, code samples, demos or link to other resources.
+App can be used as your own managing tool to help you out  sort and keep up to date your company assets in local offices etc.
+This is basic concept and still lot of features has to be implemented.
 
 
 ```javascript
@@ -280,16 +273,6 @@ See `contributing.md` for ways to get started.
 
 Please read the [Code of Conduct](https://github.com/Louis3797/awesome-readme-template/blob/master/CODE_OF_CONDUCT.md)
 
-<!-- FAQ -->
-## :grey_question: FAQ
-
-- Question 1
-
-    + Answer 1
-
-- Question 2
-
-    + Answer 2
 
 
 <!-- License -->
