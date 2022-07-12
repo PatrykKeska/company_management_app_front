@@ -169,7 +169,9 @@ Check the Roadmap to find an incoming features!
 <!-- Env Variables -->
 ### :key: Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to edit /utils/api.ts file.
+Please Don't forget to run backend and database 
+More information about setup going to find out in backend repo here : </br> https://github.com/PatrykKeska/company_management_app_backend
 <h2>Api File </h2>
 in utils/api.ts you can change path to api which you want to use. 
 if you want to use project locally please visit this file. 
