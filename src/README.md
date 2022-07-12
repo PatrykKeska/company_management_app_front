@@ -8,7 +8,6 @@ Maybe you can mention me or this repo in the acknowledgements too
 -->
 <div align="center">
 
-  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
   <h1>Company management  assets Readme</h1>
 
   <p>
@@ -79,6 +78,9 @@ Maybe you can mention me or this repo in the acknowledgements too
 
 <!-- About the Project -->
 ## :star2: About the Project
+<h2>Login and Password</h2>
+<h3>Login : admin </br>
+Password : admin</h3>
 * Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
 * App is still in development, right now has basic features implemented. 
 * Check roadmap to see an incoming changes...
@@ -136,16 +138,28 @@ Maybe you can mention me or this repo in the acknowledgements too
 <!-- Features -->
 ### :dart: Features
 
-- Feature 1
-- Feature 2
-- Feature 3
+* [x] Login/Logout 
+* [x] Local Storage Session (Possible to change session time in /utils/isTokenExpire.ts) 
+* [x] RWD
+* [x] Creating a new items.
+* [x] Items and offices image change( For now only by pasting a link with image address) - incoming file transfer  
+* [x] Editing items in storage.
+* [x] Deleting items from storage. 
+* [x] Assign items to  office.
+* [x] Deleting items from assigned offices. 
+* [x] Summary of  office.
+* [x] Creating of new offices. 
+* [x] Editing of existing offices. 
+* [x] Deleting offices 
+
+Check the Roadmap to find an incoming features! 
 
 <!-- Color Reference -->
 ### :art: Color Reference
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#FFF96B;](https://via.placeholder.com/10/222831?text=+) #FFF96B; |
+| Primary Color | ![#FFF96B;](https://via.placeholder.com/10/222831?text=+) |
 
 
 <!-- Env Variables -->
@@ -156,13 +170,10 @@ To run this project, you will need to add the following environment variables to
 in utils/api.ts you can change path to api which you want to use. 
 if you want to use project locally please visit this file. 
 
-<h2>Login and Password</h2> 
-* Login : admin
-* password : admin 
 
-`API_KEY`
+<h3>Login : admin </br> 
+Password : admin</h3> 
 
-`ANOTHER_API_KEY`
 
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started
@@ -232,10 +243,11 @@ App can be used as your own managing tool to help you out  sort and keep up to d
 This is basic concept and still lot of features has to be implemented.
 
 
-<!-- Roadmap -->
+<!-- Roadmap  -->
 ## :compass: Roadmap
 
 * [x] Basic functionality
+* [x] Linux Server Host Preview
 * [ ] Registry a new accounts
 * [ ] JWT session
 * [ ] File transfer from Client=>Server and reverse
