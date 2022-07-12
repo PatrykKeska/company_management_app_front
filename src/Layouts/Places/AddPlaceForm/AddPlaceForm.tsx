@@ -24,7 +24,6 @@ const StyledForm = styled.form`
 `
 
 
-
 export const AddPlaceForm = () => {
     const navigate = useNavigate();
     const [changeImg, toSetChangeImg] = useState(false);
@@ -46,7 +45,8 @@ export const AddPlaceForm = () => {
         try {
             (async () => {
                 if (formValues.img === '') {
-                    formValues.img = `${apiURL}/static/media/office.929e7651334293b5e310.jpeg`
+                    formValues.img = office
+
                 }
                 await fetch(`${apiURL}/add-new-place`, {
                     method: "POST",
@@ -117,7 +117,7 @@ export const AddPlaceForm = () => {
             </StyledLabel>
 
             <StyledLabel>
-               Number of the building:
+                Number of the building:
                 <Input
                     type={'text'}
                     name={'buildNumber'}
