@@ -5,6 +5,7 @@ import {Button} from "../../../Components/Button /Button";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import {InputOnChange, onSubmitType} from "../../../types/common.types";
 import {AuthProvider} from "../../../context/AuthProvider/AuthProvider";
+import {apiURL} from "../../../utils/api";
 
 
 const StyledForm = styled.form`
@@ -22,7 +23,7 @@ export const LoginForm = () => {
         e.preventDefault();
         try {
 
-            const response = await fetch('http://localhost:3001/', {
+            const response = await fetch(`${apiURL}/`, {
                 method: "POST",
                 credentials: 'include',
                 body: JSON.stringify({
@@ -33,14 +34,13 @@ export const LoginForm = () => {
 
             });
             const data = await response.json()
-            console.log(data)
-
 
             if (!data.auth) {
                 setLogginStatus(false);
 
             } else {
                 setLogginStatus(true)
+                localStorage.setItem("auth", JSON.stringify({auth: true}));
 
 
             }

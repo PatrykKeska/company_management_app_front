@@ -1,5 +1,5 @@
-import React, { useState} from 'react';
-import {Route, Routes} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Route, Routes, useNavigate} from "react-router-dom";
 import {HomePage} from "./Pages/HomePage/HomePage";
 import {StoragePage} from "./Pages/Products/StoragePage/StoragePage";
 import {PlacesPage} from "./Pages/Places/PlacesPage/PlacesPage";
@@ -15,7 +15,7 @@ import {EditSingleItemPage} from "./Pages/Products/EditSingleItemPage/EditSingle
 import {AuthProvider} from "./context/AuthProvider/AuthProvider";
 import {InventoryPage} from "./Pages/Inventory/InventoryPage";
 import {FinalizedPage} from "./Pages/FInalized/FinalizedPage";
-import {TestPage} from "./Pages/TestPage";
+import {isTokenExpire} from "./utils/isTokenExpire";
 
 
 function App() {
@@ -23,6 +23,17 @@ function App() {
     const [itemDetails, setItemDetails] = useState({} as SingleProductTypes);
     const [isNavOpen, setIsNavOpen] = useState(true);
     const [loginStatus, setLogginStatus] = useState(false);
+    const localStorageToken = localStorage.getItem("auth");
+    isTokenExpire();
+    useEffect(() => {
+        if (localStorageToken != null) {
+            const Token = JSON.parse(localStorageToken);
+            if (Token.auth) {
+                setLogginStatus(true)
+            }
+        }
+    }, [])
+
 
     return (
         <AuthProvider.Provider value={{loginStatus, setLogginStatus}}>

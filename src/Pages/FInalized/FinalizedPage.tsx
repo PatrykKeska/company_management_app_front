@@ -8,6 +8,7 @@ import {FinalizedPlaceDescription} from "../../Layouts/Finalized/FinalizedPlaceD
 import {SingleFinalizedModal} from "./SingleFinalizedModal";
 import {SinglePlacesProductsTypes} from "../../types/places_products.types";
 import {FinalizedContext} from "../../context/Finalized/FinalizedContext";
+import {apiURL} from "../../utils/api";
 
 
 export const FinalizedPage = () => {
@@ -17,14 +18,14 @@ export const FinalizedPage = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get('http://localhost:3001/places');
+            const response = await axios.get(`${apiURL}/places`);
             setPlaces(response.data.message)
         })()
 
     }, [itemsInPlace]);
 
     const getItemsInPlace = async (id: string) => {
-        const itemsInPlace = await axios.post('http://localhost:3001/finalized', {pickedPlaceID: id});
+        const itemsInPlace = await axios.post(`${apiURL}/finalized`, {pickedPlaceID: id});
         setItemsInPlace(itemsInPlace.data.response)
         setisPicked(true)
     }
@@ -34,7 +35,7 @@ export const FinalizedPage = () => {
     }
 
     const deleteProduct = async (placeID: string, itemID: string) => {
-       const response =  await axios.post('http://localhost:3001/finalized/delete', {place_id: placeID, item_id: itemID});
+       const response =  await axios.post(`${apiURL}/finalized/delete`, {place_id: placeID, item_id: itemID});
         setItemsInPlace(response.data.update)
 
     }

@@ -9,6 +9,7 @@ import {InputOnChange} from "../../../types/common.types";
 import {Checkbox} from "../../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
+import {apiURL} from "../../../utils/api";
 
 interface Props {
     row?: boolean
@@ -21,7 +22,6 @@ const StyledForm = styled.form`
   align-items: center;
   flex-direction: column;
 `
-
 
 
 export const AddPlaceForm = () => {
@@ -45,9 +45,10 @@ export const AddPlaceForm = () => {
         try {
             (async () => {
                 if (formValues.img === '') {
-                    formValues.img = 'http://localhost:3000/static/media/office.929e7651334293b5e310.jpeg'
+                    formValues.img = office
+
                 }
-                await fetch('http://localhost:3001/add-new-place', {
+                await fetch(`${apiURL}/add-new-place`, {
                     method: "POST",
                     body: JSON.stringify({
                         ...formValues
@@ -116,7 +117,7 @@ export const AddPlaceForm = () => {
             </StyledLabel>
 
             <StyledLabel>
-               Number of the building:
+                Number of the building:
                 <Input
                     type={'text'}
                     name={'buildNumber'}

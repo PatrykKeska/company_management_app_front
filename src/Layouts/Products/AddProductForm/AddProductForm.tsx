@@ -10,6 +10,7 @@ import {InputOnChange} from "../../../types/common.types";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import {useNavigate} from "react-router-dom";
 import {Checkbox} from "../../../Components/Input/Checkbox";
+import {apiURL} from "../../../utils/api";
 
 
 const StyledForm = styled.form`
@@ -40,7 +41,7 @@ export const AddProductForm = () => {
             if (formValues.img === '') {
                 formValues.img = item1
             }
-            await fetch(`http://localhost:3001/add-new-item`, {
+            await fetch(`${apiURL}/add-new-item`, {
                 method: "POST",
                 body: JSON.stringify({
                     ...formValues

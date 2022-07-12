@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
 import {NavLink} from "../../../Components/NavLink/NavLink";
-import {faDatabase, faHome, faPlusCircle, faBoxesStacked, faCheckCircle} from '@fortawesome/free-solid-svg-icons'
+import {faDatabase, faHome, faPlusCircle, faBoxesStacked, faCheckCircle, faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faXmark, faBars} from '@fortawesome/free-solid-svg-icons'
 import {NavContext} from "../../../context/nav/nav.context";
@@ -36,6 +36,7 @@ const StyledNav = styled.nav<Props>`
     position: relative;
     animation: none;
     transform: translateX(0);
+    font-size: .8em;
     
   }
 
@@ -70,6 +71,13 @@ export const Nav = () => {
                 />}
 
             <StyledNav  open={isNavOpen}>
+
+                <NavLink
+                    click={() => {
+                        setIsNavOpen(false)
+                    }}
+                    icon={faRightFromBracket}
+                    path={'/'}>Log out</NavLink>
 
 
                 <NavLink
