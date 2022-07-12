@@ -26,18 +26,17 @@ function App() {
     const localStorageToken = localStorage.getItem("auth");
     const navigate = useNavigate();
     isTokenExpire();
+
     useEffect(() => {
         if (localStorageToken != null) {
             const Token = JSON.parse(localStorageToken);
             if (Token.auth) {
                 setLogginStatus(true);
-            }else{
-                navigate('/');
             }
+        } else {
+            navigate('/');
         }
     }, [])
-
-
 
 
     return (
