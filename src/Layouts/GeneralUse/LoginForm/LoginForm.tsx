@@ -34,14 +34,13 @@ export const LoginForm = () => {
 
             });
             const data = await response.json()
-            console.log(data)
-
 
             if (!data.auth) {
                 setLogginStatus(false);
 
             } else {
                 setLogginStatus(true)
+                localStorage.setItem("auth", JSON.stringify({auth: true}));
 
 
             }
