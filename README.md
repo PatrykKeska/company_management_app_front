@@ -43,7 +43,7 @@ Maybe you can mention me or this repo in the acknowledgements too
 ## :star2: About the Project
 
 <h3>Login : admin </br>
-Password : admin</h3>
+ Password : admin</h3>
 
 
 <br/>* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
