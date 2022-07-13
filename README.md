@@ -42,14 +42,12 @@ Maybe you can mention me or this repo in the acknowledgements too
 <!-- About the Project -->
 ## :star2: About the Project
 
-<h3>Login : admin </br>
- Password : admin</h3>
-
 
 <br/>* Basic Concept of view was created in Figma : https://www.figma.com/file/5TNV2aSijVHNTm0f8phW7u/Projekt-Zaliczeniowy?node-id=0%3A1
 <br/>* App is still in development, right now has basic features implemented.
 <br/>* Check roadmap to see an incoming changes...
 <br/>* Check the features to see implemented functionalities.
+<h3>Preview Login and Password is : "admin"</br></h3>
 <br/>* Preview available(Login and password : admin) : https://patrykkeska.networkmanager.pl
 <br/>* Backend Repo : https://github.com/PatrykKeska/company_management_app_backend
 <br/>* DataBase file for Import purpose  : https://github.com/PatrykKeska/company_management_app_backend/tree/main/DataBaseScheme
@@ -142,7 +140,7 @@ Check the Roadmap to find an incoming features!
 <!-- Env Variables -->
 ### :key: Environment Variables
 
-<h3>To run locally make sure backend is listening and database is implemented correctly. 
+<h3>To run locally make sure backend is listening and database is implemented correctly, also please check cors settings in express repo.
 More information about database setup and backend  going to find out in backend repo here : </br> https://github.com/PatrykKeska/company_management_app_backend</h3>
 
 <h3>Login : admin </br> 
