@@ -68,14 +68,14 @@ In result we got kind of views ready to implements on pages.
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="src/assets /readme/S1.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S2.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S3.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S4.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S5.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S6.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S7.jpeg" alt="screenshot" />
-  <img src="src/assets /readme/S8.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S1.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S2.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S3.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S4.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S5.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S6.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S7.jpeg" alt="screenshot" />
+  <img src="src/assets%20/readme/S8.jpeg" alt="screenshot" />
   
 </div>
 
