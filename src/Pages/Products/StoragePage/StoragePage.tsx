@@ -4,7 +4,8 @@ import {Nav} from "../../../Layouts/GeneralUse/Nav/Nav";
 import styled from "styled-components";
 import {ProductDescription} from "../../../Layouts/Products/ProductDescription/ProductDescription";
 import {SingleProductTypes} from "../../../types/Product.types";
-import {apiURL} from "../../../utils/api";
+import {fileApi} from "../../../utils/api";
+import {getAllProducts} from "../functions/getAllProducts";
 
 
 const GridWrapper = styled(Wrapper)`
@@ -21,31 +22,18 @@ const GridWrapper = styled(Wrapper)`
   }
 
 `
-
-
 export const StoragePage = () => {
     const [storage, setStorage] = useState([] as SingleProductTypes[]);
-
-
     useEffect(() => {
-
-        (async () => {
-            try {
- const response = await fetch(`${apiURL}/storage`, {
-                        credentials: 'include',
-                    });
-                    const json = await response.json();
-                    setStorage(json.message)
-
-            } catch (error) {}
-        })();
+        (async ()=>{
+          const products =  await getAllProducts()
+            setStorage(products)
+        })()
  }, []);
 
     return (<>
             <Nav/>
             <GridWrapper>
-
-                {/*Dummy Data  to create styles*/}
 
                 {storage.map(item =>
                     <ProductDescription
@@ -55,9 +43,7 @@ export const StoragePage = () => {
                         price={item.price}
                         amount={item.amount}
                         dateOfBuy={item.dateOfBuy}
-                        img={item.img}/>
-
-
+                        img={`${fileApi}${item.img}`}/>
                 )}
 
             </GridWrapper>
