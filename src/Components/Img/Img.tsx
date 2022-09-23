@@ -29,9 +29,10 @@ const StyledImg = styled.img<Props>`
 
 
 export const Img = (props: Props) => {
+    const {src,width,height} = props
     return (
         <>
-            <StyledImg height={props.height} width={props.width} src={props.src}/>
+            <StyledImg height={height} width={width} src={src}/>
         </>
     )
 }
