@@ -4,13 +4,13 @@ import {Input} from "../../../Components/Input/Input";
 import {Button} from "../../../Components/Button /Button";
 import {Img} from "../../../Components/Img/Img";
 import {SendingPopUp} from "../../../Components/SendingPopUP/SendingPopUp";
-import item1 from '../../../assets /img/item1.jpeg'
 import {SingleProductTypes} from "../../../types/Product.types";
 import {InputOnChange} from "../../../types/common.types";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import {useNavigate} from "react-router-dom";
 import {Checkbox} from "../../../Components/Input/Checkbox";
-import {apiURL} from "../../../utils/api";
+import {apiURL, fileApi} from "../../../utils/api";
+import {FileInput} from "../../../Components/Input/FileInput";
 
 
 const StyledForm = styled.form`
@@ -25,32 +25,42 @@ const StyledForm = styled.form`
 export const AddProductForm = () => {
     const navigate = useNavigate();
     const [changeImg, toSetChangeImg] = useState(false);
+    const [preview, setPreview] = useState({src:''});
+    const [loading, setLoading] = useState(false)
     const [formValues, setFormValues] = useState({
         name: '',
         price: 0,
         amount: 0,
         dateOfBuy: '',
-        img: ''
+        file:null,
     } as SingleProductTypes);
-    const [loading, setLoading] = useState(false)
+
+    const handleFile = (e:React.ChangeEvent<HTMLInputElement>)=>{
+            setFormValues({...formValues, file: e.target.files![0]})
+            setPreview({src: URL.createObjectURL(e.target.files![0])})
+
+    }
+
     const addNewProduct = async (e: FormEvent) => {
         e.preventDefault();
+        console.log(formValues.file)
         setLoading(true)
-
+        const formData = new FormData()
+        formData.append('file', formValues.file);
+        formData.append('name', formValues.name);
+        formData.append('price', String(formValues.price));
+        formData.append('amount', String(formValues.amount));
+        formData.append('dateOfBuy', formValues.dateOfBuy);
         try {
-            if (formValues.img === '') {
-                formValues.img = item1
-            }
-            await fetch(`${apiURL}/add-new-item`, {
+
+            await fetch(`${apiURL}/products/add-new`, {
                 method: "POST",
-                body: JSON.stringify({
-                    ...formValues
-                }),
-                headers: {'Content-Type': 'application/json'},
+                credentials: "include",
+                body: formData
             })
         } finally {
             setLoading(false)
-            setFormValues({name: '', price: 0, amount: 0, dateOfBuy: '', img: ''})
+            setFormValues({name: '', price: 0, amount: 0, dateOfBuy: '', file:null})
             navigate('/storage')
         }
     }
@@ -60,8 +70,8 @@ export const AddProductForm = () => {
 
         loading ? <SendingPopUp/> : (
             <StyledForm onSubmit={addNewProduct}>
-                {formValues.img === '' ? <Img width={'200px'} height={'120px'} src={item1}/> :
-                    <Img width={'200px'} height={'120px'} src={formValues.img}/>}
+                {formValues.file === null ? (<Img width={'200px'} height={'120px'} src={`${fileApi}default-product-image.jpeg`}/>) :(<Img width={'200px'} height={'120px'} src={`${preview.src}`}/>)
+                }
 
 
                 <StyledLabel htmlFor="name">
@@ -112,22 +122,19 @@ export const AddProductForm = () => {
                         type={'date'}/>
 
                 </StyledLabel>
-
                 <StyledLabel row>
                     Change default image
-                    <Checkbox checked={changeImg} onChange={() => toSetChangeImg(!changeImg)}/>
+                    <Checkbox checked={changeImg} onChange={()=> toSetChangeImg(!changeImg)}/>
                 </StyledLabel>
-                {changeImg ? (<StyledLabel>
-                    Link to your image
-                    <Input
-                        onChange={(e: InputOnChange) => setFormValues({
-                            ...formValues,
-                            img: e.target.value
-                        })}
-                        value={formValues.img}
-                        name={'img'}
-                        type={'string'}/>
-                </StyledLabel>) : null}
+
+                {changeImg ? <StyledLabel >
+                        File
+                        <FileInput
+                            onChange={handleFile}
+                            name='file'
+                            />
+                </StyledLabel>
+                    : null}
                 <Button>Add</Button>
             </StyledForm>
         ))
