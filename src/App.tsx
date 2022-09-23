@@ -12,7 +12,6 @@ import {NavContext} from "./context/nav/nav.context";
 import {SingleItemContext} from "./context/SingleItem/SingleItem.context";
 import {SingleProductTypes} from "./types/Product.types";
 import {EditSingleItemPage} from "./Pages/Products/EditSingleItemPage/EditSingleItemPage";
-import {AuthProvider} from "./context/AuthProvider/AuthProvider";
 import {InventoryPage} from "./Pages/Inventory/InventoryPage";
 import {FinalizedPage} from "./Pages/FInalized/FinalizedPage";
 import {isTokenExpire} from "./utils/isTokenExpire";
@@ -40,8 +39,7 @@ function App() {
 
 
     return (
-        <AuthProvider.Provider value={{loginStatus, setLogginStatus}}>
-            {loginStatus ? (<NavContext.Provider value={{isNavOpen: isNavOpen, setIsNavOpen}}>
+         <NavContext.Provider value={{isNavOpen: isNavOpen, setIsNavOpen}}>
                 <SingleItemContext.Provider value={{itemDetails, setItemDetails}}>
                     <SinglePlaceContext.Provider value={{placeDetails, setPlaceDetails}}>
                         <Routes>
@@ -57,10 +55,9 @@ function App() {
                         </Routes>
                     </SinglePlaceContext.Provider>
                 </SingleItemContext.Provider>
-            </NavContext.Provider>) : <Routes><Route path='/' element={<HomePage/>}/></Routes>}
+            </NavContext.Provider>
+    )
 
-        </AuthProvider.Provider>
-    );
 }
 
 export default App;
