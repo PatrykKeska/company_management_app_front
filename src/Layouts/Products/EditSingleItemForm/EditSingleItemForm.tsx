@@ -3,14 +3,13 @@ import styled from "styled-components";
 import {Input} from "../../../Components/Input/Input";
 import {InputOnChange} from "../../../types/common.types";
 import {Button} from "../../../Components/Button /Button";
-import {ImgInput} from "../../../Components/Input/ImgInput";
 import {Img} from "../../../Components/Img/Img";
 import {Checkbox} from "../../../Components/Input/Checkbox";
 import {useNavigate} from "react-router-dom";
 import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
 import {SingleItemContext} from "../../../context/SingleItem/SingleItem.context";
-import item from '../../../assets /img/item.jpeg';
 import {apiURL} from "../../../utils/api";
+import {FileInput} from "../../../Components/Input/FileInput";
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -24,16 +23,24 @@ const StyledForm = styled.form`
 export const EditSingleItemForm = () => {
     const navigate = useNavigate();
     const {itemDetails, setItemDetails} = useContext(SingleItemContext);
+    const [preview,setPreview] = useState({src:''});
     const [toUpdateImg, setToUpdateImg] = useState(false);
     const [toDelete, setToDelete] = useState(false);
+
+    const handleFile = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        setItemDetails({...itemDetails, file: e.target.files![0]})
+        setPreview({src: URL.createObjectURL(e.target.files![0])})
+
+    }
     const handleToUpdateImg = () => {
         setToUpdateImg(!toUpdateImg)
+        setPreview({src:''})
     }
     const handleToDelete = () => {
         setToDelete(!toDelete)
     }
 
-// @TODO Create loading Component !!!
+
     const [loading, setLoading] = useState(false);
 
 // @TODO Create API endpoints for handleSubmit !!!
@@ -45,26 +52,26 @@ export const EditSingleItemForm = () => {
             if (!toDelete) {
                 (async () => {
 
-                    if (itemDetails.img === '') {
-                        itemDetails.img = item
-                    }
-                    await fetch(`${apiURL}/storage/update`, {
+                    const formData = new FormData();
+                    formData.append('name', itemDetails.name)
+                    formData.append('id', itemDetails.id!)
+                    formData.append('price', String(itemDetails.price))
+                    formData.append('amount', String(itemDetails.amount))
+                    formData.append('dateOfBuy', itemDetails.dateOfBuy)
+                    formData.append('file', itemDetails.file!)
+                    await fetch(`${apiURL}/products/update`, {
                         method: "PATCH",
-                        body: JSON.stringify({
-                            ...itemDetails
-                        }),
-                        headers: {'Content-Type': 'application/json'},
-
+                        credentials: 'include',
+                        body: formData
                     })
 
                 })()
             } else {
                 (async () => {
-                    await fetch(`${apiURL}/storage/delete`, {
+                    await fetch(`${apiURL}/products/remove`, {
                         method: "DELETE",
-                        body: JSON.stringify({
-                            ...itemDetails
-                        }),
+                        body: JSON.stringify({id: itemDetails.id}),
+                        credentials: 'include',
                         headers: {'Content-Type': 'application/json'},
 
                     })
@@ -91,7 +98,7 @@ export const EditSingleItemForm = () => {
     return (
 
         <StyledForm onSubmit={handleSubmit}>
-            <Img width={'200px'} height={'150px'} src={itemDetails.img}/>
+            <Img width={'200px'} height={'150px'} src={preview.src ? preview.src : itemDetails.img}/>
             <StyledLabel>
                 Name:
                 <Input
@@ -149,15 +156,11 @@ export const EditSingleItemForm = () => {
                 <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg}/>
             </StyledLabel>
 
-            {toUpdateImg ? (<ImgInput
-                onChange={(e: InputOnChange) => setItemDetails({
-                    ...itemDetails,
-                    img: e.target.value
-                })}
-                value={itemDetails.img}
-                name={'img'}
-                placeholder={'Pozostaw Puste jeżeli nie chcesz zmieniać zdjęcia'}
-                type={'string'}/>) : null}
+            {toUpdateImg ? (<><FileInput
+                onChange={handleFile}
+                name='file'
+            /> </>) : null}
+
 
 
             <StyledLabel row>
