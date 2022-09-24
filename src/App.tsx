@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {  Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { HomePage } from './Pages/HomePage/HomePage'
 import { StoragePage } from './Pages/Products/StoragePage/StoragePage'
 import { PlacesPage } from './Pages/Places/PlacesPage/PlacesPage'
@@ -21,8 +21,6 @@ function App() {
   const [itemDetails, setItemDetails] = useState({} as SingleProductTypes)
   const [isNavOpen, setIsNavOpen] = useState(true)
   isTokenExpire()
-
-
 
   return (
     <NavContext.Provider value={{ isNavOpen: isNavOpen, setIsNavOpen }}>
