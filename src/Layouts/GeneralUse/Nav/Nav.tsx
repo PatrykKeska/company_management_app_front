@@ -8,7 +8,8 @@ import {
   faBoxesStacked,
   faCheckCircle,
   faRightFromBracket,
-  faXmark, faBars
+  faXmark,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavContext } from '../../../context/nav/nav.context'
