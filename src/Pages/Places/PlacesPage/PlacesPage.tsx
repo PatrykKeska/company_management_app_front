@@ -3,22 +3,17 @@ import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import { PlaceDescription } from '../../../Layouts/Places/PlaceDescription/PlaceDescription'
 import { SinglePlaceTypes } from '../../../types/Places.types'
 import { PlaceDescriptionWrapper } from '../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper'
-import { apiURL } from '../../../utils/api'
+import { getAllProducts } from '../functions/getAllProducts'
+import { fileApi } from '../../../utils/api'
 
 export const PlacesPage = () => {
   const [places, setPlaces] = useState([] as SinglePlaceTypes[])
-
   useEffect(() => {
     ;(async () => {
-      try {
-        const data = await fetch(`${apiURL}/places`)
-        const results = await data.json()
-        setPlaces(results.message)
-      } catch (error) {
-        console.log(error)
-      }
+      const products = await getAllProducts()
+      setPlaces(products)
     })()
-  }, [])
+  }, [places])
 
   return (
     <>
@@ -28,7 +23,7 @@ export const PlacesPage = () => {
           <PlaceDescription
             id={place.id}
             key={place.id}
-            img={place.img}
+            img={`${fileApi}${place.img}`}
             name={place.name}
             city={place.city}
             street={place.street}
