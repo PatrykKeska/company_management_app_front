@@ -5,5 +5,6 @@ export interface SinglePlaceTypes {
   street: string
   buildNumber: string
   img?: string
+  file?: File
   key?: string
 }
