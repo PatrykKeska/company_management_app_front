@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const StyledTh = styled.th`
   background-color: rgba(14, 12, 12, 0.75);

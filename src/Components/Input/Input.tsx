@@ -1,11 +1,11 @@
-import React, {ChangeEventHandler} from "react";
-import styled from "styled-components";
+import React, { ChangeEventHandler } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-    type:string
-    value?: string | number | any
-    name: string
-    onChange: ChangeEventHandler
+  type: string
+  value?: string | number | any
+  name: string
+  onChange: ChangeEventHandler
 }
 
 export const StyledInput = styled.input`
@@ -17,23 +17,21 @@ export const StyledInput = styled.input`
   background-color: white;
   border-radius: 25px;
   text-align: center;
-  margin: 20px 0 ;
-  transition: .3s linear all;
-  &:hover{
+  margin: 20px 0;
+  transition: 0.3s linear all;
+  &:hover {
     box-shadow: 0 0 5px 1px black;
   }
-
 `
 
-
-
-
-export const Input = (props:Props)=>{
-
-
-    return(
-        <StyledInput onChange={props.onChange} value={props.value} name={props.name}  required type={props.type}>
-
-        </StyledInput>
-    )
+export const Input = (props: Props) => {
+  return (
+    <StyledInput
+      onChange={props.onChange}
+      value={props.value}
+      name={props.name}
+      required
+      type={props.type}
+    ></StyledInput>
+  )
 }

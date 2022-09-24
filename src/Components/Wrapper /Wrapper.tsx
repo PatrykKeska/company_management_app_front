@@ -1,10 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-
-
+import React from 'react'
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-background-color: #FFF96B;
+  background-color: #fff96b;
   padding: 30px 10px;
   width: 100vw;
   min-height: 100vh;
@@ -14,4 +12,3 @@ background-color: #FFF96B;
   align-items: center;
   flex-direction: column;
 `
-

@@ -1,12 +1,11 @@
-import React, {useContext, useState} from "react";
-import styled from "styled-components";
-import {Input} from "../../../Components/Input/Input";
-import {Button} from "../../../Components/Button /Button";
-import {StyledLabel} from "../../../Components/StyledLabel/StyledLabel";
-import {InputOnChange, onSubmitType} from "../../../types/common.types";
-import {AuthProvider} from "../../../context/AuthProvider/AuthProvider";
-import {apiURL} from "../../../utils/api";
-
+import React, { useContext, useState } from 'react'
+import styled from 'styled-components'
+import { Input } from '../../../Components/Input/Input'
+import { Button } from '../../../Components/Button /Button'
+import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
+import { InputOnChange, onSubmitType } from '../../../types/common.types'
+import { AuthProvider } from '../../../context/AuthProvider/AuthProvider'
+import { apiURL } from '../../../utils/api'
 
 const StyledForm = styled.form`
   display: flex;
@@ -16,64 +15,57 @@ const StyledForm = styled.form`
 `
 
 export const LoginForm = () => {
-    const {setLogginStatus} = useContext(AuthProvider)
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-    const handleSubmit = async (e: onSubmitType) => {
-        e.preventDefault();
-        try {
+  const { setLogginStatus } = useContext(AuthProvider)
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
+  const handleSubmit = async (e: onSubmitType) => {
+    e.preventDefault()
+    try {
+      const response = await fetch(`${apiURL}/`, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          login,
+          password,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const data = await response.json()
 
-            const response = await fetch(`${apiURL}/`, {
-                method: "POST",
-                credentials: 'include',
-                body: JSON.stringify({
-                    login,
-                    password
-                }),
-                headers: {'Content-Type': 'application/json'},
-
-            });
-            const data = await response.json()
-
-            if (!data.auth) {
-                setLogginStatus(false);
-
-            } else {
-                setLogginStatus(true)
-                localStorage.setItem("auth", JSON.stringify({auth: true}));
-
-
-            }
-
-
-        } catch (err) {
-
-        } finally {
-
-        }
+      if (!data.auth) {
+        setLogginStatus(false)
+      } else {
+        setLogginStatus(true)
+        localStorage.setItem('auth', JSON.stringify({ auth: true }))
+      }
+    } catch (err) {
+      return err
     }
+  }
 
-    return (
-        <StyledForm onSubmit={handleSubmit}>
-            <StyledLabel>
-                Login:
-                <Input
-                    value={login}
-                    type={'text'} name={'login'}
-                    onChange={(event: InputOnChange) => setLogin(event.target.value)}/>
+  return (
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledLabel>
+        Login:
+        <Input
+          value={login}
+          type={'text'}
+          name={'login'}
+          onChange={(event: InputOnChange) => setLogin(event.target.value)}
+        />
+      </StyledLabel>
 
-            </StyledLabel>
+      <StyledLabel>
+        Password:
+        <Input
+          name={'password'}
+          value={password}
+          onChange={(event: InputOnChange) => setPassword(event.target.value)}
+          type={'password'}
+        />
+      </StyledLabel>
 
-            <StyledLabel>
-                Password:
-                <Input
-                    name={'password'}
-                    value={password}
-                    onChange={(event: InputOnChange) => setPassword(event.target.value)} type={'password'}/>
-
-            </StyledLabel>
-
-            <Button>Sign in</Button>
-        </StyledForm>
-    )
+      <Button>Sign in</Button>
+    </StyledForm>
+  )
 }

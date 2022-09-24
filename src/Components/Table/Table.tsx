@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const StyledTable = styled.table`
   border-collapse: collapse;
@@ -10,5 +10,5 @@ export const StyledTable = styled.table`
   font-family: sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   text-align: center;
-  overflow:hidden;
+  overflow: hidden;
 `

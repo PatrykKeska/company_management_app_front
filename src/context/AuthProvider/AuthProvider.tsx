@@ -1,9 +1,6 @@
-import {createContext} from "react";
-
+import { createContext } from 'react'
 
 export const AuthProvider = createContext({
-        loginStatus: false,
-        setLogginStatus: (s:boolean) => {
-        }
-    }
-)
+  loginStatus: false,
+  setLogginStatus: (s: boolean) => {},
+})

@@ -1,17 +1,15 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 interface Props {
-    src?: string
-    width: string;
-    height: string;
+  src?: string
+  width: string
+  height: string
 }
 
-
 const StyledImg = styled.img<Props>`
-
-  width: ${({width}) => width};
-  height: ${({height}) => height};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
   border-radius: 40px;
   grid-column-start: 2;
   grid-column-end: 4;
@@ -27,12 +25,11 @@ const StyledImg = styled.img<Props>`
   }
 `
 
-
 export const Img = (props: Props) => {
-    const {src,width,height} = props
-    return (
-        <>
-            <StyledImg height={height} width={width} src={src}/>
-        </>
-    )
+  const { src, width, height } = props
+  return (
+    <>
+      <StyledImg height={height} width={width} src={src} />
+    </>
+  )
 }

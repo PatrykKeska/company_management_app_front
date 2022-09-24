@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const InventoryForm = styled.form`
   padding-top: 50px;

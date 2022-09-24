@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import {Wrapper} from "../Wrapper /Wrapper";
+import styled from 'styled-components'
+import { Wrapper } from '../Wrapper /Wrapper'
 
 export const PlaceDescriptionWrapper = styled(Wrapper)`
   display: flex;
@@ -10,6 +10,5 @@ export const PlaceDescriptionWrapper = styled(Wrapper)`
   @media (min-width: 800px) {
     flex-direction: row;
     flex-wrap: wrap;
-
   }
 `

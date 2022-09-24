@@ -1,6 +1,6 @@
-import {createContext} from "react";
+import { createContext } from 'react'
 
-export const  NavContext = createContext({
-    isNavOpen:true,
-    setIsNavOpen: (s:boolean)=>{}
+export const NavContext = createContext({
+  isNavOpen: true,
+  setIsNavOpen: (s: boolean) => {},
 })

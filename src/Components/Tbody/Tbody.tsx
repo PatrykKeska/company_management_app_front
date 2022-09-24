@@ -1,12 +1,11 @@
-import styled from "styled-components";
-
+import styled from 'styled-components'
 
 export const StyledTbody = styled.tbody`
-  transition: .2s linear all;
+  transition: 0.2s linear all;
   position: relative;
   z-index: 1;
   font-weight: bold;
-  background-color: #FFF96B;
+  background-color: #fff96b;
 
   &:nth-of-type(even) {
     background-color: rgb(243, 233, 105);
@@ -21,11 +20,10 @@ export const StyledTbody = styled.tbody`
     left: 0;
     position: absolute;
     transform: translateX(-101%);
-    transition: .2s linear all;
+    transition: 0.2s linear all;
     z-index: -1;
     opacity: 0;
   }
-
 
   &:hover:after {
     transform: translateX(0);
@@ -35,5 +33,4 @@ export const StyledTbody = styled.tbody`
   &:hover {
     color: white;
   }
-
 `

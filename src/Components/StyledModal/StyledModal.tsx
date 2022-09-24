@@ -1,5 +1,4 @@
-import styled from "styled-components";
-
+import styled from 'styled-components'
 
 export const StyledModal = styled.div`
   width: 95vw;

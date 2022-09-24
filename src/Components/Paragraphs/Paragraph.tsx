@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-interface Props{
-    positionStart?:number
-    positionEnd?:number
+interface Props {
+  positionStart?: number
+  positionEnd?: number
 }
 
 export const Paragraph = styled.p<Props>`
@@ -12,7 +12,6 @@ export const Paragraph = styled.p<Props>`
   grid-column-end: 5;
   align-self: center;
   justify-self: center;
-  grid-row-start: ${(props)=> props.positionStart};
-  grid-row-end: ${(props)=> props.positionEnd};
+  grid-row-start: ${(props) => props.positionStart};
+  grid-row-end: ${(props) => props.positionEnd};
 `
-
