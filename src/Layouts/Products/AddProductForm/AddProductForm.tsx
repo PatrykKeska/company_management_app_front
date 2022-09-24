@@ -26,11 +26,11 @@ export const AddProductForm = () => {
   const [preview, setPreview] = useState({ src: '' })
   const [loading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState({
-      name: '',
-      price: 0,
-      amount: 0,
-      dateOfBuy: '',
-      file: null,
+    name: '',
+    price: 0,
+    amount: 0,
+    dateOfBuy: '',
+    file: null,
   } as unknown as SingleProductTypes)
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,11 +71,11 @@ export const AddProductForm = () => {
     <SendingPopUp />
   ) : (
     <StyledForm onSubmit={addNewProduct}>
-        <Img
-            width={'200px'}
-            height={'150px'}
-            src={preview.src ? preview.src : `${fileApi}default-product-image.jpeg`}
-        />
+      <Img
+        width={'200px'}
+        height={'150px'}
+        src={preview.src ? preview.src : `${fileApi}default-product-image.jpeg`}
+      />
 
       <StyledLabel htmlFor='name'>
         Name:
