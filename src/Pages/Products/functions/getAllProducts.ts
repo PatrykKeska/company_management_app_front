@@ -7,5 +7,7 @@ export const getAllProducts = async () => {
       headers: { 'Content-Type': 'application/json' },
     })
     return await response.json()
-  } catch (error) {return  error}
+  } catch (error) {
+    return error
+  }
 }
