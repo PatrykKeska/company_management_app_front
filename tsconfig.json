@@ -1,7 +1,8 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "types": ["styled-components-react-native"],
+    "types": ["styled-components-react-native", "node"],
+    "typeRoots": ["../node_modules/@types"],
     "target": "es6",
     "lib": [
       "dom",
@@ -20,7 +21,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+
   },
   "include": [
     "src"
