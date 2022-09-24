@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FormEvent, } from 'react'
+import React, { ChangeEventHandler, FormEvent } from 'react'
 
 export type InputOnChange = React.ChangeEvent<HTMLInputElement>
 export type OnChangeCheckbox = ChangeEventHandler
