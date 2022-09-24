@@ -26,12 +26,12 @@ export const AddProductForm = () => {
   const [preview, setPreview] = useState({ src: '' })
   const [loading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState({
-    name: '',
-    price: 0,
-    amount: 0,
-    dateOfBuy: '',
-    file: null,
-  } as SingleProductTypes)
+      name: '',
+      price: 0,
+      amount: 0,
+      dateOfBuy: '',
+      file: null,
+  } as unknown as SingleProductTypes)
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...formValues, file: e.target.files![0] })
@@ -43,7 +43,7 @@ export const AddProductForm = () => {
     console.log(formValues.file)
     setLoading(true)
     const formData = new FormData()
-    formData.append('file', formValues.file)
+    formData.append('file', formValues.file!)
     formData.append('name', formValues.name)
     formData.append('price', String(formValues.price))
     formData.append('amount', String(formValues.amount))
@@ -61,7 +61,7 @@ export const AddProductForm = () => {
         price: 0,
         amount: 0,
         dateOfBuy: '',
-        file: null,
+        file: undefined,
       })
       navigate('/storage')
     }
@@ -71,15 +71,11 @@ export const AddProductForm = () => {
     <SendingPopUp />
   ) : (
     <StyledForm onSubmit={addNewProduct}>
-      {formValues.file === null ? (
         <Img
-          width={'200px'}
-          height={'120px'}
-          src={`${fileApi}default-product-image.jpeg`}
+            width={'200px'}
+            height={'150px'}
+            src={preview.src ? preview.src : `${fileApi}default-product-image.jpeg`}
         />
-      ) : (
-        <Img width={'200px'} height={'120px'} src={`${preview.src}`} />
-      )}
 
       <StyledLabel htmlFor='name'>
         Name:
