@@ -2,14 +2,14 @@ import React, { FormEvent, useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { Button } from '../../../Components/Button /Button'
-import { Img } from '../../../Components/Img/Img'
-import office from '../../../assets /img/office.jpeg'
 import { SinglePlaceTypes } from '../../../types/Places.types'
 import { InputOnChange } from '../../../types/common.types'
 import { Checkbox } from '../../../Components/Input/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
-import { apiURL } from '../../../utils/api'
+import { apiURL, fileApi } from '../../../utils/api'
+import { Img } from '../../../Components/Img/Img'
+import { FileInput } from '../../../Components/Input/FileInput'
 
 interface Props {
   row?: boolean
@@ -25,32 +25,38 @@ const StyledForm = styled.form`
 
 export const AddPlaceForm = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [changeImg, toSetChangeImg] = useState(false)
+  const [preview, setPreview] = useState({ src: '' })
   const [formValues, setFormValues] = useState({
     name: '',
     city: '',
     street: '',
     buildNumber: '',
     img: '',
-  } as SinglePlaceTypes)
+    file: File,
+  } as unknown as SinglePlaceTypes)
 
-  // @TODO create a loading component !
-  const [loading, setLoading] = useState(false)
-
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, file: e.target.files![0] })
+    setPreview({ src: URL.createObjectURL(e.target.files![0]) })
+  }
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    const { name, city, street, file, buildNumber } = formValues
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('city', city)
+    formData.append('street', street)
+    formData.append('buildNumber', buildNumber)
+    formData.append('file', file!)
     try {
       ;(async () => {
-        if (formValues.img === '') {
-          formValues.img = office
-        }
-        await fetch(`${apiURL}/add-new-place`, {
+        await fetch(`${apiURL}/places/add-new`, {
           method: 'POST',
-          body: JSON.stringify({
-            ...formValues,
-          }),
-          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: formData,
         })
       })()
     } finally {
@@ -60,19 +66,19 @@ export const AddPlaceForm = () => {
         city: '',
         street: '',
         buildNumber: '',
-        img: '',
+        file: undefined,
       })
-      navigate('/places')
     }
+    navigate('/places')
   }
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      {formValues.img === '' ? (
-        <Img width={'200px'} height={'120px'} src={office} />
-      ) : (
-        <Img width={'200px'} height={'120px'} src={formValues.img} />
-      )}
+      <Img
+        width={'200px'}
+        height={'150px'}
+        src={preview.src ? preview.src : `${fileApi}default-office-image.jpeg`}
+      />
 
       <StyledLabel>
         Name:
@@ -142,18 +148,8 @@ export const AddPlaceForm = () => {
       </StyledLabel>
       {changeImg ? (
         <StyledLabel>
-          Link to your image
-          <Input
-            onChange={(e: InputOnChange) =>
-              setFormValues({
-                ...formValues,
-                img: e.target.value,
-              })
-            }
-            value={formValues.img}
-            name={'img'}
-            type={'string'}
-          />
+          File
+          <FileInput onChange={handleFile} name='file' />
         </StyledLabel>
       ) : null}
 
