@@ -25,7 +25,7 @@ export const StoragePage = () => {
       const products = await getAllProducts()
       setStorage(products)
     })()
-  }, [])
+  }, [storage])
 
   return (
     <>
