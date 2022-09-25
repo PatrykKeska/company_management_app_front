@@ -13,7 +13,7 @@ export const PlacesPage = () => {
       const products = await getAllProducts()
       setPlaces(products)
     })()
-  }, [places])
+  }, [])
 
   return (
     <>
