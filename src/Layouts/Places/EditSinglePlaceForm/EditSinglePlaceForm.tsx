@@ -3,14 +3,14 @@ import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { InputOnChange } from '../../../types/common.types'
 import { Button } from '../../../Components/Button /Button'
-import { ImgInput } from '../../../Components/Input/ImgInput'
 import { SinglePlaceContext } from '../../../context/SinglePlace/singlePlace.context'
 import { Img } from '../../../Components/Img/Img'
 import { Checkbox } from '../../../Components/Input/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
-import office from '../../../assets /img/office.jpeg'
-import { apiURL } from '../../../utils/api'
+import { FileInput } from '../../../Components/Input/FileInput'
+import { updateSinglePlace } from '../../../Pages/Places/functions/updateSinglePlace'
+import { deletePlace } from '../../../Pages/Places/functions/deletePlace'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -22,6 +22,8 @@ const StyledForm = styled.form`
 
 export const EditSinglePlaceForm = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+  const [preview, setPreview] = useState({ src: '' })
   const { placeDetails, setPlaceDetails } = useContext(SinglePlaceContext)
   const [toUpdateImg, setToUpdateImg] = useState(false)
   const [toDelete, setToDelete] = useState(false)
@@ -32,37 +34,20 @@ export const EditSinglePlaceForm = () => {
     setToDelete(!toDelete)
   }
 
-  // @TODO Create loading Component !!!
-  const [loading, setLoading] = useState(false)
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPlaceDetails({ ...placeDetails, file: e.target.files![0] })
+    setPreview({ src: URL.createObjectURL(e.target.files![0]) })
+  }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
       if (!toDelete) {
-        ;(async () => {
-          if (placeDetails.img === '') {
-            placeDetails.img = office
-          }
-          await fetch(`${apiURL}/places/update`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-              ...placeDetails,
-            }),
-            headers: { 'Content-Type': 'application/json' },
-          })
-        })()
+        await updateSinglePlace(placeDetails)
       } else {
-        ;(async () => {
-          await fetch(`${apiURL}/places/delete`, {
-            method: 'DELETE',
-            body: JSON.stringify({
-              ...placeDetails,
-            }),
-            headers: { 'Content-Type': 'application/json' },
-          })
-        })()
+        await deletePlace(placeDetails.id!)
       }
     } finally {
       setLoading(false)
@@ -72,7 +57,7 @@ export const EditSinglePlaceForm = () => {
         city: '',
         street: '',
         buildNumber: '',
-        img: '',
+        file: undefined,
       })
     }
     navigate('/places')
@@ -80,7 +65,11 @@ export const EditSinglePlaceForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <Img width={'200px'} height={'150px'} src={placeDetails.img} />
+      <Img
+        width={'200px'}
+        height={'150px'}
+        src={preview.src ? preview.src : placeDetails.img}
+      />
       <StyledLabel>
         Name:
         <Input
@@ -145,18 +134,10 @@ export const EditSinglePlaceForm = () => {
         <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg} />
       </StyledLabel>
       {toUpdateImg ? (
-        <ImgInput
-          onChange={(e: InputOnChange) =>
-            setPlaceDetails({
-              ...placeDetails,
-              img: e.target.value,
-            })
-          }
-          value={placeDetails.img}
-          name={'img'}
-          placeholder={'Pozostaw Puste jeżeli nie chcesz zmieniać zdjęcia'}
-          type={'string'}
-        />
+        <StyledLabel>
+          File
+          <FileInput onChange={handleFile} name='file' />
+        </StyledLabel>
       ) : null}
 
       <StyledLabel row>
