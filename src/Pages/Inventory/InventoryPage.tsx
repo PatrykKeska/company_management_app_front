@@ -1,110 +1,327 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import * as React from 'react'
+import {
+  Avatar,
+  Button,
+  Input,
+  createTheme,
+  TextField,
+  Modal,
+  Box,
+  Typography,
+  Alert,
+} from '@mui/material'
+import { useTheme, StylesProvider } from '@material-ui/core/styles'
 import { Nav } from '../../Layouts/GeneralUse/Nav/Nav'
 import { Wrapper } from '../../Components/Wrapper /Wrapper'
-import axios from 'axios'
 import { SingleProductTypes } from '../../types/Product.types'
 import { SinglePlaceTypes } from '../../types/Places.types'
-import { InventoryPlaceSummary } from '../../Layouts/inventory /InventoryPlaceSummary'
-import { InventoryItemSummary } from '../../Layouts/inventory /InventoryItemSummary'
-import { InventoryFormLayout } from '../../Layouts/inventory /InventoryFormLayout'
-import { InventoryTableItem } from '../../Layouts/inventory /InventoryTableItem'
-import { InventoryTablePlace } from '../../Layouts/inventory /InventoryTablePlace'
-import { apiURL } from '../../utils/api'
-import {InputOnChange} from '../../types/common.types';
+import { getAllProducts } from '../Products/functions/getAllProducts'
+import { getAllPlaces } from '../Places/functions/getAllPlaces'
+import { apiURL, fileApi } from '../../utils/api'
+import { ProductInPlace } from '../../types/product-in-place'
+import { ProductToPick } from '../../types/productToPick'
+import { PlaceToPick } from '../../types/PlaceToPick'
+import styled, { ThemeProvider as SCThemeProvider } from 'styled-components'
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 370,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+})
+
+interface ActivePlaceOrProduct {
+  isActive: boolean
+}
+
+const ProductContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  gap: 2,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: 'black',
+  fontSize: 'small',
+  padding: 8,
+  borderRadius: 4,
+
+  [theme.breakpoints.up('xs')]: {
+    width: '170px',
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: '250px',
+  },
+}))
+const SingleProduct = styled(ProductContainer)<ActivePlaceOrProduct>`
+  background-color: ${({ isActive }) => (!isActive ? 'white' : '#beff00')};
+  transition: 0.3s linear background-color;
+`
+
+const PlaceContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  gap: 2,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  color: 'darkblue',
+  fontSize: 'small',
+  padding: 8,
+  borderRadius: 4,
+  [theme.breakpoints.up('xs')]: {
+    width: '170px',
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: '250px',
+  },
+}))
+
+const SinglePlace = styled(PlaceContainer)<ActivePlaceOrProduct>`
+  background-color: ${({ isActive }) => (!isActive ? 'white' : '#beff00')};
+  transition: 0.3s linear background-color;
+`
+
+const Container = styled('div')({
+  display: 'grid',
+  justifyItems: 'center',
+  gap: 5,
+  padding: 8,
+  borderRadius: 4,
+})
+
+const GridContainer = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2,1fr)',
+  gap: 2,
+  paddingTop: '30px',
+})
+
+const FlexContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  gap: 10,
+})
+
+const MyButton = styled(Button)({
+  width: 'medium',
+  fontSize: 'small',
+  height: '25px',
+})
+
+const ValueInput = styled(Input)({
+  width: '100px',
+})
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+}
 
 export const InventoryPage = () => {
-  const [items, setItems] = useState(Array<SingleProductTypes>)
-  const [places, setPlaces] = useState(Array<SinglePlaceTypes>)
-  const [isPicked, setIsPicked] = useState({
-    pickedItem: false,
-    pickedPlace: false,
-  })
-  const [itemsBasket, setItemBasket] = useState({} as SingleProductTypes)
-  const [pickedPlace, setPickedPlace] = useState({} as SinglePlaceTypes)
+  const [products, setProducts] = useState([] as ProductToPick[])
+  const [places, setPlaces] = useState([] as PlaceToPick[])
+  const [message, setMessage] = useState({ title: '', message: '' })
+  const [assigned, setAssigned] = useState({} as ProductInPlace)
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
-  useEffect(() => {
-    ;(async () => {
-      const items = await axios(`${apiURL}/storage`)
-      setItems(items.data.message)
-      const places = await axios(`${apiURL}/places`)
-      setPlaces(places.data.message)
-    })()
-  }, [isPicked])
-
-  const handleItems = (item: SingleProductTypes) => {
-    setItemBasket({
-      ...item,
-      amount: 0,
-    })
-    setIsPicked({ ...isPicked, pickedItem: true })
+  const handleProductPick = (id: string) => {
+    setAssigned({ ...assigned, amount: 0, productId: id })
+    products
+      .filter((product) => {
+        if (product.isPicked) {
+          product.isPicked = false
+        }
+        if (product.id === id) {
+          product.isPicked = true
+        }
+      })
+      .map((product) => (product.isPicked = !product.isPicked))
   }
 
-  const handlePlaces = (place: SinglePlaceTypes) => {
-    setPickedPlace({
-      ...place,
-    })
-    setIsPicked({ ...isPicked, pickedPlace: true })
+  const handlePlacePick = (id: string) => {
+    setAssigned({ placeId: '', productId: '', amount: 0 })
+    places
+      .filter((place) => {
+        if (place.isPicked) {
+          place.isPicked = false
+        }
+        if (place.id === id) {
+          place.isPicked = true
+        }
+      })
+      .map((place) => (place.isPicked = !place.isPicked))
+    setAssigned({ ...assigned, placeId: id })
   }
 
-  const handleSubbmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (isPicked.pickedItem && isPicked.pickedPlace) {
-      try {
-        await axios.post(
-          `${apiURL}/inventory/check`,
-          { items: itemsBasket, place: pickedPlace },
-          {
-            headers: { 'Content-type': 'application/json' },
-          },
-        )
-      } catch (err) {
-        console.log(err)
-      } finally {
-        setIsPicked({ pickedItem: false, pickedPlace: false })
+    try {
+      const response = await fetch(`${apiURL}/product-in-places/assign`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(assigned),
+      })
+      const data = await response.json()
+      if (data.isSuccess) {
+        await setMessage({ title: 'Success', message: data.message })
+      } else {
+        await setMessage({ title: 'Fail', message: data.message })
       }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      handleOpen()
     }
   }
 
-  const handleAmountInput = (e: InputOnChange) => {
-    setItemBasket({
-      ...itemsBasket,
-      amount: Number(e.target.value),
-    })
+  const handleInput = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setAssigned({ ...assigned, amount: Number(e.target.value) })
   }
+  useEffect(() => {
+    ;(async () => {
+      const fetchProducts = (await getAllProducts()) as SingleProductTypes[]
+      const fetchPlaces = (await getAllPlaces()) as SinglePlaceTypes[]
+      const singleProduct = fetchProducts
+        .filter((isAvailable) => isAvailable.productStatus === 1)
+        .map((product) => {
+          return { ...product, isPicked: false }
+        })
+      const singlePlace = fetchPlaces
+        .filter((isAvailable) => isAvailable.placeStatus === 1)
+        .map((place) => {
+          return { ...place, isPicked: false }
+        })
+      setProducts(singleProduct)
+      setPlaces(singlePlace)
+    })()
+  }, [open])
 
   return (
     <Wrapper>
       <Nav />
-      <InventoryTablePlace place={places} onClick={handlePlaces} />
-
-      <InventoryTableItem onClick={handleItems} items={items} />
-
-      {isPicked.pickedPlace && (
-        <InventoryPlaceSummary
-          img={pickedPlace.img}
-          name={pickedPlace.name}
-          city={pickedPlace.city}
-          street={pickedPlace.street}
-          buildNumber={pickedPlace.buildNumber}
-        />
-      )}
-
-      {isPicked.pickedItem && (
-        <>
-          <InventoryItemSummary
-            name={itemsBasket.name}
-            price={itemsBasket.price}
-            amount={itemsBasket.amount}
-            dateOfBuy={itemsBasket.dateOfBuy}
-            img={itemsBasket.img}
-          />
-          <InventoryFormLayout
-            onSubmit={handleSubbmit}
-            onChange={handleAmountInput}
-            amount={itemsBasket.amount}
-          />{' '}
-        </>
-      )}
+      <StylesProvider injectFirst>
+        <SCThemeProvider theme={theme}>
+          <GridContainer>
+            <FlexContainer>
+              <Container>
+                <Typography>Places</Typography>
+                {places.map((place) => (
+                  <SinglePlace isActive={place.isPicked} key={place.id}>
+                    <Avatar
+                      sx={{ width: 70, height: 70 }}
+                      srcSet={`${fileApi}${place.img}`}
+                    />
+                    <p>{place.name}</p>
+                    <p>City: {place.city}</p>
+                    <p>Street: {place.street}</p>
+                    <p>BN: {place.buildNumber}</p>
+                    <MyButton
+                      variant='contained'
+                      onClick={() => handlePlacePick(place.id!)}
+                    >
+                      Pick
+                    </MyButton>
+                  </SinglePlace>
+                ))}
+              </Container>
+            </FlexContainer>
+            <FlexContainer>
+              <Container>
+                <Typography>Products</Typography>
+                {products.map((product) => (
+                  <SingleProduct isActive={product.isPicked} key={product.id}>
+                    <Avatar
+                      sx={{ width: 70, height: 70 }}
+                      srcSet={`${fileApi}${product.img}`}
+                    />
+                    <p>{product.name}</p>
+                    <p>Price: {product.price}</p>
+                    <p>Amount: {product.amount}</p>
+                    <p>Date: {product.dateOfBuy}</p>
+                    <MyButton
+                      variant='contained'
+                      onClick={() => handleProductPick(product.id!)}
+                    >
+                      Pick
+                    </MyButton>
+                    {product.isPicked && (
+                      <>
+                        <ValueInput
+                          onChange={(e) => handleInput(e)}
+                          fullWidth={false}
+                          size='small'
+                          type='number'
+                          inputProps={{
+                            min: '1',
+                          }}
+                        />
+                        <MyButton
+                          variant='contained'
+                          onClick={handleSubmit}
+                          size={'small'}
+                        >
+                          Add
+                        </MyButton>
+                      </>
+                    )}
+                  </SingleProduct>
+                ))}
+              </Container>
+            </FlexContainer>
+          </GridContainer>
+        </SCThemeProvider>
+      </StylesProvider>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={style}>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+          >
+            {message.title}
+          </Typography>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+          >
+            {message.message}
+          </Typography>
+        </Box>
+      </Modal>
     </Wrapper>
   )
 }
