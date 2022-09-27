@@ -7,4 +7,5 @@ export interface SinglePlaceTypes {
   img?: string
   file?: File
   key?: string
+  placeStatus?: number
 }

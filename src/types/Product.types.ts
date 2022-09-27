@@ -7,4 +7,5 @@ export interface SingleProductTypes {
   id?: string
   key?: string
   file?: File
+  productStatus?: number
 }
