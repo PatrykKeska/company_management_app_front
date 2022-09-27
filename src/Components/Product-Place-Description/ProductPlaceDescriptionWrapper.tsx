@@ -1,7 +1,12 @@
 import styled from 'styled-components'
-
-export const ProductPlaceDescriptionWrapper = styled.div`
+interface Props {
+  isActive: number
+}
+export const ProductPlaceDescriptionWrapper = styled.div<Props>`
   width: 350px;
+  filter: ${({ isActive }) =>
+    isActive === 0 ? 'grayscale(1)opacity(0.7)' : null};
+  position: relative;
   margin: 10px auto;
   height: 330px;
   display: grid;
