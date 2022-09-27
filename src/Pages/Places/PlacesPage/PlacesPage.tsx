@@ -3,14 +3,14 @@ import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import { PlaceDescription } from '../../../Layouts/Places/PlaceDescription/PlaceDescription'
 import { SinglePlaceTypes } from '../../../types/Places.types'
 import { PlaceDescriptionWrapper } from '../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper'
-import { getAllProducts } from '../functions/getAllProducts'
+import { getAllPlaces } from '../functions/getAllPlaces'
 import { fileApi } from '../../../utils/api'
 
 export const PlacesPage = () => {
   const [places, setPlaces] = useState([] as SinglePlaceTypes[])
   useEffect(() => {
     ;(async () => {
-      const products = await getAllProducts()
+      const products = await getAllPlaces()
       setPlaces(products)
     })()
   }, [])
@@ -28,6 +28,7 @@ export const PlacesPage = () => {
             city={place.city}
             street={place.street}
             buildNumber={place.buildNumber}
+            placeStatus={place.placeStatus}
           />
         ))}
       </PlaceDescriptionWrapper>

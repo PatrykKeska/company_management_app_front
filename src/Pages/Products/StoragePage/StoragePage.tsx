@@ -25,7 +25,7 @@ export const StoragePage = () => {
       const products = await getAllProducts()
       setStorage(products)
     })()
-  }, [storage])
+  }, [])
 
   return (
     <>
@@ -40,6 +40,7 @@ export const StoragePage = () => {
             amount={item.amount}
             dateOfBuy={item.dateOfBuy}
             img={`${fileApi}${item.img}`}
+            productStatus={item.productStatus}
           />
         ))}
       </GridWrapper>
