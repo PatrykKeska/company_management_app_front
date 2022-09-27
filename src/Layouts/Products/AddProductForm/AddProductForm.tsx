@@ -40,7 +40,6 @@ export const AddProductForm = () => {
 
   const addNewProduct = async (e: FormEvent) => {
     e.preventDefault()
-    console.log(formValues.file)
     setLoading(true)
     const formData = new FormData()
     formData.append('file', formValues.file!)
