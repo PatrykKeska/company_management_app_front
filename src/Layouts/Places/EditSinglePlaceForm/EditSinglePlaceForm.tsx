@@ -11,6 +11,8 @@ import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { FileInput } from '../../../Components/Input/FileInput'
 import { updateSinglePlace } from '../../../Pages/Places/functions/updateSinglePlace'
 import { deletePlace } from '../../../Pages/Places/functions/deletePlace'
+import { restorePlace } from '../../../Pages/Places/functions/restorePlace'
+import { makePlaceUnAvailable } from '../../../Pages/Places/functions/makePlaceUnAvilable'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -25,15 +27,38 @@ export const EditSinglePlaceForm = () => {
   const [loading, setLoading] = useState(false)
   const [preview, setPreview] = useState({ src: '' })
   const { placeDetails, setPlaceDetails } = useContext(SinglePlaceContext)
-  const [toUpdateImg, setToUpdateImg] = useState(false)
+  const [imageStatus, setImageStatus] = useState(false)
+  const [restore, setRestore] = useState(false)
+  const [unavailable, setUnavailable] = useState(false)
   const [toDelete, setToDelete] = useState(false)
-  const handleToUpdateImg = () => {
-    setToUpdateImg(!toUpdateImg)
-  }
+  const { placeStatus, street, img, city, name, file, id, buildNumber } =
+    placeDetails
+
   const handleToDelete = () => {
+    setImageStatus(false)
+    setRestore(false)
+    setUnavailable(false)
     setToDelete(!toDelete)
   }
 
+  const setImgStatus = () => {
+    setToDelete(false)
+    setUnavailable(false)
+    setRestore(false)
+    setImageStatus(!imageStatus)
+  }
+  const setRestoreStatus = () => {
+    setImageStatus(false)
+    setToDelete(false)
+    setUnavailable(false)
+    setRestore(!restore)
+  }
+  const setUnavailableStatus = () => {
+    setImageStatus(false)
+    setToDelete(false)
+    setRestore(false)
+    setUnavailable(!unavailable)
+  }
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlaceDetails({ ...placeDetails, file: e.target.files![0] })
     setPreview({ src: URL.createObjectURL(e.target.files![0]) })
@@ -46,8 +71,13 @@ export const EditSinglePlaceForm = () => {
     try {
       if (!toDelete) {
         await updateSinglePlace(placeDetails)
+      }
+      if (restore && id) {
+        await restorePlace(id)
+      } else if (unavailable && id) {
+        await makePlaceUnAvailable(id)
       } else {
-        await deletePlace(placeDetails.id!)
+        await deletePlace(id!)
       }
     } finally {
       setLoading(false)
@@ -68,14 +98,15 @@ export const EditSinglePlaceForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : placeDetails.img}
+        src={preview.src ? preview.src : img}
       />
       <StyledLabel>
         Name:
         <Input
+          disabled={unavailable || toDelete || restore || placeStatus === 0}
           type={'text'}
           name={'name'}
-          value={placeDetails.name}
+          value={name}
           onChange={(event: InputOnChange) =>
             setPlaceDetails({
               ...placeDetails,
@@ -88,9 +119,10 @@ export const EditSinglePlaceForm = () => {
       <StyledLabel>
         City:
         <Input
+          disabled={unavailable || toDelete || restore || placeStatus === 0}
           type={'text'}
           name={'city'}
-          value={placeDetails.city}
+          value={city}
           onChange={(event: InputOnChange) =>
             setPlaceDetails({
               ...placeDetails,
@@ -103,9 +135,10 @@ export const EditSinglePlaceForm = () => {
       <StyledLabel>
         Street:
         <Input
+          disabled={unavailable || toDelete || restore || placeStatus === 0}
           type={'text'}
           name={'street'}
-          value={placeDetails.street}
+          value={street}
           onChange={(event: InputOnChange) =>
             setPlaceDetails({
               ...placeDetails,
@@ -118,9 +151,10 @@ export const EditSinglePlaceForm = () => {
       <StyledLabel>
         Number of the building:
         <Input
+          disabled={unavailable || toDelete || restore || placeStatus === 0}
           type={'text'}
           name={'buildNumber'}
-          value={placeDetails.buildNumber}
+          value={buildNumber}
           onChange={(event: InputOnChange) =>
             setPlaceDetails({
               ...placeDetails,
@@ -129,11 +163,14 @@ export const EditSinglePlaceForm = () => {
           }
         />
       </StyledLabel>
-      <StyledLabel row>
-        Change image
-        <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg} />
-      </StyledLabel>
-      {toUpdateImg ? (
+      {placeStatus === 1 ? (
+        <StyledLabel row>
+          Change image
+          <Checkbox checked={imageStatus} onChange={setImgStatus} />
+        </StyledLabel>
+      ) : null}
+
+      {imageStatus ? (
         <StyledLabel>
           File
           <FileInput onChange={handleFile} name='file' />
@@ -144,11 +181,23 @@ export const EditSinglePlaceForm = () => {
         Delete from database
         <Checkbox checked={toDelete} onChange={handleToDelete} />
       </StyledLabel>
-      {toDelete ? (
-        <Button small={true}>Delete</Button>
+      {placeStatus === 0 ? (
+        <StyledLabel row>
+          Restore
+          <Checkbox checked={restore} onChange={setRestoreStatus} />
+        </StyledLabel>
       ) : (
-        <Button small={true}>Update</Button>
+        <StyledLabel row>
+          Make it Unavailable
+          <Checkbox checked={unavailable} onChange={setUnavailableStatus} />
+        </StyledLabel>
       )}
+      <Button small={true}>
+        {(toDelete && 'Delete') ||
+          (restore && 'Restore') ||
+          (unavailable && 'Change Status') ||
+          'Update'}
+      </Button>
     </StyledForm>
   )
 }

@@ -11,6 +11,8 @@ import { SingleItemContext } from '../../../context/SingleItem/SingleItem.contex
 import { FileInput } from '../../../Components/Input/FileInput'
 import { updateProduct } from '../../../Pages/Products/functions/updateProduct'
 import { deleteProduct } from '../../../Pages/Products/functions/deleteProduct'
+import { restoreProduct } from '../../../Pages/Products/functions/restoreProduct'
+import { makeProductUnavailable } from '../../../Pages/Products/functions/makeProductUnavailable'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -26,28 +28,51 @@ export const EditSingleItemForm = () => {
   const [preview, setPreview] = useState({ src: '' })
   const [toUpdateImg, setToUpdateImg] = useState(false)
   const [toDelete, setToDelete] = useState(false)
-
+  const [unavailable, setUnavailable] = useState(false)
+  const [restore, setRestore] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { id, img, amount, file, name, dateOfBuy, price, productStatus } =
+    itemDetails
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItemDetails({ ...itemDetails, file: e.target.files![0] })
     setPreview({ src: URL.createObjectURL(e.target.files![0]) })
   }
   const handleToUpdateImg = () => {
     setToUpdateImg(!toUpdateImg)
+    setToDelete(false)
+    setUnavailable(false)
     setPreview({ src: '' })
   }
   const handleToDelete = () => {
+    setRestore(false)
+    setToUpdateImg(false)
+    setUnavailable(false)
     setToDelete(!toDelete)
   }
 
-  const [loading, setLoading] = useState(false)
+  const setRestoreStatus = () => {
+    setToDelete(false)
+    setToUpdateImg(false)
+    setRestore(!restore)
+  }
 
-  // @TODO Create API endpoints for handleSubmit !!!
+  const setUnavailableStatus = () => {
+    setToDelete(false)
+    setToUpdateImg(false)
+    setUnavailable(!unavailable)
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
     try {
       if (!toDelete) {
         await updateProduct(itemDetails)
+      }
+      if (restore && amount > 0) {
+        await restoreProduct(itemDetails.id!, itemDetails.amount)
+      } else if (unavailable && id) {
+        await makeProductUnavailable(id)
       } else {
         await deleteProduct(itemDetails.id!)
       }
@@ -74,6 +99,7 @@ export const EditSingleItemForm = () => {
       <StyledLabel>
         Name:
         <Input
+          disabled={toDelete || unavailable || restore || productStatus === 0}
           type={'text'}
           name={'name'}
           value={itemDetails.name}
@@ -89,6 +115,7 @@ export const EditSingleItemForm = () => {
       <StyledLabel>
         Price:
         <Input
+          disabled={toDelete || unavailable || restore || productStatus === 0}
           type={'number'}
           name={'price'}
           value={itemDetails.price}
@@ -104,6 +131,9 @@ export const EditSingleItemForm = () => {
       <StyledLabel>
         Amount:
         <Input
+          disabled={
+            toDelete || unavailable || (productStatus === 0 && !restore)
+          }
           type={'number'}
           name={'amount'}
           value={itemDetails.amount}
@@ -119,6 +149,7 @@ export const EditSingleItemForm = () => {
       <StyledLabel>
         Date Of Buy:
         <Input
+          disabled={toDelete || unavailable || restore || productStatus === 0}
           type={'text'}
           name={'dateOfBuy'}
           value={itemDetails.dateOfBuy}
@@ -130,10 +161,12 @@ export const EditSingleItemForm = () => {
           }
         />
       </StyledLabel>
-      <StyledLabel row>
-        Change image
-        <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg} />
-      </StyledLabel>
+      {productStatus === 1 ? (
+        <StyledLabel row>
+          Change image
+          <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg} />
+        </StyledLabel>
+      ) : null}
 
       {toUpdateImg ? (
         <>
@@ -145,11 +178,25 @@ export const EditSingleItemForm = () => {
         Delete from database
         <Checkbox checked={toDelete} onChange={handleToDelete} />
       </StyledLabel>
-      {toDelete ? (
-        <Button small={true}>Delete</Button>
+
+      {productStatus === 0 ? (
+        <StyledLabel row>
+          Restore
+          <Checkbox checked={restore} onChange={setRestoreStatus} />
+        </StyledLabel>
       ) : (
-        <Button small={true}>Update</Button>
+        <StyledLabel row>
+          Make it Unavailable
+          <Checkbox checked={unavailable} onChange={setUnavailableStatus} />
+        </StyledLabel>
       )}
+
+      <Button small={true}>
+        {(toDelete && 'Delete') ||
+          (restore && 'Restore') ||
+          (unavailable && 'Change Status') ||
+          'Update'}
+      </Button>
     </StyledForm>
   )
 }
