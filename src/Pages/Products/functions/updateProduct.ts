@@ -10,9 +10,15 @@ export const updateProduct = async (itemDetails: SingleProductTypes) => {
   formData.append('amount', String(amount))
   formData.append('dateOfBuy', dateOfBuy)
   formData.append('file', file!)
-  await fetch(`${apiURL}/products/update`, {
+  const data = await fetch(`${apiURL}/products/update`, {
     method: 'PATCH',
     credentials: 'include',
     body: formData,
   })
+  const response = await data.json()
+  if (response.isSuccess) {
+    return { title: 'Success', message: response.message }
+  } else {
+    return { title: 'Fail', message: response.message }
+  }
 }

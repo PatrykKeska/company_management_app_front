@@ -10,9 +10,15 @@ export const updateSinglePlace = async (placeDetails: SinglePlaceTypes) => {
   formData.append('city', city)
   formData.append('buildNumber', buildNumber)
   formData.append('file', file!)
-  await fetch(`${apiURL}/places/update`, {
+  const data = await fetch(`${apiURL}/places/update`, {
     method: 'PATCH',
     credentials: 'include',
     body: formData,
   })
+  const response = await data.json()
+  if (response.isSuccess) {
+    return { title: 'Success', message: response.message }
+  } else {
+    return { title: 'Fail', message: response.message }
+  }
 }
