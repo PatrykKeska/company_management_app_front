@@ -13,6 +13,8 @@ import { updateProduct } from '../../../Pages/Products/functions/updateProduct'
 import { deleteProduct } from '../../../Pages/Products/functions/deleteProduct'
 import { restoreProduct } from '../../../Pages/Products/functions/restoreProduct'
 import { makeProductUnavailable } from '../../../Pages/Products/functions/makeProductUnavailable'
+import { Box, Modal, Typography } from '@mui/material'
+import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -27,10 +29,20 @@ export const EditSingleItemForm = () => {
   const { itemDetails, setItemDetails } = useContext(SingleItemContext)
   const [preview, setPreview] = useState({ src: '' })
   const [toUpdateImg, setToUpdateImg] = useState(false)
+  const [responseMessage, setResponseMessage] = useState({
+    title: '',
+    message: '',
+  })
   const [toDelete, setToDelete] = useState(false)
   const [unavailable, setUnavailable] = useState(false)
   const [restore, setRestore] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => {
+    setOpen(false)
+    navigate('/storage')
+  }
   const { id, img, amount, file, name, dateOfBuy, price, productStatus } =
     itemDetails
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,19 +78,27 @@ export const EditSingleItemForm = () => {
     e.preventDefault()
     setLoading(true)
     try {
-      if (!toDelete) {
-        await updateProduct(itemDetails)
+      if (!toDelete && !restore && !unavailable) {
+        const resMessage = await updateProduct(itemDetails)
+        setResponseMessage(resMessage)
       }
       if (restore && amount > 0) {
-        await restoreProduct(itemDetails.id!, itemDetails.amount)
+        const resMessage = await restoreProduct(
+          itemDetails.id!,
+          itemDetails.amount,
+        )
+        setResponseMessage(resMessage)
       } else if (unavailable && id) {
-        await makeProductUnavailable(id)
-      } else {
-        await deleteProduct(itemDetails.id!)
+        const resMessage = await makeProductUnavailable(id)
+        setResponseMessage(resMessage)
+      }
+      if (toDelete) {
+        const resMessage = await deleteProduct(itemDetails.id!)
+        setResponseMessage(resMessage)
       }
     } finally {
+      handleOpen()
       setLoading(false)
-      navigate('/storage')
       setItemDetails({
         name: '',
         price: 0,
@@ -197,6 +217,40 @@ export const EditSingleItemForm = () => {
           (unavailable && 'Change Status') ||
           'Update'}
       </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={materialModalStyle}>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+          >
+            {responseMessage.title}
+          </Typography>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+          >
+            {responseMessage.message}
+          </Typography>
+        </Box>
+      </Modal>
     </StyledForm>
   )
 }
