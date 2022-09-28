@@ -1,37 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Wrapper } from '../../../Components/Wrapper /Wrapper'
 import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import styled from 'styled-components'
 import { ProductDescription } from '../../../Layouts/Products/ProductDescription/ProductDescription'
-import { SingleProductTypes } from '../../../types/Product.types'
 import { fileApi } from '../../../utils/api'
-import { getAllProducts } from '../functions/getAllProducts'
+import { useGetAllProductsHook } from '../functions/useGetAllProductsHook'
+import { Grid } from '@mui/material'
 
 const GridWrapper = styled(Wrapper)`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 100px;
-
-  @media (min-width: 800px) {
-    flex-direction: row;
-    flex-wrap: wrap;
+  @media (max-width: 800px) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px;
   }
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
 `
 export const StoragePage = () => {
-  const [storage, setStorage] = useState([] as SingleProductTypes[])
-  useEffect(() => {
-    ;(async () => {
-      const products = await getAllProducts()
-      setStorage(products)
-    })()
-  }, [])
-
+  const allProducts = useGetAllProductsHook()
   return (
     <>
       <Nav />
       <GridWrapper>
-        {storage.map((item) => (
+        {allProducts.map((item) => (
           <ProductDescription
             id={item.id}
             key={item.id}

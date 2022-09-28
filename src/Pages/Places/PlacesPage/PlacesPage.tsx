@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import { PlaceDescription } from '../../../Layouts/Places/PlaceDescription/PlaceDescription'
-import { SinglePlaceTypes } from '../../../types/Places.types'
 import { PlaceDescriptionWrapper } from '../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper'
-import { getAllPlaces } from '../functions/getAllPlaces'
 import { fileApi } from '../../../utils/api'
+import { useGetAllPlacesHook } from '../functions/useGetAllPlacesHook'
 
 export const PlacesPage = () => {
-  const [places, setPlaces] = useState([] as SinglePlaceTypes[])
-  useEffect(() => {
-    ;(async () => {
-      const products = await getAllPlaces()
-      setPlaces(products)
-    })()
-  }, [])
-
+  const allPlaces = useGetAllPlacesHook()
   return (
     <>
       <Nav />
       <PlaceDescriptionWrapper>
-        {places.map((place) => (
+        {allPlaces.map((place) => (
           <PlaceDescription
             id={place.id}
             key={place.id}
