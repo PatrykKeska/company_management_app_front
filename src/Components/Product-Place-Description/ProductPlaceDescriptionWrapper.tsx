@@ -7,7 +7,7 @@ export const ProductPlaceDescriptionWrapper = styled.div<Props>`
   filter: ${({ isActive }) =>
     isActive === 0 ? 'grayscale(1)opacity(0.7)' : null};
   position: relative;
-  margin: 10px auto;
+  margin: 10px 5px;
   height: 330px;
   display: grid;
   padding: 10px;
@@ -18,7 +18,7 @@ export const ProductPlaceDescriptionWrapper = styled.div<Props>`
   border-collapse: collapse;
 
   @media (min-width: 500px) {
-    width: 600px;
+    width: 450px;
     height: 400px;
   }
 

@@ -5,13 +5,11 @@ import {
   Button,
   Input,
   createTheme,
-  TextField,
   Modal,
   Box,
   Typography,
-  Alert,
 } from '@mui/material'
-import { useTheme, StylesProvider } from '@material-ui/core/styles'
+import { StylesProvider } from '@material-ui/core/styles'
 import { Nav } from '../../Layouts/GeneralUse/Nav/Nav'
 import { Wrapper } from '../../Components/Wrapper /Wrapper'
 import { SingleProductTypes } from '../../types/Product.types'
@@ -50,6 +48,7 @@ const ProductContainer = styled('div')(({ theme }) => ({
   fontSize: 'small',
   padding: 8,
   borderRadius: 4,
+  boxShadow: '0 0 10px #1ca600',
 
   [theme.breakpoints.up('xs')]: {
     width: '170px',
@@ -73,6 +72,7 @@ const PlaceContainer = styled('div')(({ theme }) => ({
   fontSize: 'small',
   padding: 8,
   borderRadius: 4,
+  boxShadow: '0 0 10px #1ca600',
   [theme.breakpoints.up('xs')]: {
     width: '170px',
   },
@@ -89,7 +89,7 @@ const SinglePlace = styled(PlaceContainer)<ActivePlaceOrProduct>`
 const Container = styled('div')({
   display: 'grid',
   justifyItems: 'center',
-  gap: 5,
+  gap: 10,
   padding: 8,
   borderRadius: 4,
 })
@@ -97,7 +97,7 @@ const Container = styled('div')({
 const GridContainer = styled('div')({
   display: 'grid',
   gridTemplateColumns: 'repeat(2,1fr)',
-  gap: 2,
+  gap: 5,
   paddingTop: '30px',
 })
 
@@ -117,13 +117,15 @@ const MyButton = styled(Button)({
 const ValueInput = styled(Input)({
   width: '100px',
 })
-const style = {
+export const materialModalStyle = {
   position: 'absolute',
+  color: 'black',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: '#ff8900',
+  textShadow: '0 1px 5px white',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
@@ -294,7 +296,7 @@ export const InventoryPage = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box sx={materialModalStyle}>
           <Typography
             style={{
               display: 'flex',
