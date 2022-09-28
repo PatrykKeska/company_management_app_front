@@ -13,6 +13,8 @@ import { updateSinglePlace } from '../../../Pages/Places/functions/updateSingleP
 import { deletePlace } from '../../../Pages/Places/functions/deletePlace'
 import { restorePlace } from '../../../Pages/Places/functions/restorePlace'
 import { makePlaceUnAvailable } from '../../../Pages/Places/functions/makePlaceUnAvilable'
+import { Box, Modal, Typography } from '@mui/material'
+import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -30,6 +32,16 @@ export const EditSinglePlaceForm = () => {
   const [imageStatus, setImageStatus] = useState(false)
   const [restore, setRestore] = useState(false)
   const [unavailable, setUnavailable] = useState(false)
+  const [responseMessage, setResponseMessage] = useState({
+    title: '',
+    message: '',
+  })
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => {
+    setOpen(false)
+    navigate('/places')
+  }
   const [toDelete, setToDelete] = useState(false)
   const { placeStatus, street, img, city, name, file, id, buildNumber } =
     placeDetails
@@ -69,17 +81,22 @@ export const EditSinglePlaceForm = () => {
     setLoading(true)
 
     try {
-      if (!toDelete) {
-        await updateSinglePlace(placeDetails)
+      if (!toDelete && !unavailable && !restore) {
+        const resMessage = await updateSinglePlace(placeDetails)
+        setResponseMessage(resMessage)
       }
       if (restore && id) {
-        await restorePlace(id)
+        const resMessage = await restorePlace(id)
+        setResponseMessage(resMessage)
       } else if (unavailable && id) {
-        await makePlaceUnAvailable(id)
-      } else {
-        await deletePlace(id!)
+        const resMessage = await makePlaceUnAvailable(id)
+        setResponseMessage(resMessage)
+      } else if (toDelete) {
+        const resMessage = await deletePlace(id!)
+        setResponseMessage(resMessage)
       }
     } finally {
+      handleOpen()
       setLoading(false)
 
       setPlaceDetails({
@@ -90,7 +107,6 @@ export const EditSinglePlaceForm = () => {
         file: undefined,
       })
     }
-    navigate('/places')
   }
 
   return (
@@ -198,6 +214,40 @@ export const EditSinglePlaceForm = () => {
           (unavailable && 'Change Status') ||
           'Update'}
       </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={materialModalStyle}>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+          >
+            {responseMessage.title}
+          </Typography>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+          >
+            {responseMessage.message}
+          </Typography>
+        </Box>
+      </Modal>
     </StyledForm>
   )
 }
