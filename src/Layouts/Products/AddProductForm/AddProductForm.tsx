@@ -9,8 +9,11 @@ import { InputOnChange } from '../../../types/common.types'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { useNavigate } from 'react-router-dom'
 import { Checkbox } from '../../../Components/Input/Checkbox'
-import { apiURL, fileApi } from '../../../utils/api'
+import { fileApi } from '../../../utils/api'
 import { FileInput } from '../../../Components/Input/FileInput'
+import { createNewProduct } from '../../../Pages/Places/functions/createNewProduct'
+import { Box, Modal, Typography } from '@mui/material'
+import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -24,7 +27,16 @@ export const AddProductForm = () => {
   const navigate = useNavigate()
   const [changeImg, toSetChangeImg] = useState(false)
   const [preview, setPreview] = useState({ src: '' })
-  const [loading, setLoading] = useState(false)
+  const [responseMessage, setResponseMessage] = useState({
+    title: '',
+    message: '',
+  })
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => {
+    setOpen(false)
+    navigate('/storage')
+  }
   const [formValues, setFormValues] = useState({
     name: '',
     price: 0,
@@ -40,21 +52,11 @@ export const AddProductForm = () => {
 
   const addNewProduct = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    const formData = new FormData()
-    formData.append('file', formValues.file!)
-    formData.append('name', formValues.name)
-    formData.append('price', String(formValues.price))
-    formData.append('amount', String(formValues.amount))
-    formData.append('dateOfBuy', formValues.dateOfBuy)
     try {
-      await fetch(`${apiURL}/products/add-new`, {
-        method: 'POST',
-        credentials: 'include',
-        body: formData,
-      })
+      const resMessage = await createNewProduct(formValues)
+      setResponseMessage(resMessage)
     } finally {
-      setLoading(false)
+      handleOpen()
       setFormValues({
         name: '',
         price: 0,
@@ -62,13 +64,10 @@ export const AddProductForm = () => {
         dateOfBuy: '',
         file: undefined,
       })
-      navigate('/storage')
     }
   }
 
-  return loading ? (
-    <SendingPopUp />
-  ) : (
+  return (
     <StyledForm onSubmit={addNewProduct}>
       <Img
         width={'200px'}
@@ -150,6 +149,40 @@ export const AddProductForm = () => {
         </StyledLabel>
       ) : null}
       <Button>Add</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={materialModalStyle}>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+          >
+            {responseMessage.title}
+          </Typography>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+          >
+            {responseMessage.message}
+          </Typography>
+        </Box>
+      </Modal>
     </StyledForm>
   )
 }
