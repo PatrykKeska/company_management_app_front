@@ -7,9 +7,12 @@ import { InputOnChange } from '../../../types/common.types'
 import { Checkbox } from '../../../Components/Input/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
-import { apiURL, fileApi } from '../../../utils/api'
+import { fileApi } from '../../../utils/api'
 import { Img } from '../../../Components/Img/Img'
 import { FileInput } from '../../../Components/Input/FileInput'
+import { Box, Modal, Typography } from '@mui/material'
+import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
+import { createNewPlace } from '../../../Pages/Products/functions/createNewPlace'
 
 interface Props {
   row?: boolean
@@ -25,7 +28,16 @@ const StyledForm = styled.form`
 
 export const AddPlaceForm = () => {
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
+  const [responseMessage, setResponseMessage] = useState({
+    title: '',
+    message: '',
+  })
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => {
+    setOpen(false)
+    navigate('/places')
+  }
   const [changeImg, toSetChangeImg] = useState(false)
   const [preview, setPreview] = useState({ src: '' })
   const [formValues, setFormValues] = useState({
@@ -41,26 +53,13 @@ export const AddPlaceForm = () => {
     setFormValues({ ...formValues, file: e.target.files![0] })
     setPreview({ src: URL.createObjectURL(e.target.files![0]) })
   }
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    const { name, city, street, file, buildNumber } = formValues
-    const formData = new FormData()
-    formData.append('name', name)
-    formData.append('city', city)
-    formData.append('street', street)
-    formData.append('buildNumber', buildNumber)
-    formData.append('file', file!)
     try {
-      ;(async () => {
-        await fetch(`${apiURL}/places/add-new`, {
-          method: 'POST',
-          credentials: 'include',
-          body: formData,
-        })
-      })()
+      const resMessage = await createNewPlace(formValues)
+      setResponseMessage(resMessage)
     } finally {
-      setLoading(false)
+      handleOpen()
       setFormValues({
         name: '',
         city: '',
@@ -69,7 +68,6 @@ export const AddPlaceForm = () => {
         file: undefined,
       })
     }
-    navigate('/places')
   }
 
   return (
@@ -154,6 +152,40 @@ export const AddPlaceForm = () => {
       ) : null}
 
       <Button>Add</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='modal-modal-title'
+        aria-describedby='modal-modal-description'
+      >
+        <Box sx={materialModalStyle}>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-title'
+            variant='h6'
+            component='h2'
+          >
+            {responseMessage.title}
+          </Typography>
+          <Typography
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            id='modal-modal-description'
+            sx={{ mt: 2 }}
+          >
+            {responseMessage.message}
+          </Typography>
+        </Box>
+      </Modal>
     </StyledForm>
   )
 }
