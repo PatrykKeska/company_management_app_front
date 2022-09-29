@@ -82,7 +82,7 @@ export function FinalizedPlace() {
                     size='small'
                     variant='contained'
                   >
-                    Remove Amount OF
+                    Remove Amount Of
                   </Button>
                   {isPicked && (
                     <ValueInput
