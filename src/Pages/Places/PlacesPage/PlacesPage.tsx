@@ -4,8 +4,10 @@ import { PlaceDescription } from '../../../Layouts/Places/PlaceDescription/Place
 import { PlaceDescriptionWrapper } from '../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper'
 import { fileApi } from '../../../utils/api'
 import { useGetAllPlacesHook } from '../functions/useGetAllPlacesHook'
+import { useAuthCheck } from '../../../utils/useAuthCheck'
 
 export const PlacesPage = () => {
+  useAuthCheck()
   const allPlaces = useGetAllPlacesHook()
   return (
     <>

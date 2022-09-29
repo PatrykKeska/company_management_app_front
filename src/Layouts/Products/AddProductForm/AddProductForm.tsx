@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { Button } from '../../../Components/Button /Button'
 import { Img } from '../../../Components/Img/Img'
-import { SendingPopUp } from '../../../Components/SendingPopUP/SendingPopUp'
 import { SingleProductTypes } from '../../../types/Product.types'
 import { InputOnChange } from '../../../types/common.types'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
@@ -13,7 +12,7 @@ import { fileApi } from '../../../utils/api'
 import { FileInput } from '../../../Components/Input/FileInput'
 import { createNewProduct } from '../../../Pages/Places/functions/createNewProduct'
 import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
+import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
 
 const StyledForm = styled.form`
   padding-top: 50px;

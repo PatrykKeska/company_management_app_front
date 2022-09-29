@@ -5,9 +5,9 @@ import styled from 'styled-components'
 import { ProductDescription } from '../../../Layouts/Products/ProductDescription/ProductDescription'
 import { fileApi } from '../../../utils/api'
 import { useGetAllProductsHook } from '../functions/useGetAllProductsHook'
-import { Grid } from '@mui/material'
+import { useAuthCheck } from '../../../utils/useAuthCheck'
 
-const GridWrapper = styled(Wrapper)`
+export const GridWrapper = styled(Wrapper)`
   @media (max-width: 800px) {
     display: flex;
     justify-content: center;
@@ -20,7 +20,9 @@ const GridWrapper = styled(Wrapper)`
   align-items: flex-start;
 `
 export const StoragePage = () => {
+  useAuthCheck()
   const allProducts = useGetAllProductsHook()
+
   return (
     <>
       <Nav />

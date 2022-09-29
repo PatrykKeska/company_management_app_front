@@ -11,8 +11,9 @@ import { fileApi } from '../../../utils/api'
 import { Img } from '../../../Components/Img/Img'
 import { FileInput } from '../../../Components/Input/FileInput'
 import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
 import { createNewPlace } from '../../../Pages/Products/functions/createNewPlace'
+import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
+import { useAuthCheck } from '../../../utils/useAuthCheck'
 
 interface Props {
   row?: boolean
@@ -27,6 +28,7 @@ const StyledForm = styled.form`
 `
 
 export const AddPlaceForm = () => {
+  useAuthCheck()
   const navigate = useNavigate()
   const [responseMessage, setResponseMessage] = useState({
     title: '',
