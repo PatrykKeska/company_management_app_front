@@ -14,13 +14,12 @@ import { SingleProductTypes } from './types/Product.types'
 import { EditSingleItemPage } from './Pages/Products/EditSingleItemPage/EditSingleItemPage'
 import { InventoryPage } from './Pages/Inventory/InventoryPage'
 import { FinalizedPage } from './Pages/FInalized/FinalizedPage'
-import { isTokenExpire } from './utils/isTokenExpire'
+import { FinalizedPlace } from './Pages/FinalizedPlace'
 
 function App() {
   const [placeDetails, setPlaceDetails] = useState({} as SinglePlaceTypes)
   const [itemDetails, setItemDetails] = useState({} as SingleProductTypes)
   const [isNavOpen, setIsNavOpen] = useState(true)
-  isTokenExpire()
 
   return (
     <NavContext.Provider value={{ isNavOpen: isNavOpen, setIsNavOpen }}>
@@ -32,6 +31,7 @@ function App() {
             <Route path='/places' element={<PlacesPage />} />
             <Route path='/inventory' element={<InventoryPage />} />
             <Route path='/finalized' element={<FinalizedPage />} />
+            <Route path='/finalized/:id' element={<FinalizedPlace />} />
             <Route path='/add-items' element={<AddItemPage />} />
             <Route path='/add-places' element={<AddPlacePage />} />
             <Route path='/places/:id' element={<EditSinglePlacePage />} />
