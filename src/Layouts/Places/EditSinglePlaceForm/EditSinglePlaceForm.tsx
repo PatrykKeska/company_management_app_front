@@ -14,7 +14,7 @@ import { deletePlace } from '../../../Pages/Places/functions/deletePlace'
 import { restorePlace } from '../../../Pages/Places/functions/restorePlace'
 import { makePlaceUnAvailable } from '../../../Pages/Places/functions/makePlaceUnAvilable'
 import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
+import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
 
 const StyledForm = styled.form`
   padding-top: 50px;

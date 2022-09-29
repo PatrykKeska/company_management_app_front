@@ -1,14 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import * as React from 'react'
-import {
-  Avatar,
-  Button,
-  Input,
-  createTheme,
-  Modal,
-  Box,
-  Typography,
-} from '@mui/material'
+import { Avatar, Modal, Box, Typography } from '@mui/material'
 import { StylesProvider } from '@material-ui/core/styles'
 import { Nav } from '../../Layouts/GeneralUse/Nav/Nav'
 import { Wrapper } from '../../Components/Wrapper /Wrapper'
@@ -20,116 +12,16 @@ import { apiURL, fileApi } from '../../utils/api'
 import { ProductInPlace } from '../../types/product-in-place'
 import { ProductToPick } from '../../types/productToPick'
 import { PlaceToPick } from '../../types/PlaceToPick'
-import styled, { ThemeProvider as SCThemeProvider } from 'styled-components'
-
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      xs: 370,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-})
-
-interface ActivePlaceOrProduct {
-  isActive: boolean
-}
-
-const ProductContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: 2,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: 'black',
-  fontSize: 'small',
-  padding: 8,
-  borderRadius: 4,
-  boxShadow: '0 0 10px #1ca600',
-
-  [theme.breakpoints.up('xs')]: {
-    width: '170px',
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: '250px',
-  },
-}))
-const SingleProduct = styled(ProductContainer)<ActivePlaceOrProduct>`
-  background-color: ${({ isActive }) => (!isActive ? 'white' : '#beff00')};
-  transition: 0.3s linear background-color;
-`
-
-const PlaceContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  gap: 2,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: 'darkblue',
-  fontSize: 'small',
-  padding: 8,
-  borderRadius: 4,
-  boxShadow: '0 0 10px #1ca600',
-  [theme.breakpoints.up('xs')]: {
-    width: '170px',
-  },
-  [theme.breakpoints.up('sm')]: {
-    width: '250px',
-  },
-}))
-
-const SinglePlace = styled(PlaceContainer)<ActivePlaceOrProduct>`
-  background-color: ${({ isActive }) => (!isActive ? 'white' : '#beff00')};
-  transition: 0.3s linear background-color;
-`
-
-const Container = styled('div')({
-  display: 'grid',
-  justifyItems: 'center',
-  gap: 10,
-  padding: 8,
-  borderRadius: 4,
-})
-
-const GridContainer = styled('div')({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2,1fr)',
-  gap: 5,
-  paddingTop: '30px',
-})
-
-const FlexContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-start',
-  gap: 10,
-})
-
-const MyButton = styled(Button)({
-  width: 'medium',
-  fontSize: 'small',
-  height: '25px',
-})
-
-const ValueInput = styled(Input)({
-  width: '100px',
-})
-export const materialModalStyle = {
-  position: 'absolute',
-  color: 'black',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: '#ff8900',
-  textShadow: '0 1px 5px white',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-}
+import { ThemeProvider as SCThemeProvider } from 'styled-components'
+import { theme } from '../../MaterialUIComponents/theme/materialTheme'
+import { SingleProduct } from '../../MaterialUIComponents/productContainer'
+import { MyButton } from '../../MaterialUIComponents/myButton'
+import { materialModalStyle } from '../../MaterialUIComponents/theme/materialModalStyle'
+import { GridContainer } from '../../MaterialUIComponents/gridContainer'
+import { FlexContainer } from '../../MaterialUIComponents/flexContainer'
+import { Container } from '../../MaterialUIComponents/container'
+import { ValueInput } from '../../MaterialUIComponents/valueInput'
+import { useAuthCheck } from '../../utils/useAuthCheck'
 
 export const InventoryPage = () => {
   const [products, setProducts] = useState([] as ProductToPick[])
@@ -139,7 +31,7 @@ export const InventoryPage = () => {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
+  useAuthCheck()
   const handleProductPick = (id: string) => {
     setAssigned({ ...assigned, amount: 0, productId: id })
     products
@@ -225,7 +117,7 @@ export const InventoryPage = () => {
               <Container>
                 <Typography>Places</Typography>
                 {places.map((place) => (
-                  <SinglePlace isActive={place.isPicked} key={place.id}>
+                  <SingleProduct isActive={place.isPicked} key={place.id}>
                     <Avatar
                       sx={{ width: 70, height: 70 }}
                       srcSet={`${fileApi}${place.img}`}
@@ -240,7 +132,7 @@ export const InventoryPage = () => {
                     >
                       Pick
                     </MyButton>
-                  </SinglePlace>
+                  </SingleProduct>
                 ))}
               </Container>
             </FlexContainer>

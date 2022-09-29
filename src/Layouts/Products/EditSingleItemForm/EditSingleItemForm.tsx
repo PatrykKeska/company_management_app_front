@@ -14,7 +14,7 @@ import { deleteProduct } from '../../../Pages/Products/functions/deleteProduct'
 import { restoreProduct } from '../../../Pages/Products/functions/restoreProduct'
 import { makeProductUnavailable } from '../../../Pages/Products/functions/makeProductUnavailable'
 import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../Pages/Inventory/InventoryPage'
+import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
 
 const StyledForm = styled.form`
   padding-top: 50px;
