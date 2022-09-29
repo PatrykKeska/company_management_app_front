@@ -1,76 +1,50 @@
-import React, { useEffect, useState } from 'react'
 import { Nav } from '../../Layouts/GeneralUse/Nav/Nav'
 import { Wrapper } from '../../Components/Wrapper /Wrapper'
-import axios from 'axios'
-import { SinglePlaceTypes } from '../../types/Places.types'
-import { PlaceDescriptionWrapper } from '../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper'
-import { FinalizedPlaceDescription } from '../../Layouts/Finalized/FinalizedPlaceDescription'
-import { SingleFinalizedModal } from './SingleFinalizedModal'
-import { SinglePlacesProductsTypes } from '../../types/places_products.types'
-import { FinalizedContext } from '../../context/Finalized/FinalizedContext'
-import { apiURL } from '../../utils/api'
+import { useAuthCheck } from '../../utils/useAuthCheck'
+import { useGetAllPlacesHook } from '../Places/functions/useGetAllPlacesHook'
+import { SingleProduct } from '../../MaterialUIComponents/productContainer'
+import { theme } from '../../MaterialUIComponents/theme/materialTheme'
+import { ThemeProvider as SCThemeProvider } from 'styled-components'
+import { StylesProvider } from '@material-ui/core/styles'
+import { Avatar, Button } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { fileApi } from '../../utils/api'
+import * as React from 'react'
+import { FlexboxContainer } from '../../Components/flexboxContainer/flexboxContainer'
 
 export const FinalizedPage = () => {
-  const [places, setPlaces] = useState(Array<SinglePlaceTypes>)
-  const [itemsInPlace, setItemsInPlace] = useState(
-    Array<SinglePlacesProductsTypes>
-  )
-  const [isPicked, setisPicked] = useState(false)
-
-  useEffect(() => {
-    ;(async () => {
-      const response = await axios.get(`${apiURL}/places`)
-      setPlaces(response.data.message)
-    })()
-  }, [itemsInPlace])
-
-  const getItemsInPlace = async (id: string) => {
-    const itemsInPlace = await axios.post(`${apiURL}/finalized`, {
-      pickedPlaceID: id,
-    })
-    setItemsInPlace(itemsInPlace.data.response)
-    setisPicked(true)
-  }
-
-  const handleModal = () => {
-    setisPicked(false)
-  }
-
-  const deleteProduct = async (placeID: string, itemID: string) => {
-    const response = await axios.post(`${apiURL}/finalized/delete`, {
-      placeId: placeID,
-      itemId: itemID,
-    })
-    setItemsInPlace(response.data.update)
-  }
+  useAuthCheck()
+  const places = useGetAllPlacesHook()
 
   return (
     <Wrapper>
-      <FinalizedContext.Provider value={{ itemsInPlace, setItemsInPlace }}>
-        <Nav />
-        {isPicked ? (
-          <SingleFinalizedModal
-            deleteProduct={deleteProduct}
-            onClick={handleModal}
-            items={itemsInPlace}
-          />
-        ) : (
-          <PlaceDescriptionWrapper>
+      <Nav />
+      <StylesProvider injectFirst>
+        <SCThemeProvider theme={theme}>
+          <FlexboxContainer>
             {places.map((place) => (
-              <FinalizedPlaceDescription
-                id={place.id}
-                key={place.id}
-                img={place.img}
-                name={place.name}
-                city={place.city}
-                street={place.street}
-                buildNumber={place.buildNumber}
-                onClick={getItemsInPlace}
-              />
+              <SingleProduct key={place.id}>
+                <Avatar
+                  sx={{ width: 70, height: 70 }}
+                  srcSet={`${fileApi}${place.img}`}
+                />
+                <p>{place.name}</p>
+                <p>City: {place.city}</p>
+                <p>Street: {place.street}</p>
+                <p>BN: {place.buildNumber}</p>
+                <Button
+                  component={Link}
+                  to={`/finalized/${place.id}`}
+                  size='small'
+                  variant='contained'
+                >
+                  Check Products
+                </Button>
+              </SingleProduct>
             ))}
-          </PlaceDescriptionWrapper>
-        )}
-      </FinalizedContext.Provider>
+          </FlexboxContainer>
+        </SCThemeProvider>
+      </StylesProvider>
     </Wrapper>
   )
 }
