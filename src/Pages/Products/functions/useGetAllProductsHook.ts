@@ -9,6 +9,9 @@ export function useGetAllProductsHook() {
       const products = await getAllProducts()
       setStorage(products)
     })()
+    return () => {
+      setStorage([])
+    }
   }, [])
   return storage
 }

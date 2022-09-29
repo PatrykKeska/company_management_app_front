@@ -10,6 +10,9 @@ export function useGetAllPlacesHook() {
       const products = await getAllPlaces()
       setPlaces(products)
     })()
+    return () => {
+      setPlaces([])
+    }
   }, [])
   return places
 }
