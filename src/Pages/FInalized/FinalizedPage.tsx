@@ -1,7 +1,6 @@
 import { Nav } from '../../Layouts/GeneralUse/Nav/Nav'
 import { Wrapper } from '../../Components/Wrapper /Wrapper'
 import { useAuthCheck } from '../../utils/useAuthCheck'
-import { useGetAllPlacesHook } from '../Places/functions/useGetAllPlacesHook'
 import { SingleProduct } from '../../MaterialUIComponents/productContainer'
 import { theme } from '../../MaterialUIComponents/theme/materialTheme'
 import { ThemeProvider as SCThemeProvider } from 'styled-components'
@@ -11,11 +10,11 @@ import { Link } from 'react-router-dom'
 import { fileApi } from '../../utils/api'
 import * as React from 'react'
 import { FlexboxContainer } from '../../Components/flexboxContainer/flexboxContainer'
+import { useGetAllAssignedPlaces } from './functions /useGetAllAssignedPlaces'
 
 export const FinalizedPage = () => {
   useAuthCheck()
-  const places = useGetAllPlacesHook()
-
+  const places = useGetAllAssignedPlaces()
   return (
     <Wrapper>
       <Nav />
