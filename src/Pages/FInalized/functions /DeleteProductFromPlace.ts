@@ -13,6 +13,10 @@ export async function deleteProductFromPlace(
     headers: { 'Content-type': 'application/json' },
   })
   const response = await data.json()
-  setMessage({ title: response.title, message: response.message })
+  setMessage({
+    title: response.title,
+    message: response.message,
+    redirect: response.redirect,
+  })
   return response
 }

@@ -13,7 +13,12 @@ export async function removeAmountOfProduct(
     body: JSON.stringify({ productId, placeId, amount }),
     headers: { 'Content-type': 'application/json' },
   })
+
   const response = await data.json()
-  setMessage({ title: response.title, message: response.message })
+  setMessage({
+    title: response.title,
+    message: response.message,
+    redirect: response.redirect,
+  })
   return response
 }
