@@ -14,7 +14,7 @@ import { SingleProductTypes } from './types/Product.types'
 import { EditSingleItemPage } from './Pages/Products/EditSingleItemPage/EditSingleItemPage'
 import { InventoryPage } from './Pages/Inventory/InventoryPage'
 import { FinalizedPage } from './Pages/FInalized/FinalizedPage'
-import { FinalizedPlace } from './Pages/FinalizedPlace'
+import { FinalizedPlace } from './Pages/FInalized/FinalizedPlace'
 
 function App() {
   const [placeDetails, setPlaceDetails] = useState({} as SinglePlaceTypes)
