@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { SinglePlaceTypes } from '../../../types/Places.types'
-import { getAllPlaces } from './getAllPlaces'
+import { getAllFinalizedPlaces } from '../functions /getAllFinalizedPlaces'
 
-export function useGetAllPlacesHook() {
+export function useGetAllAssignedPlaces() {
   const [places, setPlaces] = useState([] as SinglePlaceTypes[])
 
   useEffect(() => {
     ;(async () => {
-      const products = await getAllPlaces()
-      setPlaces(products)
+      const places = await getAllFinalizedPlaces()
+      setPlaces(places)
     })()
     return () => {
       setPlaces([])

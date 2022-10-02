@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getAllProductInPlaces } from './getAllProductInPlaces'
+import { getAllProductInPlaces } from '../functions /getAllProductInPlaces'
 import { SinglePlaceTypes } from '../../../types/Places.types'
 import { ProductToPick } from '../../../types/productToPick'
 
@@ -30,6 +30,7 @@ export function useGetAllProductForThisPlace(placeId: string, status: boolean) {
         place: productInPlaces.place,
         products: productInPlaces.products,
       })
+
       return () => {
         setProductsInPlace({
           place: defaultValues.place,
@@ -38,5 +39,6 @@ export function useGetAllProductForThisPlace(placeId: string, status: boolean) {
       }
     })()
   }, [status])
+
   return productsInPlace
 }
