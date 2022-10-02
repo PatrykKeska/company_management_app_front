@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, useContext, useState } from 'react'
+import React, { MouseEventHandler } from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { NavLink as Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
@@ -23,6 +23,10 @@ const StyledLink = styled(Link)`
   z-index: 2;
   overflow: hidden;
   transition: 0.2s linear all;
+  &.active {
+    background-color: black;
+    color: white;
+  }
 
   &:after {
     content: '';
