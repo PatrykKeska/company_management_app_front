@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { InputOnChange } from '../../../types/common.types'
@@ -9,12 +9,13 @@ import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { SingleItemContext } from '../../../context/SingleItem/SingleItem.context'
 import { FileInput } from '../../../Components/Input/FileInput'
-import { updateProduct } from '../../../Pages/Products/functions/updateProduct'
-import { deleteProduct } from '../../../Pages/Products/functions/deleteProduct'
-import { restoreProduct } from '../../../Pages/Products/functions/restoreProduct'
-import { makeProductUnavailable } from '../../../Pages/Products/functions/makeProductUnavailable'
-import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
+import { editSingleItemHandleToUpdateImg } from '../../../Pages/Products/functions/editSingleItemHandleToUpdateImg'
+import { editSingleItemHandleToDelete } from '../../../Pages/Products/functions/editSingleItemHandleToDelete'
+import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
+import { editSingleItemFormHandleFile } from '../../../Pages/Products/functions/editSingleItemFormHandleFile'
+import { editSingleItemSetRestore } from '../../../Pages/Products/functions/editSingleItemSetRestore'
+import { editSingleItemSetUnavailable } from '../../../Pages/Products/functions/editSingleItemSetUnavailable'
+import { editSingleItemHandleSubmit } from '../../../Pages/Products/functions/editSingleItemHandleSubmit'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -36,85 +37,35 @@ export const EditSingleItemForm = () => {
   const [toDelete, setToDelete] = useState(false)
   const [unavailable, setUnavailable] = useState(false)
   const [restore, setRestore] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
     setOpen(false)
     navigate('/storage')
   }
-  const { id, img, amount, file, name, dateOfBuy, price, productStatus } =
-    itemDetails
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setItemDetails({ ...itemDetails, file: e.target.files![0] })
-    setPreview({ src: URL.createObjectURL(e.target.files![0]) })
-  }
-  const handleToUpdateImg = () => {
-    setToUpdateImg(!toUpdateImg)
-    setToDelete(false)
-    setUnavailable(false)
-    setPreview({ src: '' })
-  }
-  const handleToDelete = () => {
-    setRestore(false)
-    setToUpdateImg(false)
-    setUnavailable(false)
-    setToDelete(!toDelete)
-  }
-
-  const setRestoreStatus = () => {
-    setToDelete(false)
-    setToUpdateImg(false)
-    setRestore(!restore)
-  }
-
-  const setUnavailableStatus = () => {
-    setToDelete(false)
-    setToUpdateImg(false)
-    setUnavailable(!unavailable)
-  }
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      if (!toDelete && !restore && !unavailable) {
-        const resMessage = await updateProduct(itemDetails)
-        setResponseMessage(resMessage)
-      }
-      if (restore && amount > 0) {
-        const resMessage = await restoreProduct(
-          itemDetails.id!,
-          itemDetails.amount,
-        )
-        setResponseMessage(resMessage)
-      } else if (unavailable && id) {
-        const resMessage = await makeProductUnavailable(id)
-        setResponseMessage(resMessage)
-      }
-      if (toDelete) {
-        const resMessage = await deleteProduct(itemDetails.id!)
-        setResponseMessage(resMessage)
-      }
-    } finally {
-      handleOpen()
-      setLoading(false)
-      setItemDetails({
-        name: '',
-        price: 0,
-        amount: 0,
-        dateOfBuy: '',
-        img: '',
-      })
-    }
-  }
+  const { id, img, amount, name, dateOfBuy, price, productStatus } = itemDetails
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm
+      onSubmit={(e) =>
+        editSingleItemHandleSubmit(
+          e,
+          toDelete,
+          restore,
+          unavailable,
+          itemDetails,
+          setResponseMessage,
+          amount,
+          id!,
+          handleOpen,
+          setItemDetails,
+        )
+      }
+    >
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : itemDetails.img}
+        src={preview.src ? preview.src : img}
       />
       <StyledLabel>
         Name:
@@ -122,7 +73,7 @@ export const EditSingleItemForm = () => {
           disabled={toDelete || unavailable || restore || productStatus === 0}
           type={'text'}
           name={'name'}
-          value={itemDetails.name}
+          value={name}
           onChange={(event: InputOnChange) =>
             setItemDetails({
               ...itemDetails,
@@ -138,7 +89,7 @@ export const EditSingleItemForm = () => {
           disabled={toDelete || unavailable || restore || productStatus === 0}
           type={'number'}
           name={'price'}
-          value={itemDetails.price}
+          value={price}
           onChange={(event: InputOnChange) =>
             setItemDetails({
               ...itemDetails,
@@ -156,7 +107,7 @@ export const EditSingleItemForm = () => {
           }
           type={'number'}
           name={'amount'}
-          value={itemDetails.amount}
+          value={amount}
           onChange={(event: InputOnChange) =>
             setItemDetails({
               ...itemDetails,
@@ -172,7 +123,7 @@ export const EditSingleItemForm = () => {
           disabled={toDelete || unavailable || restore || productStatus === 0}
           type={'text'}
           name={'dateOfBuy'}
-          value={itemDetails.dateOfBuy}
+          value={dateOfBuy}
           onChange={(event: InputOnChange) =>
             setItemDetails({
               ...itemDetails,
@@ -184,30 +135,82 @@ export const EditSingleItemForm = () => {
       {productStatus === 1 ? (
         <StyledLabel row>
           Change image
-          <Checkbox checked={toUpdateImg} onChange={handleToUpdateImg} />
+          <Checkbox
+            checked={toUpdateImg}
+            onChange={() =>
+              editSingleItemHandleToUpdateImg(
+                setToUpdateImg,
+                setToDelete,
+                setUnavailable,
+                setPreview,
+                toUpdateImg,
+              )
+            }
+          />
         </StyledLabel>
       ) : null}
 
       {toUpdateImg ? (
         <>
-          <FileInput onChange={handleFile} name='file' />{' '}
+          <FileInput
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              editSingleItemFormHandleFile(
+                e,
+                setItemDetails,
+                setPreview,
+                itemDetails,
+              )
+            }
+            name='file'
+          />
         </>
       ) : null}
 
       <StyledLabel row>
         Delete from database
-        <Checkbox checked={toDelete} onChange={handleToDelete} />
+        <Checkbox
+          checked={toDelete}
+          onChange={() =>
+            editSingleItemHandleToDelete(
+              setRestore,
+              setToUpdateImg,
+              setUnavailable,
+              setToDelete,
+              toDelete,
+            )
+          }
+        />
       </StyledLabel>
 
       {productStatus === 0 ? (
         <StyledLabel row>
           Restore
-          <Checkbox checked={restore} onChange={setRestoreStatus} />
+          <Checkbox
+            checked={restore}
+            onChange={() =>
+              editSingleItemSetRestore(
+                setToDelete,
+                setToUpdateImg,
+                setRestore,
+                restore,
+              )
+            }
+          />
         </StyledLabel>
       ) : (
         <StyledLabel row>
           Make it Unavailable
-          <Checkbox checked={unavailable} onChange={setUnavailableStatus} />
+          <Checkbox
+            checked={unavailable}
+            onChange={() =>
+              editSingleItemSetUnavailable(
+                setToDelete,
+                setToUpdateImg,
+                setUnavailable,
+                unavailable,
+              )
+            }
+          />
         </StyledLabel>
       )}
 
@@ -217,40 +220,11 @@ export const EditSingleItemForm = () => {
           (unavailable && 'Change Status') ||
           'Update'}
       </Button>
-      <Modal
+      <ResponseModal
         open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={materialModalStyle}>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-title'
-            variant='h6'
-            component='h2'
-          >
-            {responseMessage.title}
-          </Typography>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-description'
-            sx={{ mt: 2 }}
-          >
-            {responseMessage.message}
-          </Typography>
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+        message={responseMessage}
+      />
     </StyledForm>
   )
 }
