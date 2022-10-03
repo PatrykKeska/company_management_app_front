@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { InputOnChange } from '../../../types/common.types'
@@ -9,12 +9,14 @@ import { Checkbox } from '../../../Components/Input/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { FileInput } from '../../../Components/Input/FileInput'
-import { updateSinglePlace } from '../../../Pages/Places/functions/updateSinglePlace'
-import { deletePlace } from '../../../Pages/Places/functions/deletePlace'
-import { restorePlace } from '../../../Pages/Places/functions/restorePlace'
-import { makePlaceUnAvailable } from '../../../Pages/Places/functions/makePlaceUnAvilable'
 import { Box, Modal, Typography } from '@mui/material'
 import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
+import { EditSinglePlaceHandleToDelete } from '../../../Pages/Places/functions/EditSinglePlaceHandleToDelete'
+import { editSinglePlaceSetImgStatus } from '../../../Pages/Places/functions/editSinglePlaceSetImgStatus'
+import { editSinglePlaceSetRestoreStatus } from '../../../Pages/Places/functions/editSinglePlaceSetRestoreStatus'
+import { editSinglePlaceSetUnavailableStatus } from '../../../Pages/Places/functions/editSinglePlaceSetUnavailableStatus'
+import { editSinglePlaceHandleFile } from '../../../Pages/Places/functions/editSinglePlaceHandleFile'
+import { editSinglePlaceHandleSubmit } from '../../../Pages/Places/functions/editSinglePlaceHandleSubmit'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -26,91 +28,40 @@ const StyledForm = styled.form`
 
 export const EditSinglePlaceForm = () => {
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
   const [preview, setPreview] = useState({ src: '' })
   const { placeDetails, setPlaceDetails } = useContext(SinglePlaceContext)
   const [imageStatus, setImageStatus] = useState(false)
   const [restore, setRestore] = useState(false)
   const [unavailable, setUnavailable] = useState(false)
+  const [toDelete, setToDelete] = useState(false)
+  const [open, setOpen] = React.useState(false)
   const [responseMessage, setResponseMessage] = useState({
     title: '',
     message: '',
   })
-  const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
     setOpen(false)
     navigate('/places')
   }
-  const [toDelete, setToDelete] = useState(false)
-  const { placeStatus, street, img, city, name, file, id, buildNumber } =
-    placeDetails
-
-  const handleToDelete = () => {
-    setImageStatus(false)
-    setRestore(false)
-    setUnavailable(false)
-    setToDelete(!toDelete)
-  }
-
-  const setImgStatus = () => {
-    setToDelete(false)
-    setUnavailable(false)
-    setRestore(false)
-    setImageStatus(!imageStatus)
-  }
-  const setRestoreStatus = () => {
-    setImageStatus(false)
-    setToDelete(false)
-    setUnavailable(false)
-    setRestore(!restore)
-  }
-  const setUnavailableStatus = () => {
-    setImageStatus(false)
-    setToDelete(false)
-    setRestore(false)
-    setUnavailable(!unavailable)
-  }
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPlaceDetails({ ...placeDetails, file: e.target.files![0] })
-    setPreview({ src: URL.createObjectURL(e.target.files![0]) })
-  }
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-
-    try {
-      if (!toDelete && !unavailable && !restore) {
-        const resMessage = await updateSinglePlace(placeDetails)
-        setResponseMessage(resMessage)
-      }
-      if (restore && id) {
-        const resMessage = await restorePlace(id)
-        setResponseMessage(resMessage)
-      } else if (unavailable && id) {
-        const resMessage = await makePlaceUnAvailable(id)
-        setResponseMessage(resMessage)
-      } else if (toDelete) {
-        const resMessage = await deletePlace(id!)
-        setResponseMessage(resMessage)
-      }
-    } finally {
-      handleOpen()
-      setLoading(false)
-
-      setPlaceDetails({
-        name: '',
-        city: '',
-        street: '',
-        buildNumber: '',
-        file: undefined,
-      })
-    }
-  }
+  const { placeStatus, street, img, city, name, id, buildNumber } = placeDetails
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm
+      onSubmit={(e) =>
+        editSinglePlaceHandleSubmit(
+          e,
+          toDelete,
+          unavailable,
+          restore,
+          placeDetails,
+          setResponseMessage,
+          id!,
+          handleOpen,
+          setPlaceDetails,
+        )
+      }
+    >
       <Img
         width={'200px'}
         height={'150px'}
@@ -182,30 +133,84 @@ export const EditSinglePlaceForm = () => {
       {placeStatus === 1 ? (
         <StyledLabel row>
           Change image
-          <Checkbox checked={imageStatus} onChange={setImgStatus} />
+          <Checkbox
+            checked={imageStatus}
+            onChange={() =>
+              editSinglePlaceSetImgStatus(
+                setToDelete,
+                setUnavailable,
+                setRestore,
+                setImageStatus,
+                imageStatus,
+              )
+            }
+          />
         </StyledLabel>
       ) : null}
 
       {imageStatus ? (
         <StyledLabel>
           File
-          <FileInput onChange={handleFile} name='file' />
+          <FileInput
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              editSinglePlaceHandleFile(
+                e,
+                setPlaceDetails,
+                placeDetails,
+                setPreview,
+              )
+            }
+            name='file'
+          />
         </StyledLabel>
       ) : null}
 
       <StyledLabel row>
         Delete from database
-        <Checkbox checked={toDelete} onChange={handleToDelete} />
+        <Checkbox
+          checked={toDelete}
+          onChange={() =>
+            EditSinglePlaceHandleToDelete(
+              setImageStatus,
+              setRestore,
+              setUnavailable,
+              setToDelete,
+              toDelete,
+            )
+          }
+        />
       </StyledLabel>
       {placeStatus === 0 ? (
         <StyledLabel row>
           Restore
-          <Checkbox checked={restore} onChange={setRestoreStatus} />
+          <Checkbox
+            checked={restore}
+            onChange={() =>
+              editSinglePlaceSetRestoreStatus(
+                setToDelete,
+                setUnavailable,
+                setRestore,
+                setImageStatus,
+                restore,
+              )
+            }
+          />
         </StyledLabel>
       ) : (
         <StyledLabel row>
           Make it Unavailable
-          <Checkbox checked={unavailable} onChange={setUnavailableStatus} />
+          <Checkbox
+            checked={unavailable}
+            onChange={() =>
+              editSinglePlaceSetUnavailableStatus(
+                setImageStatus,
+                setToDelete,
+                setRestore,
+                setUnavailable,
+                unavailable,
+              )
+            }
+          />
         </StyledLabel>
       )}
       <Button small={true}>
