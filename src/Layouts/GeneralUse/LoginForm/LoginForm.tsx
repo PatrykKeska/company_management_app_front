@@ -6,6 +6,8 @@ import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { InputOnChange, onSubmitType } from '../../../types/common.types'
 import { AuthProvider } from '../../../context/AuthProvider/AuthProvider'
 import { apiURL } from '../../../utils/api'
+import { log } from 'util'
+import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
 
 const StyledForm = styled.form`
   display: flex;
@@ -15,32 +17,37 @@ const StyledForm = styled.form`
 `
 
 export const LoginForm = () => {
-  const { setLogginStatus } = useContext(AuthProvider)
+  const { setLoginStatus } = useContext(AuthProvider)
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+  const [message, SetMessage] = useState({ title: '', message: '' })
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   const handleSubmit = async (e: onSubmitType) => {
     e.preventDefault()
-    try {
-      const response = await fetch(`${apiURL}/`, {
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({
-          login,
-          password,
-        }),
-        headers: { 'Content-Type': 'application/json' },
+    await fetch(`${apiURL}/user/login`, {
+      method: 'POST',
+      body: JSON.stringify({ email: login, pwd: password }),
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => {
+        return res.json()
       })
-      const data = await response.json()
-
-      if (!data.auth) {
-        setLogginStatus(false)
-      } else {
-        setLogginStatus(true)
-        localStorage.setItem('auth', JSON.stringify({ auth: true }))
-      }
-    } catch (err) {
-      return err
-    }
+      .then((response) => {
+        if (response.status === 200) {
+          setLoginStatus(true)
+          return localStorage.setItem(
+            'session',
+            JSON.stringify(response.logged),
+          )
+        } else if (response.status === 401) {
+          SetMessage({ title: 'Fail', message: response.error })
+          handleOpen()
+        }
+      })
   }
 
   return (
@@ -66,6 +73,11 @@ export const LoginForm = () => {
       </StyledLabel>
 
       <Button>Sign in</Button>
+      <ResponseModal
+        open={open}
+        handleClose={handleClose}
+        message={{ title: message.title, message: message.message }}
+      />
     </StyledForm>
   )
 }
