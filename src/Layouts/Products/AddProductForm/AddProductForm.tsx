@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { Button } from '../../../Components/Button /Button'
@@ -10,9 +10,9 @@ import { useNavigate } from 'react-router-dom'
 import { Checkbox } from '../../../Components/Input/Checkbox'
 import { fileApi } from '../../../utils/api'
 import { FileInput } from '../../../Components/Input/FileInput'
-import { createNewProduct } from '../../../Pages/Places/functions/createNewProduct'
-import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
+import { addProductFormHandleFile } from '../../../Pages/Products/functions/AddProductFormHandleFile'
+import { addProductFormAddNewProduct } from '../../../Pages/Products/functions/AddProductFormAddNewProduct'
+import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -26,11 +26,11 @@ export const AddProductForm = () => {
   const navigate = useNavigate()
   const [changeImg, toSetChangeImg] = useState(false)
   const [preview, setPreview] = useState({ src: '' })
+  const [open, setOpen] = React.useState(false)
   const [responseMessage, setResponseMessage] = useState({
     title: '',
     message: '',
   })
-  const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
     setOpen(false)
@@ -44,30 +44,18 @@ export const AddProductForm = () => {
     file: null,
   } as unknown as SingleProductTypes)
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({ ...formValues, file: e.target.files![0] })
-    setPreview({ src: URL.createObjectURL(e.target.files![0]) })
-  }
-
-  const addNewProduct = async (e: FormEvent) => {
-    e.preventDefault()
-    try {
-      const resMessage = await createNewProduct(formValues)
-      setResponseMessage(resMessage)
-    } finally {
-      handleOpen()
-      setFormValues({
-        name: '',
-        price: 0,
-        amount: 0,
-        dateOfBuy: '',
-        file: undefined,
-      })
-    }
-  }
-
   return (
-    <StyledForm onSubmit={addNewProduct}>
+    <StyledForm
+      onSubmit={(e) =>
+        addProductFormAddNewProduct(
+          e,
+          formValues,
+          setResponseMessage,
+          handleOpen,
+          setFormValues,
+        )
+      }
+    >
       <Img
         width={'200px'}
         height={'150px'}
@@ -144,44 +132,20 @@ export const AddProductForm = () => {
       {changeImg ? (
         <StyledLabel>
           File
-          <FileInput onChange={handleFile} name='file' />
+          <FileInput
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              addProductFormHandleFile(e, setFormValues, formValues, setPreview)
+            }
+            name='file'
+          />
         </StyledLabel>
       ) : null}
       <Button>Add</Button>
-      <Modal
+      <ResponseModal
         open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={materialModalStyle}>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-title'
-            variant='h6'
-            component='h2'
-          >
-            {responseMessage.title}
-          </Typography>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-description'
-            sx={{ mt: 2 }}
-          >
-            {responseMessage.message}
-          </Typography>
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+        message={responseMessage}
+      />
     </StyledForm>
   )
 }
