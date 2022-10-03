@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
+import { AuthProvider } from '../context/AuthProvider/AuthProvider'
 
 export function useAuthCheck() {
+  const { setLoginStatus } = useContext(AuthProvider)
   const navigate = useNavigate()
   useEffect(() => {
     ;(async () => {
@@ -11,6 +13,8 @@ export function useAuthCheck() {
       })
       const response = await data.json()
       if (response.statusCode === 401) {
+        setLoginStatus(false)
+        localStorage.setItem('session', JSON.stringify(false))
         navigate('/')
       }
     })()
