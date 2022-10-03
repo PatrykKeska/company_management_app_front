@@ -1,8 +1,8 @@
 import { Wrapper } from '../../Components/Wrapper /Wrapper'
 import { Nav } from '../../Layouts/GeneralUse/Nav/Nav'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useGetAllProductForThisPlace } from './hooks/useGetAllProductForThisPlace'
-import { Avatar, Box, Button, Modal, Typography } from '@mui/material'
+import { Avatar, Button, Typography } from '@mui/material'
 import { FlexboxContainer } from '../../Components/flexboxContainer/flexboxContainer'
 import { ProductContainer } from '../../MaterialUIComponents/productContainer'
 import { theme } from '../../MaterialUIComponents/theme/materialTheme'
@@ -11,18 +11,17 @@ import { ThemeProvider as SCThemeProvider } from 'styled-components'
 import { fileApi } from '../../utils/api'
 import * as React from 'react'
 import { SummaryCalc } from '../../utils/SummaryCalc'
-import { deleteProductFromPlace } from './functions /DeleteProductFromPlace'
 import { useState } from 'react'
 import { ValueInput } from '../../MaterialUIComponents/valueInput'
 import { removeAmountOfProduct } from './functions /removeAmountOfProduct'
 import { useAuthCheck } from '../../utils/useAuthCheck'
-import { materialModalStyle } from '../../MaterialUIComponents/theme/materialModalStyle'
 import { handleUpdate } from './functions /handleUpdate'
 import { handleInput } from './functions /handleInput'
 import { SummaryFinalizedPlace } from '../../Layouts/Finalized/SummaryFinalizedPlace'
+import { ResultModal } from '../../MaterialUIComponents/ResultModal'
+import { ConfirmModal } from '../../MaterialUIComponents/ConfirmModal'
 
 export function FinalizedPlace() {
-  const navigate = useNavigate()
   useAuthCheck()
   const [status, setStatus] = useState(false)
   const [update, setUpdate] = useState(false)
@@ -33,7 +32,6 @@ export function FinalizedPlace() {
   const handleClose = () => setOpen(false)
   const params = useParams()
   const products = useGetAllProductForThisPlace(params.id!, status)
-  const { name, img, street, city, buildNumber } = products.place
   const totalItemsPrice = SummaryCalc(products.products)
   const [message, setMessage] = useState({
     title: '',
@@ -146,91 +144,21 @@ export function FinalizedPlace() {
           </FlexboxContainer>
         </SCThemeProvider>
       </StylesProvider>
-      <Modal
+      <ResultModal
+        setConfirmDelete={setConfirmDelete}
+        message={message}
+        handleClose={handleClose}
         open={open}
-        onClose={() => {
-          handleClose()
-          setConfirmDelete(false)
-          if (message.redirect) {
-            navigate('/finalized')
-          }
-        }}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={materialModalStyle}>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-title'
-            variant='h6'
-            component='h2'
-          >
-            {message.title}
-          </Typography>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-description'
-            sx={{ mt: 2 }}
-          >
-            {message.message}
-          </Typography>
-        </Box>
-      </Modal>
-      <Modal
-        open={confirmDelete}
-        onClose={() => setConfirmDelete(false)}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-          justifyContent='center'
-          sx={materialModalStyle}
-        >
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-title'
-            variant='h6'
-            component='h2'
-          >
-            Are you sure ?
-          </Typography>
-          <Button
-            sx={{ mt: 5 }}
-            onClick={async () => {
-              await deleteProductFromPlace(
-                deleteDetails.placeId,
-                deleteDetails.productId,
-                setMessage,
-              )
-              setStatus(!status)
-              handleOpen()
-            }}
-            size='medium'
-            variant='contained'
-          >
-            Confirm Delete
-          </Button>
-        </Box>
-      </Modal>
+      />
+      <ConfirmModal
+        setConfirmDelete={setConfirmDelete}
+        confirmDelete={confirmDelete}
+        deleteDetails={deleteDetails}
+        handleOpen={handleOpen}
+        setMessage={setMessage}
+        setStatus={setStatus}
+        status={status}
+      />
     </Wrapper>
   )
 }
