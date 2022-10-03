@@ -9,14 +9,13 @@ import { Checkbox } from '../../../Components/Input/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { FileInput } from '../../../Components/Input/FileInput'
-import { Box, Modal, Typography } from '@mui/material'
-import { materialModalStyle } from '../../../MaterialUIComponents/theme/materialModalStyle'
 import { EditSinglePlaceHandleToDelete } from '../../../Pages/Places/functions/EditSinglePlaceHandleToDelete'
 import { editSinglePlaceSetImgStatus } from '../../../Pages/Places/functions/editSinglePlaceSetImgStatus'
 import { editSinglePlaceSetRestoreStatus } from '../../../Pages/Places/functions/editSinglePlaceSetRestoreStatus'
 import { editSinglePlaceSetUnavailableStatus } from '../../../Pages/Places/functions/editSinglePlaceSetUnavailableStatus'
 import { editSinglePlaceHandleFile } from '../../../Pages/Places/functions/editSinglePlaceHandleFile'
 import { editSinglePlaceHandleSubmit } from '../../../Pages/Places/functions/editSinglePlaceHandleSubmit'
+import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -219,40 +218,11 @@ export const EditSinglePlaceForm = () => {
           (unavailable && 'Change Status') ||
           'Update'}
       </Button>
-      <Modal
+      <ResponseModal
         open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={materialModalStyle}>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-title'
-            variant='h6'
-            component='h2'
-          >
-            {responseMessage.title}
-          </Typography>
-          <Typography
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            id='modal-modal-description'
-            sx={{ mt: 2 }}
-          >
-            {responseMessage.message}
-          </Typography>
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+        message={responseMessage}
+      />
     </StyledForm>
   )
 }
