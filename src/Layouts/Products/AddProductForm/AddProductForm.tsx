@@ -8,11 +8,11 @@ import { InputOnChange } from '../../../types/common.types'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { useNavigate } from 'react-router-dom'
 import { Checkbox } from '../../../Components/Input/Checkbox'
-import { fileApi } from '../../../utils/api'
 import { FileInput } from '../../../Components/Input/FileInput'
 import { addProductFormHandleFile } from '../../../Pages/Products/functions/AddProductFormHandleFile'
 import { addProductFormAddNewProduct } from '../../../Pages/Products/functions/AddProductFormAddNewProduct'
 import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
+import { getDefaultImages } from '../../../utils/getDefaultImages'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -43,7 +43,7 @@ export const AddProductForm = () => {
     dateOfBuy: '',
     file: null,
   } as unknown as SingleProductTypes)
-
+  const defaultProductImage = getDefaultImages('product')
   return (
     <StyledForm
       onSubmit={(e) =>
@@ -59,7 +59,7 @@ export const AddProductForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : `${fileApi}default-product-image.jpeg`}
+        src={preview.src ? preview.src : defaultProductImage}
       />
 
       <StyledLabel htmlFor='name'>

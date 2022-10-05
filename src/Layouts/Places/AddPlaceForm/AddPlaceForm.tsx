@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '../../../Components/Input/Input'
 import { Button } from '../../../Components/Button /Button'
@@ -14,6 +14,7 @@ import { useAuthCheck } from '../../../utils/useAuthCheck'
 import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
 import { addPlaceHandleFile } from '../../../Pages/Places/functions/AddPlaceHandleFile'
 import { AddPlaceHandleSubmit } from '../../../Pages/Places/functions/AddPlaceHandleSubmit'
+import { getDefaultImages } from '../../../utils/getDefaultImages'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -46,7 +47,7 @@ export const AddPlaceForm = () => {
     img: '',
     file: File,
   } as unknown as SinglePlaceTypes)
-
+  const defaultProductImage = getDefaultImages('place')
   return (
     <StyledForm
       onSubmit={(e) =>
@@ -62,7 +63,7 @@ export const AddPlaceForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : `${fileApi}default-office-image.jpeg`}
+        src={preview.src ? preview.src : defaultProductImage}
       />
 
       <StyledLabel>

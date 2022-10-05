@@ -16,6 +16,7 @@ import { editSingleItemFormHandleFile } from '../../../Pages/Products/functions/
 import { editSingleItemSetRestore } from '../../../Pages/Products/functions/editSingleItemSetRestore'
 import { editSingleItemSetUnavailable } from '../../../Pages/Products/functions/editSingleItemSetUnavailable'
 import { editSingleItemHandleSubmit } from '../../../Pages/Products/functions/editSingleItemHandleSubmit'
+import { getProductImg } from '../../../utils/getProductImg'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -43,8 +44,8 @@ export const EditSingleItemForm = () => {
     setOpen(false)
     navigate('/storage')
   }
-  const { id, img, amount, name, dateOfBuy, price, productStatus } = itemDetails
-
+  const { id, amount, name, dateOfBuy, price, productStatus } = itemDetails
+  const productImage = getProductImg(id!)
   return (
     <StyledForm
       onSubmit={(e) =>
@@ -65,7 +66,7 @@ export const EditSingleItemForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : img}
+        src={preview.src ? preview.src : productImage}
       />
       <StyledLabel>
         Name:

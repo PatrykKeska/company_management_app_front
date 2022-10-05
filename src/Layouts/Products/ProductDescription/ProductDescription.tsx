@@ -5,21 +5,22 @@ import { SingleProductTypes } from '../../../types/Product.types'
 import { LinkButton } from '../../../Components/LinkButton/LinkButton'
 import { SingleItemContext } from '../../../context/SingleItem/SingleItem.context'
 import { ProductPlaceDescriptionWrapper } from '../../../Components/Product-Place-Description/ProductPlaceDescriptionWrapper'
-import styled from 'styled-components'
 import { UnavailableMessage } from '../../../Components/UnavailableMessage/UnavailableMessage'
+import { getProductImg } from '../../../utils/getProductImg'
 
 export const ProductDescription = (props: SingleProductTypes) => {
   const { setItemDetails } = useContext(SingleItemContext)
   const setContextForSingleProduct = () => {
     setItemDetails(props)
   }
-  const { productStatus, price, img, amount, dateOfBuy, name, file, id } = props
+  const { productStatus, price, amount, dateOfBuy, name, id } = props
+  const productImage = getProductImg(id!)
   return (
     <ProductPlaceDescriptionWrapper isActive={productStatus!} key={id}>
       <UnavailableMessage>
         {productStatus! === 0 ? 'Unavailable!' : null}
       </UnavailableMessage>
-      <Img width={'150px'} height={'120px'} src={img} />
+      <Img width={'150px'} height={'120px'} src={productImage} />
       <Paragraph positionStart={2} positionEnd={2}>{`${name}`}</Paragraph>
       <Paragraph
         positionStart={3}

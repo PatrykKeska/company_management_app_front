@@ -3,7 +3,6 @@ import { Wrapper } from '../../../Components/Wrapper /Wrapper'
 import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import styled from 'styled-components'
 import { ProductDescription } from '../../../Layouts/Products/ProductDescription/ProductDescription'
-import { fileApi } from '../../../utils/api'
 import { useGetAllProductsHook } from '../hooks/useGetAllProductsHook'
 import { useAuthCheck } from '../../../utils/useAuthCheck'
 
@@ -22,7 +21,6 @@ export const GridWrapper = styled(Wrapper)`
 export const StoragePage = () => {
   useAuthCheck()
   const allProducts = useGetAllProductsHook()
-
   return (
     <>
       <Nav />
@@ -35,7 +33,6 @@ export const StoragePage = () => {
             price={item.price}
             amount={item.amount}
             dateOfBuy={item.dateOfBuy}
-            img={`${fileApi}${item.img}`}
             productStatus={item.productStatus}
           />
         ))}
