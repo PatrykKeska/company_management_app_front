@@ -39,10 +39,6 @@ export const LoginForm = () => {
       .then((response) => {
         if (response.status === 200) {
           setLoginStatus(true)
-          return localStorage.setItem(
-            'session',
-            JSON.stringify(response.logged),
-          )
         } else if (response.status === 401) {
           SetMessage({ title: 'Fail', message: response.error })
           handleOpen()

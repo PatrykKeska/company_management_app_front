@@ -3,7 +3,7 @@ export interface SingleProductTypes {
   price: number
   amount: number
   dateOfBuy: string
-  img?: string
+  img?: string | any
   id?: string
   key?: string
   file?: File

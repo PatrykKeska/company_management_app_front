@@ -5,7 +5,7 @@ export const fileApi = 'http://localhost:3001/files/'
 // export const fileApi = 'https://localhost:3001/files/'
 // export const fileApi = 'https://kendziior4.usermd.net/api/files/'
 // export const fetchFile = 'https://kendziior4.usermd.net/api/file-transfer'
-export const fetchFile = 'http://localhost:3001/file-transfer/photo'
+
 export const fetchDefaultProductImage =
   'http://localhost:3001/file-transfer/default-product'
 export const fetchDefaultPlaceImage =

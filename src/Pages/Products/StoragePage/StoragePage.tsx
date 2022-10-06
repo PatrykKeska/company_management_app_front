@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Wrapper } from '../../../Components/Wrapper /Wrapper'
 import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import styled from 'styled-components'
@@ -21,21 +21,25 @@ export const GridWrapper = styled(Wrapper)`
 export const StoragePage = () => {
   useAuthCheck()
   const allProducts = useGetAllProductsHook()
+
   return (
     <>
       <Nav />
       <GridWrapper>
-        {allProducts.map((item) => (
-          <ProductDescription
-            id={item.id}
-            key={item.id}
-            name={item.name}
-            price={item.price}
-            amount={item.amount}
-            dateOfBuy={item.dateOfBuy}
-            productStatus={item.productStatus}
-          />
-        ))}
+        {allProducts.map((item) => {
+          return (
+            <ProductDescription
+              id={item.id}
+              img={item.img}
+              key={item.id}
+              name={item.name}
+              price={item.price}
+              amount={item.amount}
+              dateOfBuy={item.dateOfBuy}
+              productStatus={item.productStatus}
+            />
+          )
+        })}
       </GridWrapper>
     </>
   )

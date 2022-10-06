@@ -16,10 +16,9 @@ export const logoutUser = async (
     .then((response) => response.json())
     .then((data) => {
       if (data.status === 200) {
-        localStorage.setItem('session', JSON.stringify(data.logged))
-        setLoginStatus(JSON.parse(localStorage.getItem('session')!))
+        setLoginStatus(true)
       } else {
-        localStorage.setItem('session', 'false')
+        setLoginStatus(false)
       }
     })
 }

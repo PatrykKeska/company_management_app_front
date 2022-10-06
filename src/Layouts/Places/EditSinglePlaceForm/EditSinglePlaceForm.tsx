@@ -16,6 +16,8 @@ import { editSinglePlaceSetUnavailableStatus } from '../../../Pages/Places/funct
 import { editSinglePlaceHandleFile } from '../../../Pages/Places/functions/editSinglePlaceHandleFile'
 import { editSinglePlaceHandleSubmit } from '../../../Pages/Places/functions/editSinglePlaceHandleSubmit'
 import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
+import { getDefaultImages } from '../../../utils/getDefaultImages'
+import { fileApi } from '../../../utils/api'
 
 const StyledForm = styled.form`
   padding-top: 50px;
@@ -43,8 +45,7 @@ export const EditSinglePlaceForm = () => {
     setOpen(false)
     navigate('/places')
   }
-  const { placeStatus, street, img, city, name, id, buildNumber } = placeDetails
-
+  const { placeStatus, street, city, name, id, buildNumber, img } = placeDetails
   return (
     <StyledForm
       onSubmit={(e) =>
@@ -64,7 +65,7 @@ export const EditSinglePlaceForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : img}
+        src={preview.src ? preview.src : `${fileApi}${placeDetails.img}`}
       />
       <StyledLabel>
         Name:

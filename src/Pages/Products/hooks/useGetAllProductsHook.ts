@@ -6,7 +6,7 @@ export function useGetAllProductsHook() {
   const [storage, setStorage] = useState([] as SingleProductTypes[])
   useEffect(() => {
     ;(async () => {
-      const products = await getAllProducts()
+      const products = (await getAllProducts()) as SingleProductTypes[]
       setStorage(products)
     })()
     return () => {

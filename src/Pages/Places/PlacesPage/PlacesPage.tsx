@@ -16,8 +16,8 @@ export const PlacesPage = () => {
         {allPlaces.map((place) => (
           <PlaceDescription
             id={place.id}
+            img={place.img}
             key={place.id}
-            img={`${fileApi}${place.img}`}
             name={place.name}
             city={place.city}
             street={place.street}

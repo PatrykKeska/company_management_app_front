@@ -5,7 +5,9 @@ export const useSession = () => {
   const { setLoginStatus, loginStatus } = useContext(AuthProvider)
   const localSession = localStorage.getItem('session')
   useEffect(() => {
-    setLoginStatus(JSON.parse(localSession!))
+    if (localSession) {
+      setLoginStatus(JSON.parse(localSession))
+    }
   }, [loginStatus])
   return loginStatus
 }

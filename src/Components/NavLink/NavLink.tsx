@@ -7,12 +7,16 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 interface Props {
   path: string
-  children: string
+  children: JSX.Element | JSX.Element[] | string
   icon: IconProp
   click: MouseEventHandler
+  home?: string
 }
 
-const StyledLink = styled(Link)`
+interface PropsLink {
+  to: string
+}
+const StyledLink = styled(Link)<PropsLink>`
   text-transform: uppercase;
   text-decoration: none;
   color: black;
@@ -24,8 +28,24 @@ const StyledLink = styled(Link)`
   overflow: hidden;
   transition: 0.2s linear all;
   &.active {
-    background-color: black;
-    color: white;
+    background-color: ${({ to }) =>
+      to === '/places' ||
+      to === '/storage' ||
+      to === '/add-items' ||
+      to === '/add-places' ||
+      to === '/inventory' ||
+      to === '/finalized'
+        ? 'black'
+        : 'none'};
+    color: ${({ to }) =>
+      to === '/places' ||
+      to === '/storage' ||
+      to === '/add-items' ||
+      to === '/add-places' ||
+      to === '/inventory' ||
+      to === '/finalized'
+        ? 'white'
+        : 'none'};
   }
 
   &:after {

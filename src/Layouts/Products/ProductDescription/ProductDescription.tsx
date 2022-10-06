@@ -6,21 +6,20 @@ import { LinkButton } from '../../../Components/LinkButton/LinkButton'
 import { SingleItemContext } from '../../../context/SingleItem/SingleItem.context'
 import { ProductPlaceDescriptionWrapper } from '../../../Components/Product-Place-Description/ProductPlaceDescriptionWrapper'
 import { UnavailableMessage } from '../../../Components/UnavailableMessage/UnavailableMessage'
-import { getProductImg } from '../../../utils/getProductImg'
+import { fileApi } from '../../../utils/api'
 
 export const ProductDescription = (props: SingleProductTypes) => {
   const { setItemDetails } = useContext(SingleItemContext)
   const setContextForSingleProduct = () => {
     setItemDetails(props)
   }
-  const { productStatus, price, amount, dateOfBuy, name, id } = props
-  const productImage = getProductImg(id!)
+  const { productStatus, price, amount, dateOfBuy, name, id, img } = props
   return (
     <ProductPlaceDescriptionWrapper isActive={productStatus!} key={id}>
       <UnavailableMessage>
         {productStatus! === 0 ? 'Unavailable!' : null}
       </UnavailableMessage>
-      <Img width={'150px'} height={'120px'} src={productImage} />
+      <Img width={'150px'} height={'120px'} src={`${fileApi}${img}`} />
       <Paragraph positionStart={2} positionEnd={2}>{`${name}`}</Paragraph>
       <Paragraph
         positionStart={3}

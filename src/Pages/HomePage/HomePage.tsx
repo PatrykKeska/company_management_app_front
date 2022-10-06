@@ -6,16 +6,13 @@ import { LoginForm } from '../../Layouts/GeneralUse/LoginForm/LoginForm'
 import { AuthProvider } from '../../context/AuthProvider/AuthProvider'
 import { LogoutButton } from '../../Components/logoutButton/LogoutButton'
 import { logoutUser } from './functions/logoutUser'
-import { useSession } from './hooks/useSession'
 
 export const HomePage = () => {
-  const { setLoginStatus } = useContext(AuthProvider)
-  const sessionStatus = useSession()
-
+  const { setLoginStatus, loginStatus } = useContext(AuthProvider)
   return (
     <>
       <Wrapper>
-        {sessionStatus ? (
+        {loginStatus ? (
           <>
             <Nav />
             <Title>Inventory Management</Title>

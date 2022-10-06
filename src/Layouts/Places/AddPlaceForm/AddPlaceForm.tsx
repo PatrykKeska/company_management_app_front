@@ -47,7 +47,7 @@ export const AddPlaceForm = () => {
     img: '',
     file: File,
   } as unknown as SinglePlaceTypes)
-  const defaultProductImage = getDefaultImages('place')
+  const defaultPlaceImage = getDefaultImages('place')
   return (
     <StyledForm
       onSubmit={(e) =>
@@ -63,7 +63,7 @@ export const AddPlaceForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : defaultProductImage}
+        src={preview.src ? preview.src : defaultPlaceImage}
       />
 
       <StyledLabel>
