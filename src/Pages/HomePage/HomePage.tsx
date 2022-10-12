@@ -6,6 +6,8 @@ import { LoginForm } from '../../Layouts/GeneralUse/LoginForm/LoginForm'
 import { AuthProvider } from '../../context/AuthProvider/AuthProvider'
 import { LogoutButton } from '../../Components/logoutButton/LogoutButton'
 import { logoutUser } from './functions/logoutUser'
+import { Button } from '@mui/material'
+import { createDefaultUser } from './functions/createDefaultUser'
 
 export const HomePage = () => {
   const { setLoginStatus, loginStatus } = useContext(AuthProvider)
@@ -24,6 +26,9 @@ export const HomePage = () => {
           <>
             <Title>Inventory Management</Title>
             <LoginForm />
+            <form onSubmit={(e)=>createDefaultUser(e)}>
+            <Button type='submit'>Create a default account</Button>
+            </form>
           </>
         )}
       </Wrapper>
