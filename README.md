@@ -69,7 +69,7 @@ Everything is in:
  company_management_app_backend_nest/Guide/MyDevil Hosting Nest...pdf 
  ````
 
-<h3>FrontEnd Repository</h3>
+<h3>Backend Repository</h3>
 
 ````
 https://github.com/PatrykKeska/company_management_app_backend_nest````
