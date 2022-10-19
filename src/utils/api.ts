@@ -1,7 +1,7 @@
 export const ApiList = {
-  defaultProductImage : 'http://localhost:3001/file-transfer/default-product/',
-  defaultPlaceImage: 'http://localhost:3001/file-transfer/default-place',
-  productImage:'http://localhost:3001/file-transfer/product-photo/',
-  placeImage:'http://localhost:3001/file-transfer/place-photo/',
-  basicUrl:'http://localhost:3001',
+  defaultProductImage : 'https://kendziior4.usermd.net/api/file-transfer/default-product/',
+  defaultPlaceImage: 'https://kendziior4.usermd.net/api/file-transfer/default-place',
+  productImage:'https://kendziior4.usermd.net/api/file-transfer/product-photo/',
+  placeImage:'https://kendziior4.usermd.net/api/file-transfer/place-photo/',
+  basicUrl:'https://kendziior4.usermd.net/api',
 }
