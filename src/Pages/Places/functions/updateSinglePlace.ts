@@ -1,6 +1,6 @@
-import { apiURL } from '../../../utils/api'
 import { SinglePlaceTypes } from '../../../types/Places.types'
-
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 export const updateSinglePlace = async (placeDetails: SinglePlaceTypes) => {
   const { id, name, file, street, city, buildNumber } = placeDetails
   const formData = new FormData()
@@ -10,7 +10,7 @@ export const updateSinglePlace = async (placeDetails: SinglePlaceTypes) => {
   formData.append('city', city)
   formData.append('buildNumber', buildNumber)
   formData.append('file', file!)
-  const data = await fetch(`${apiURL}/places/update`, {
+  const data = await fetch(`${basicUrl}/places/update`, {
     method: 'PATCH',
     credentials: 'include',
     body: formData,

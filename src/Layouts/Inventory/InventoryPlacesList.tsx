@@ -1,13 +1,13 @@
 import { SingleProduct } from '../../MaterialUIComponents/productContainer'
 import { Avatar } from '@mui/material'
-import { fileApi } from '../../utils/api'
 import { MyButton } from '../../MaterialUIComponents/myButton'
 import { handlePlacePick } from '../../Pages/Inventory/functions/handlePlacePick'
 import * as React from 'react'
 import { CallBackFunction } from '../../types/CallBackFunction'
 import { ProductInPlace } from '../../types/product-in-place'
 import { PlaceToPick } from '../../types/PlaceToPick'
-
+import { ApiList } from '../../utils/api'
+const {placeImage} = ApiList
 interface Props {
   places: PlaceToPick[]
   setAssigned: CallBackFunction
@@ -22,7 +22,7 @@ export const InventoryPlacesList = (props: Props) => {
         <SingleProduct isActive={place.isPicked} key={place.id}>
           <Avatar
             sx={{ width: 70, height: 70 }}
-            srcSet={`${fileApi}${place.img}`}
+            srcSet={`${placeImage}${place.id}`}
           />
           <p>{place.name}</p>
           <p>City: {place.city}</p>

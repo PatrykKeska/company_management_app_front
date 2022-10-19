@@ -1,7 +1,7 @@
-import { apiURL } from '../../../utils/api'
-
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 export const makePlaceUnAvailable = async (id: string) => {
-  const data = await fetch(`${apiURL}/places/unavailable`, {
+  const data = await fetch(`${basicUrl}/places/unavailable`, {
     method: 'PATCH',
     credentials: 'include',
     headers: { 'Content-type': 'application/json' },

@@ -1,7 +1,8 @@
-import { apiURL } from '../../../utils/api'
+import { ApiList } from '../../../utils/api'
 
 export const deletePlace = async (id: string) => {
-  const data = await fetch(`${apiURL}/places/remove`, {
+const {basicUrl} = ApiList
+  const data = await fetch(`${basicUrl}/places/remove`, {
     method: 'DELETE',
     credentials: 'include',
     body: JSON.stringify({ id }),

@@ -1,6 +1,6 @@
-import { apiURL } from '../../../utils/api'
 import { SingleProductTypes } from '../../../types/Product.types'
-
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 export const updateProduct = async (itemDetails: SingleProductTypes) => {
   const { id, name, price, amount, dateOfBuy, file } = itemDetails
   const formData = new FormData()
@@ -10,7 +10,7 @@ export const updateProduct = async (itemDetails: SingleProductTypes) => {
   formData.append('amount', String(amount))
   formData.append('dateOfBuy', dateOfBuy)
   formData.append('file', file!)
-  const data = await fetch(`${apiURL}/products/update`, {
+  const data = await fetch(`${basicUrl}/products/update`, {
     method: 'PATCH',
     credentials: 'include',
     body: formData,
