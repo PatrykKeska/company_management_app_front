@@ -15,7 +15,6 @@ export const ProductDescription = (props: SingleProductTypes) => {
   }
   const { productStatus, price, amount, dateOfBuy, name, id } = props
   const {productImage} = ApiList
-
   return (
     <ProductPlaceDescriptionWrapper isActive={productStatus!} key={id}>
       <UnavailableMessage>

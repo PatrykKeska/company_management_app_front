@@ -21,7 +21,6 @@ export const GridWrapper = styled(Wrapper)`
 export const StoragePage = () => {
   useAuthCheck()
   const allProducts = useGetAllProductsHook()
-
   return (
     <>
       <Nav />
