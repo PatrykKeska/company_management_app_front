@@ -7,15 +7,14 @@ import { InputOnChange } from '../../../types/common.types'
 import { Checkbox } from '../../../Components/Input/Checkbox'
 import { useNavigate } from 'react-router-dom'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
-import { fileApi } from '../../../utils/api'
 import { Img } from '../../../Components/Img/Img'
 import { FileInput } from '../../../Components/Input/FileInput'
 import { useAuthCheck } from '../../../utils/useAuthCheck'
 import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
 import { addPlaceHandleFile } from '../../../Pages/Places/functions/AddPlaceHandleFile'
 import { AddPlaceHandleSubmit } from '../../../Pages/Places/functions/AddPlaceHandleSubmit'
-import { getDefaultImages } from '../../../utils/getDefaultImages'
-
+import { ApiList } from '../../../utils/api'
+const {defaultPlaceImage} = ApiList
 const StyledForm = styled.form`
   padding-top: 50px;
   display: flex;
@@ -47,7 +46,6 @@ export const AddPlaceForm = () => {
     img: '',
     file: File,
   } as unknown as SinglePlaceTypes)
-  const defaultPlaceImage = getDefaultImages('place')
   return (
     <StyledForm
       onSubmit={(e) =>

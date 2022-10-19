@@ -1,7 +1,7 @@
-import { apiURL } from '../../../utils/api'
-
+import { ApiList} from '../../../utils/api'
+const {basicUrl} = ApiList
 export const getAllPlaces = async () => {
-  const data = await fetch(`${apiURL}/places`, {
+  const data = await fetch(`${basicUrl}/places`, {
     method: 'GET',
     credentials: 'include',
   })

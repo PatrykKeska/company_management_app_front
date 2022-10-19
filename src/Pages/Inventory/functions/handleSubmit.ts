@@ -1,7 +1,8 @@
 import { FormEvent } from 'react'
-import { apiURL } from '../../../utils/api'
 import { ProductInPlace } from '../../../types/product-in-place'
 import { CallBackFunction } from '../../../types/CallBackFunction'
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 
 export const handleSubmit = async (
   e: FormEvent,
@@ -11,7 +12,7 @@ export const handleSubmit = async (
 ) => {
   e.preventDefault()
   try {
-    const response = await fetch(`${apiURL}/product-in-places/assign`, {
+    const response = await fetch(`${basicUrl}/product-in-places/assign`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-type': 'application/json' },

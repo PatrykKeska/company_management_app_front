@@ -6,8 +6,8 @@ import { LinkButton } from '../../../Components/LinkButton/LinkButton'
 import { SinglePlaceContext } from '../../../context/SinglePlace/singlePlace.context'
 import { ProductPlaceDescriptionWrapper } from '../../../Components/Product-Place-Description/ProductPlaceDescriptionWrapper'
 import { UnavailableMessage } from '../../../Components/UnavailableMessage/UnavailableMessage'
-import { fileApi } from '../../../utils/api'
-
+import { ApiList } from '../../../utils/api'
+const {placeImage} = ApiList
 export const PlaceDescription = (props: SinglePlaceTypes) => {
   const { setPlaceDetails } = useContext(SinglePlaceContext)
 
@@ -23,7 +23,7 @@ export const PlaceDescription = (props: SinglePlaceTypes) => {
       <UnavailableMessage>
         {props.placeStatus! === 0 ? 'Unavailable!' : null}
       </UnavailableMessage>
-      <Img width={'150px'} height={'120px'} src={`${fileApi}${props.img}`} />
+      <Img width={'150px'} height={'120px'} src={`${placeImage}${props.id}`} />
       <Paragraph positionStart={2} positionEnd={2}>{`${props.name}`}</Paragraph>
       <Paragraph
         positionStart={3}

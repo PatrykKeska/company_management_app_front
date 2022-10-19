@@ -2,7 +2,6 @@ import React from 'react'
 import { Nav } from '../../../Layouts/GeneralUse/Nav/Nav'
 import { PlaceDescription } from '../../../Layouts/Places/PlaceDescription/PlaceDescription'
 import { PlaceDescriptionWrapper } from '../../../Components/PlaceDescriptionWrapper/PlaceDescriptionWrapper'
-import { fileApi } from '../../../utils/api'
 import { useGetAllPlacesHook } from '../hooks/useGetAllPlacesHook'
 import { useAuthCheck } from '../../../utils/useAuthCheck'
 

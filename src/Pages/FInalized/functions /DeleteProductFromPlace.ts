@@ -1,12 +1,13 @@
-import { apiURL } from '../../../utils/api'
 import { CallBackFunction } from '../../../types/CallBackFunction'
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 
 export async function deleteProductFromPlace(
   placeId: string,
   productId: string,
   setMessage: CallBackFunction,
 ) {
-  const data = await fetch(`${apiURL}/product-in-places/remove`, {
+  const data = await fetch(`${basicUrl}/product-in-places/remove`, {
     method: 'DELETE',
     credentials: 'include',
     body: JSON.stringify({ placeId, productId }),

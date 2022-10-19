@@ -1,6 +1,7 @@
 import { FormEvent } from 'react'
-import { apiURL } from '../../../utils/api'
+import { ApiList} from '../../../utils/api'
 import { CallBackFunction } from '../../../types/CallBackFunction'
+const {basicUrl} = ApiList
 
 export const logoutUser = async (
   e: FormEvent,
@@ -8,7 +9,7 @@ export const logoutUser = async (
 ) => {
   e.preventDefault()
 
-  await fetch(`${apiURL}/user/logout`, {
+  await fetch(`${basicUrl}/user/logout`, {
     method: 'GET',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },

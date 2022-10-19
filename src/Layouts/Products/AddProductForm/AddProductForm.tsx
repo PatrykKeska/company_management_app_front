@@ -12,8 +12,8 @@ import { FileInput } from '../../../Components/Input/FileInput'
 import { addProductFormHandleFile } from '../../../Pages/Products/functions/AddProductFormHandleFile'
 import { addProductFormAddNewProduct } from '../../../Pages/Products/functions/AddProductFormAddNewProduct'
 import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
-import { getDefaultImages } from '../../../utils/getDefaultImages'
-
+import { ApiList } from '../../../utils/api'
+const {defaultProductImage} = ApiList
 const StyledForm = styled.form`
   padding-top: 50px;
   display: flex;
@@ -43,7 +43,7 @@ export const AddProductForm = () => {
     dateOfBuy: '',
     file: null,
   } as unknown as SingleProductTypes)
-  const defaultProductImage = getDefaultImages('product')
+
   return (
     <StyledForm
       onSubmit={(e) =>
@@ -59,7 +59,7 @@ export const AddProductForm = () => {
       <Img
         width={'200px'}
         height={'150px'}
-        src={preview.src ? preview.src : defaultProductImage}
+        src={preview.src ? preview.src : `${defaultProductImage}`}
       />
 
       <StyledLabel htmlFor='name'>

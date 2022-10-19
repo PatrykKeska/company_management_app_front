@@ -8,7 +8,6 @@ import { ProductContainer } from '../../MaterialUIComponents/productContainer'
 import { theme } from '../../MaterialUIComponents/theme/materialTheme'
 import { StylesProvider } from '@material-ui/core/styles'
 import { ThemeProvider as SCThemeProvider } from 'styled-components'
-import { fileApi } from '../../utils/api'
 import * as React from 'react'
 import { SummaryCalc } from '../../utils/SummaryCalc'
 import { useState } from 'react'
@@ -20,6 +19,8 @@ import { handleInput } from './functions /handleInput'
 import { SummaryFinalizedPlace } from '../../Layouts/Finalized/SummaryFinalizedPlace'
 import { ResultModal } from '../../MaterialUIComponents/ResultModal'
 import { ConfirmModal } from '../../MaterialUIComponents/ConfirmModal'
+import { ApiList } from '../../utils/api'
+const {productImage} = ApiList
 
 export function FinalizedPlace() {
   useAuthCheck()
@@ -55,7 +56,7 @@ export function FinalizedPlace() {
         <SCThemeProvider theme={theme}>
           <FlexboxContainer>
             {products.products.map((item) => {
-              const { id, name, img, amount, price, dateOfBuy, isPicked } = item
+              const { id, name, amount, price, dateOfBuy, isPicked } = item
               return (
                 <ProductContainer
                   style={{
@@ -67,7 +68,7 @@ export function FinalizedPlace() {
                 >
                   <Avatar
                     sx={{ width: 100, height: 100 }}
-                    srcSet={`${fileApi}${img}`}
+                    srcSet={`${productImage}${id}`}
                   />
                   <Typography fontSize={15}>Name: {name}</Typography>
                   <Typography fontSize={15}>Each Piece: {price} $</Typography>

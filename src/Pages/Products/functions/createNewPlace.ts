@@ -1,6 +1,6 @@
-import { apiURL } from '../../../utils/api'
 import { SinglePlaceTypes } from '../../../types/Places.types'
-
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 export function createNewPlace(productDetails: SinglePlaceTypes) {
   const responseFunction = async () => {
     const { name, city, buildNumber, street, file } = productDetails
@@ -11,7 +11,7 @@ export function createNewPlace(productDetails: SinglePlaceTypes) {
     formData.append('buildNumber', buildNumber)
     formData.append('file', file!)
 
-    const data = await fetch(`${apiURL}/places/add-new`, {
+    const data = await fetch(`${basicUrl}/places/add-new`, {
       method: 'POST',
       credentials: 'include',
       body: formData,

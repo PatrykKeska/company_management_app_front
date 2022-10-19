@@ -1,15 +1,16 @@
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { Avatar, Typography } from '@mui/material'
-import { fileApi } from '../../utils/api'
 import * as React from 'react'
 import { SinglePlaceTypes } from '../../types/Places.types'
+import { ApiList } from '../../utils/api'
 export interface Props {
   placeDetails: SinglePlaceTypes
   totalItemsPrice: number
 }
 export const SummaryFinalizedPlace = (props: Props) => {
-  const { name, city, street, buildNumber, img } = props.placeDetails
-
+  const { name, city, street, buildNumber, img,id
+  } = props.placeDetails
+  const {placeImage} = ApiList
   return (
     <Grid2
       direction='column'
@@ -22,7 +23,7 @@ export const SummaryFinalizedPlace = (props: Props) => {
       <Grid2 xs={1} sm={2} md={4}>
         <Avatar
           sx={{ width: 100, height: 100 }}
-          srcSet={img ? `${fileApi}/${img}` : ''}
+          srcSet={img ? `${placeImage}${id}` : ''}
         />
       </Grid2>
       <Grid2>

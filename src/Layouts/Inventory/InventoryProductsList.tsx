@@ -1,6 +1,5 @@
 import { SingleProduct } from '../../MaterialUIComponents/productContainer'
 import { Avatar } from '@mui/material'
-import { fileApi } from '../../utils/api'
 import { MyButton } from '../../MaterialUIComponents/myButton'
 import { handleProductPick } from '../../Pages/Inventory/functions/handleProductPick'
 import { ValueInput } from '../../MaterialUIComponents/valueInput'
@@ -10,7 +9,8 @@ import * as React from 'react'
 import { ProductToPick } from '../../types/productToPick'
 import { CallBackFunction } from '../../types/CallBackFunction'
 import { ProductInPlace } from '../../types/product-in-place'
-
+import { ApiList } from '../../utils/api'
+const {productImage} = ApiList
 interface Props {
   products: ProductToPick[]
   setAssigned: CallBackFunction
@@ -27,7 +27,7 @@ export const InventoryProductsList = (props: Props) => {
         <SingleProduct isActive={product.isPicked} key={product.id}>
           <Avatar
             sx={{ width: 70, height: 70 }}
-            srcSet={`${fileApi}${product.img}`}
+            srcSet={`${productImage}${product.id}`}
           />
           <p>{product.name}</p>
           <p>Price: {product.price}</p>

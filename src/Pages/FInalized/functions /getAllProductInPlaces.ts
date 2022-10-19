@@ -1,8 +1,8 @@
-import { apiURL } from '../../../utils/api'
 import { SingleProductTypes } from '../../../types/Product.types'
-
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 export async function getAllProductInPlaces(id: string) {
-  const data = await fetch(`${apiURL}/product-in-places/get-exact`, {
+  const data = await fetch(`${basicUrl}/product-in-places/get-exact`, {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({ placeId: id }),

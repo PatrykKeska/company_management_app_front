@@ -5,10 +5,9 @@ import { Button } from '../../../Components/Button /Button'
 import { StyledLabel } from '../../../Components/StyledLabel/StyledLabel'
 import { InputOnChange, onSubmitType } from '../../../types/common.types'
 import { AuthProvider } from '../../../context/AuthProvider/AuthProvider'
-import { apiURL } from '../../../utils/api'
-import { log } from 'util'
 import { ResponseModal } from '../../../MaterialUIComponents/ResponseModal'
-
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 const StyledForm = styled.form`
   display: flex;
   justify-content: center;
@@ -27,7 +26,7 @@ export const LoginForm = () => {
 
   const handleSubmit = async (e: onSubmitType) => {
     e.preventDefault()
-    await fetch(`${apiURL}/user/login`, {
+    await fetch(`${basicUrl}/user/login`, {
       method: 'POST',
       body: JSON.stringify({ email: login, pwd: password }),
       credentials: 'include',

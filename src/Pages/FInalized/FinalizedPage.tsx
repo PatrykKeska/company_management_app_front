@@ -7,11 +7,11 @@ import { ThemeProvider as SCThemeProvider } from 'styled-components'
 import { StylesProvider } from '@material-ui/core/styles'
 import { Avatar, Button, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { fileApi } from '../../utils/api'
 import * as React from 'react'
 import { FlexboxContainer } from '../../Components/flexboxContainer/flexboxContainer'
 import { useGetAllAssignedPlaces } from './hooks/useGetAllAssignedPlaces'
-
+import { ApiList } from '../../utils/api'
+const {placeImage} = ApiList
 export const FinalizedPage = () => {
   useAuthCheck()
   const places = useGetAllAssignedPlaces()
@@ -31,7 +31,7 @@ export const FinalizedPage = () => {
                 <SingleProduct key={place.id}>
                   <Avatar
                     sx={{ width: 70, height: 70 }}
-                    srcSet={`${fileApi}${place.img}`}
+                    srcSet={`${placeImage}${place.id}`}
                   />
                   <p>{place.name}</p>
                   <p>City: {place.city}</p>

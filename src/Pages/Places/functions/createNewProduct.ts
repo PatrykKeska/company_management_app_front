@@ -1,5 +1,6 @@
-import { apiURL } from '../../../utils/api'
 import { SingleProductTypes } from '../../../types/Product.types'
+import { ApiList } from '../../../utils/api'
+const {basicUrl} = ApiList
 
 export function createNewProduct(productDetails: SingleProductTypes) {
   const responseFunction = async () => {
@@ -11,7 +12,7 @@ export function createNewProduct(productDetails: SingleProductTypes) {
     formData.append('amount', String(amount))
     formData.append('dateOfBuy', dateOfBuy)
 
-    const data = await fetch(`${apiURL}/products/add-new`, {
+    const data = await fetch(`${basicUrl}/products/add-new`, {
       method: 'POST',
       credentials: 'include',
       body: formData,

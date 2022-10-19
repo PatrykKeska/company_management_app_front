@@ -1,6 +1,8 @@
-import { apiURL } from '../../../utils/api'
+import { ApiList } from '../../../utils/api'
+
+const {basicUrl} = ApiList
 export const makeProductUnavailable = async (id: string) => {
-  const data = await fetch(`${apiURL}/products/unavailable`, {
+  const data = await fetch(`${basicUrl}/products/unavailable`, {
     method: 'PATCH',
     credentials: 'include',
     headers: { 'Content-type': 'application/json' },
